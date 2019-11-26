@@ -11,7 +11,8 @@ public final class Constants {
     private  static AssetManager MANAGER = new AssetManager();
 
 
-
+	// this is another comment
+	
 
     private Constants()
     {
