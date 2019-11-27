@@ -37,9 +37,10 @@ public class MainClass extends ApplicationAdapter {
 
 			batch.begin();
 
-			mapData.renderMap(batch);
+			renderMap(batch);
             batch.draw(Constants.getManager().get("borderArt.png", Texture.class), 0, 0, Constants.getResolutionWidth(), Constants.getResolutionHeight(),0,0,1280,720,false,false);
-			batch.end();
+
+            batch.end();
 
 		}
 		else{
@@ -69,6 +70,19 @@ public class MainClass extends ApplicationAdapter {
 	}
 
 
+
+
+	public void renderMap(SpriteBatch batch)
+	{
+
+		for(int width = 0; width < mapData.getMapWidth(); width++)
+		{
+			for(int height = 0; height < mapData.getMapHeight(); height++)
+			{
+				batch.draw(Constants.getManager().get(mapData.getMapData()[width][height].getTexName(), Texture.class),(width * Constants.getTileSize()) + mapData.getShiftX(),(height*Constants.getTileSize())+ mapData.getShiftY(), Constants.getTileSize(),Constants.getTileSize(),0,0,32,32,false,false);
+			}
+		}
+	}
 
 
 
