@@ -6,13 +6,15 @@ public class Tile
     private int mapY;
     private String texName;
 
-    Tile()
+    
+    // why are none of the constructors public?
+    public Tile()
     {
         //default constructor
 
     }
 
-    Tile(int newMapX, int newMapY)
+    public Tile(int newMapX, int newMapY)
     {
 
         mapX = newMapX;
@@ -21,7 +23,7 @@ public class Tile
 
     }
 
-    Tile(int newMapX, int newMapY, String textureLocation)
+    public Tile(int newMapX, int newMapY, String textureLocation)
     {
 
         mapX = newMapX;
