@@ -4,7 +4,7 @@ package com.kroy.game;
 class Fortress extends Character {
 
     public Fortress(int health, int damage, int range, Tile location, String name) {
-        super(health, damage, range, location, name);
+        super(health, damage, range, location);
     }
 
 

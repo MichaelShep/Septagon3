@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class MainClass extends ApplicationAdapter {
@@ -25,7 +27,13 @@ public class MainClass extends ApplicationAdapter {
 		initSetting();
 		loadTextures();
 
+
+
 		mapData = new Map();
+
+
+
+
 		batch = new SpriteBatch();
 	}
 
@@ -57,12 +65,11 @@ public class MainClass extends ApplicationAdapter {
 
 	public void loadTextures(){
 		Constants.getManager().load("grassTile.png", Texture.class);
-		Constants.getManager().load("stationTile.png", Texture.class);
-		Constants.getManager().load("horiRoadTile.png", Texture.class);
-		Constants.getManager().load("vertRoadTile.png", Texture.class);
-		Constants.getManager().load("crossRoadTile.png", Texture.class);
-		Constants.getManager().load("fortressTile.png", Texture.class);
+		Constants.getManager().load("roadTile.png", Texture.class);
 		Constants.getManager().load("borderArt.png", Texture.class);
+		Constants.getManager().load("stationTile.png", Texture.class);
+		Constants.getManager().load("fortressTile.png", Texture.class);
+
 	}
 
 	public void initSetting(){
@@ -74,7 +81,6 @@ public class MainClass extends ApplicationAdapter {
 
 	public void renderMap(SpriteBatch batch)
 	{
-
 		for(int width = 0; width < mapData.getMapWidth(); width++)
 		{
 			for(int height = 0; height < mapData.getMapHeight(); height++)

@@ -12,11 +12,17 @@ public final class Constants {
 
     private static int ROAD_DENSITY = 7;
 
-    private static int TILE_SIZE = (int)Math.sqrt((RESOLUTION_WIDTH*RESOLUTION_HEIGHT)/(MAP_WIDTH*MAP_HEIGHT));
+    //private static int TILE_SIZE = (int)Math.sqrt((RESOLUTION_WIDTH*RESOLUTION_HEIGHT)/(MAP_WIDTH*MAP_HEIGHT));
+    private static int TILE_SIZE = 32;
     private  static AssetManager MANAGER = new AssetManager();
 
-    private static int FORTRESS_COUNT = 4;
+    private static int FORTRESS_COUNT = 6;
     private static int FIREENGINE_COUNT = 2;
+
+    private static String MAP_FILE_NAME = "testmap.csv";
+
+    private static int STATION_REFILL_AMOUNT = 10;
+    private static int STATION_REPAIR_AMOUNT = 10;
 
 
 	// this is another comment
@@ -71,7 +77,27 @@ public final class Constants {
         return FIREENGINE_COUNT;
     }
 
+    public static String getMapFileName()
+    {
+        return MAP_FILE_NAME;
+    }
+
+    public static int getStationRefillAmount()
+    {
+        return STATION_REFILL_AMOUNT;
+    }
+
+    public static int getStationRepairAmount()
+    {
+        return STATION_REPAIR_AMOUNT;
+    }
+
+
 }
+
+
+
+
 
 /*
   private final static int RESOLUTION_WIDTH = 1280;

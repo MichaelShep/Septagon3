@@ -2,30 +2,37 @@ package com.kroy.game;
 
 import java.lang.Math;
 
-abstract public class Character {
-
-    private String name;
+abstract public class Character
+{
     private int health;
     private int damage;
     private int range;
     private boolean disabled;
     private Tile location;
 
-    public Character(int health, int damage, int range, Tile spawn, String name) {
+
+    public Character(int health, int damage, int range, Tile spawn)
+    {
         this.health = health;
         this.damage = damage;
         this.range = range;
         this.location = spawn;
         this.disabled = false;
-        this.name = name;
     }
 
-    protected boolean inRange(Tile target) {
+    protected boolean inRange(Tile target)
+    {
+        /* NEEDS IMPLEMENTING
+
         if (Math.sqrt(Math.pow((this.location.MapX - target.MapX), 2) + (Math.pow((this.location.MapY - target.MapY), 2))) <= this.range) {
             return true;
         } else {
             return false;
         }
+         */
+
+        return false;
+
     }
 
     protected void death() {
@@ -69,13 +76,6 @@ abstract public class Character {
         this.location = newLocation;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public boolean getDisabled() {
         return this.disabled;

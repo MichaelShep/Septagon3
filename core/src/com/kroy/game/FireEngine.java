@@ -7,8 +7,8 @@ public class FireEngine extends Character {
     private int waterCapacity;
     private boolean disabled;
 
-    public FireEngine(int health, int damage, int range, Tile location, String name, int speed, int waterCapacity) {
-        super(health, damage, range, location, name);
+    public FireEngine(int health, int damage, int range, Tile location, int speed, int waterCapacity) {
+        super(health, damage, range, location);
         this.speed = speed;
         this.waterCapacity = waterCapacity;
         this.disabled = false;

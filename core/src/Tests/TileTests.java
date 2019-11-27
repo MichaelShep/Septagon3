@@ -1,5 +1,7 @@
 package Tests;
 
+/* TALK TO ME ABOUT FIXING THIS, James;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -22,3 +24,4 @@ public class TileTests
 	
 	
 }
+*/

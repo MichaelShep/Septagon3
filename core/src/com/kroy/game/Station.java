@@ -9,7 +9,11 @@ public class Station extends Tile
 
     Station(int X, int Y)
     {
-        super(X,Y, "stationTile.png");
+        super(X,Y, "stationTile.png",TileType.TILE_TYPES_STATION);
+
+        repairTime = Constants.getStationRepairAmount();
+        refillTime = Constants.getStationRefillAmount();
+
     }
 
     private int getRepairTime()
