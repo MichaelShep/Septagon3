@@ -1,8 +1,12 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import java.lang.Math;
 
-abstract public class Character
+abstract public class Character extends Sprite
 {
     private int health;
     private int damage;
@@ -11,8 +15,9 @@ abstract public class Character
     private Tile location;
 
 
-    public Character(int health, int damage, int range, Tile spawn)
+    public Character(int health, int damage, int range, Tile spawn, String spriteTex)
     {
+        super(Constants.getManager().get(spriteTex, Texture.class),Constants.getTileSize(),Constants.getTileSize());
         this.health = health;
         this.damage = damage;
         this.range = range;

@@ -8,7 +8,7 @@ public class FireEngine extends Character {
     private boolean disabled;
 
     public FireEngine(int health, int damage, int range, Tile location, int speed, int waterCapacity) {
-        super(health, damage, range, location);
+        super(health, damage, range, location, "badlogic.jpg");
         this.speed = speed;
         this.waterCapacity = waterCapacity;
         this.disabled = false;
@@ -29,6 +29,7 @@ public class FireEngine extends Character {
             return 0;
         }
 
+
         if(inRange(target.getLocation())) {
             if (this.waterAmount >= 20) {
                 this.waterAmount -= 20;
@@ -37,6 +38,7 @@ public class FireEngine extends Character {
                 this.waterAmount = 0;
                 return (Math.round((this.waterAmount / 20) * this.getDamage()));
             }
+
 
         } else {
             return 0;

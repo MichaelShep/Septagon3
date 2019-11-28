@@ -15,8 +15,6 @@ public class Map {
     private int mapWidth,mapHeight;
     private int shiftX,shiftY;
 
-    private final int roadDensity = Constants.getRoadDensity();
-
 
 
 
@@ -199,7 +197,6 @@ public class Map {
 
     }
  */
-
 
 
 

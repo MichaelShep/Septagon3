@@ -1,10 +1,18 @@
 package com.kroy.game;
 
 import java.util.ArrayList;
-/*
 
 public class Enemy extends Player {
 
+    public Enemy(String name, Boolean myTurn)
+    {
+        super(name,myTurn);
+
+    }
+
+
+
+/*
     public Enemy(String name, boolean myTurn, ArrayList<Fortress> team) {
         super(name, myTurn);
         team = new ArrayList<>();
@@ -26,6 +34,6 @@ public class Enemy extends Player {
 
 
 
+*/
 
 }
- */

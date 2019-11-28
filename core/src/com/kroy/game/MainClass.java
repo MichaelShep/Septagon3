@@ -16,7 +16,8 @@ public class MainClass extends ApplicationAdapter {
 
 	Map mapData;
 	SpriteBatch batch;
-
+	Human humanData;
+	Enemy enemyData;
 
 
 
@@ -30,6 +31,8 @@ public class MainClass extends ApplicationAdapter {
 
 
 		mapData = new Map();
+		humanData = new Human("humanName",true);
+		enemyData = new Enemy("EnemyName",false);
 
 
 
@@ -45,8 +48,10 @@ public class MainClass extends ApplicationAdapter {
 
 			batch.begin();
 
+
 			renderMap(batch);
             batch.draw(Constants.getManager().get("borderArt.png", Texture.class), 0, 0, Constants.getResolutionWidth(), Constants.getResolutionHeight(),0,0,1280,720,false,false);
+
 
             batch.end();
 
@@ -57,6 +62,8 @@ public class MainClass extends ApplicationAdapter {
 
 
 	}
+
+
 
 	@Override
 	public void dispose () {

@@ -6,7 +6,7 @@ abstract public class Player {
     private static int turns = 1;
     private String name;
     protected boolean myTurn;
-    private ArrayList<Character> team;
+    private Character[] team;
 
     public Player(String name, boolean myTurn) {
         this.name = name;
@@ -14,9 +14,10 @@ abstract public class Player {
     }
 
     protected void resolveDeaths() {
-        for(int i = 0; i < team.size(); i ++) {
-            if(team.get(i).getDisabled()) {
-                team.remove(i);
+
+        for(int i = 0; i < team.length; i ++) {
+            if(team[i].getDisabled()) {
+                team[i] = null;
             }
         }
     }
@@ -45,12 +46,9 @@ abstract public class Player {
         this.myTurn = state;
     }
 
-    public ArrayList<Character> getTeam() {
+    public Character[] getTeam() {
         return this.team;
     }
 
-    public void killTeam(Character entity) {
-        this.team.remove(entity);
-    }
 
 }
