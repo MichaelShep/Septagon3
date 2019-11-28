@@ -10,6 +10,7 @@ public class Map {
 
     Tile[][] mapData;
     Station stationPosition;
+    Tile[] fortressPositions;
 
     private int mapWidth,mapHeight;
     private int shiftX,shiftY;
@@ -22,7 +23,6 @@ public class Map {
     Map()
     {
         //default map
-
         mapWidth = Constants.getMapWidth();
         mapHeight = Constants.getMapHeight();
         mapData = new Tile[mapWidth][mapHeight];
@@ -31,6 +31,7 @@ public class Map {
         shiftY = (Constants.getResolutionHeight() - (mapHeight*Constants.getTileSize()))/2;
 
         stationPosition = null;
+        fortressPositions = new Tile[Constants.getFortressCount()];
 
         try
         {
@@ -55,7 +56,7 @@ public class Map {
 
         String texture;
 
-        int maxFortresses = Constants.getFortressCount();
+        int maxFortresses = fortressPositions.length;
         int fortressPlaced = 0;
 
         String rowData;
@@ -85,7 +86,15 @@ public class Map {
                         else
                         {
                             mapData[cell][rowCount] = new Tile(cell,rowCount, texture, TileType.values()[cellData]);
-                            mapData[cell][rowCount].setInhabitant(getNewFortress(mapData[cell][rowCount]) );
+                            for(int i=0; i<maxFortresses;i++)
+                            {
+                                if (fortressPositions[i] == null)
+                                {
+                                    fortressPositions[i] = mapData[cell][rowCount];
+                                    break;
+                                }
+                            }
+
                             fortressPlaced++;
                             placed = true;
                         }
@@ -111,6 +120,13 @@ public class Map {
                 rowCount--;
             }
             csvReader.close();
+
+            if (fortressPlaced < maxFortresses)
+            {
+                throw new IllegalArgumentException("Input Map does not contain enough fortresses as specified in Constants.Java");
+            }
+
+
 
         }
         catch(FileNotFoundException e)
@@ -153,6 +169,8 @@ public class Map {
     }
 
 
+/*
+
     private FireEngine getNewFireEngine(Tile characterPosition)
     {
         //encapsulates the balance
@@ -180,6 +198,7 @@ public class Map {
 
 
     }
+ */
 
 
 
