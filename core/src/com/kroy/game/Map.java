@@ -43,9 +43,9 @@ public class Map {
 
     ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException
     {
-        ArrayList<String[]> rowData;
+        ArrayList<String[]> rowData = new ArrayList<String[]>();
         String row;
-        rowData = null;
+        //rowData = null;
 
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader(mapCSVFile));
@@ -53,7 +53,6 @@ public class Map {
             while ((row = csvReader.readLine()) != null)
             {
                 String[] data = row.split(",");
-                assert rowData != null;
                 rowData.add(data);
             }
 
@@ -72,8 +71,8 @@ public class Map {
     }
 
 
-    public void generateMap(ArrayList<String[]> mapTileData) {
-
+    public void generateMap(ArrayList<String[]> mapTileData)
+    {
         int tileCode;
 
         for (int width = 0; width < mapWidth; width++)
