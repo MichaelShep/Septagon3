@@ -87,7 +87,8 @@ public class Map {
                 switch (tileCode)
                 {
                     case 1:
-                        mapData[width][height] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        int[] adjacentTiles = getAdjacentTileCodes(width,height,mapTileData);
+                        mapData[width][height] = new Tile(width, height,mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
                     case 2:
                         mapData[width][height] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
                     case 3:
@@ -121,6 +122,136 @@ public class Map {
                 return "stationTile.png";
             default:
                 throw new IllegalArgumentException(textureCode + " is not implemented in mapTextures()");
+        }
+    }
+
+
+    //ths is hideous
+    private int[] getAdjacentTileCodes(int xPos, int yPos, ArrayList<String[]> mapTileData)
+    {
+        int[] adjacentTileCodes = new int[4];
+
+        if (yPos + 1 <= mapHeight)
+        {
+            adjacentTileCodes[0] = Integer.parseInt(mapTileData.get(xPos)[yPos + 1]);
+        }
+        else {
+            adjacentTileCodes[0] = 9;
+        }
+
+        if (xPos + 1 <= mapWidth)
+        {
+            adjacentTileCodes[1] = Integer.parseInt(mapTileData.get(xPos + 1)[yPos]);
+        }
+        else
+        {
+            adjacentTileCodes[1] = 9;
+        }
+
+        if(yPos - 1 >= 0)
+        {
+            adjacentTileCodes[2] = Integer.parseInt(mapTileData.get(xPos)[yPos - 1]);
+        }
+        else
+        {
+            adjacentTileCodes[2] = 9;
+        }
+
+        if (xPos - 1 >= 0)
+        {
+            adjacentTileCodes[3] = Integer.parseInt(mapTileData.get(xPos - 1)[yPos]);
+        }
+        else
+        {
+            adjacentTileCodes[3] = 9;
+        }
+
+        return adjacentTileCodes;
+    }
+
+
+    //if someone can do this neater please do
+    private String mapRoadTextures(int[] adjacentTileTypes)
+    {
+        switch((adjacentTileTypes[0] + adjacentTileTypes[1] + adjacentTileTypes[2] + adjacentTileTypes[3]))
+        {
+            case 4:
+                return("RoadFourWay.png");
+            case 3:
+                if (adjacentTileTypes[0] != 1)
+                {
+                    return("RoadThreeWayNoUp.png");
+                }
+                else if (adjacentTileTypes[1] != 1)
+                {
+                    return("RoadThreeWayNoRight.png");
+                }
+                else if (adjacentTileTypes[2] != 1)
+                {
+                    return("RoadThreeWayNoDown.png");
+                }
+                else
+                {
+                    return("RoadThreeWayNoLeft.png");
+                }
+
+            case 2:
+                if (adjacentTileTypes[0] == 1)
+                {
+                    if (adjacentTileTypes[2] != 1)
+                    {
+                        if (adjacentTileTypes[1] == 1)
+                        {
+                            return("RoadTwoWayRightUp.png");
+                        }
+                        else
+                        {
+                            return("RoadTwoWayLeftUp.png");
+                        }
+                    }
+                    else
+                    {
+                        return ("RoadVertical.png");
+                    }
+                }
+                else
+                    if(adjacentTileTypes[2] == 1)
+                    {
+                        if (adjacentTileTypes[1] == 1)
+                        {
+                            return("RoadTwoWayRightDown.png");
+                        }
+                        else
+                        {
+                            return("RoadTwoWayLeftDown.png");
+                        }
+                    }
+                    else
+                    {
+                        return("RoadHorizontal.png");
+                    }
+
+            case 1:
+                if (adjacentTileTypes[0] == 1)
+                {
+                    return("RoadVertical.png");
+                }
+                else if(adjacentTileTypes[1] == 1)
+                {
+                    return("RoadHorizontal.png");
+                }
+                else if (adjacentTileTypes[2] == 1)
+                {
+                    return("RoadVertical.png");
+                }
+                else
+                {
+                    return("RoadHorizontal.png");
+                }
+
+
+            default:
+                return("RoadHorizontal.png");
         }
     }
 
