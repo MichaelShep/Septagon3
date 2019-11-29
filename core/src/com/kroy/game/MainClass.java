@@ -30,7 +30,7 @@ public class MainClass extends ApplicationAdapter {
 
 
 
-		mapData = new Map();
+		mapData = new Map(Constants.getMapFileName());
 		humanData = new Human("humanName",true);
 		enemyData = new Enemy("EnemyName",false);
 

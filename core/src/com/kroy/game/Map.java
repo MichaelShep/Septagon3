@@ -17,12 +17,11 @@ public class Map {
     //this comment exists because i forgot to split my comits
     public Map(String fileName)
     {
-        ArrayList<String[]> mapTileData = new ArrayList<String[]>();
-        String directory = System.getProperty("user.dir") + "\\core\\src\\Data\\" + fileName;
+        String directory = System.getProperty("user.dir") + "/core/src/Data/" + fileName;
 
         try
         {
-            mapTileData = readMapCSV(directory);
+            readMapCSV(directory);
         }
         catch (IOException e)
         {
@@ -30,18 +29,17 @@ public class Map {
             System.exit(0);
         }
 
-        mapWidth = mapTileData.get(0).length;
-        mapHeight = mapTileData.size();
-        mapData = new Tile[mapWidth][mapHeight];
+
+
 
         shiftX = (Constants.getResolutionWidth() - (mapWidth*Constants.getTileSize()))/2;
         shiftY = (Constants.getResolutionHeight() - (mapHeight*Constants.getTileSize()))/2;
 
-        generateMap(mapTileData);
+
     }
 
 
-    ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException
+    void readMapCSV(String mapCSVFile) throws IOException
     {
         ArrayList<String[]> rowData = new ArrayList<String[]>();
         String row;
@@ -67,7 +65,12 @@ public class Map {
             throw new IOException();
         }
 
-        return rowData;
+        mapWidth = (rowData.get(0).length)-1;
+        mapHeight = (rowData.size())-1;
+
+        mapData = new Tile[mapWidth][mapHeight];
+        generateMap(rowData);
+
     }
 
 
@@ -75,11 +78,12 @@ public class Map {
     {
         int tileCode;
 
-        for (int width = 0; width < mapWidth; width++)
+        for (int width = 0; width < mapWidth-1; width++)
         {
-            for (int height = 0; height < mapHeight; height++)
+            for (int height = 0; height < mapHeight-1; height++)
             {
-                tileCode = Integer.parseInt(mapTileData.get(width)[height]);
+                System.out.println("WIDTH: " + width + " HEIGHT: " + height);
+                tileCode = (Integer.parseInt(mapTileData.get(width)[height])-1);
                 switch (tileCode)
                 {
                     case 1:
@@ -124,11 +128,21 @@ public class Map {
     String rndTexture(String textureType)
     {
         Random random = new Random();
-        String path = System.getProperty("user.dir") + "\\core\\src\\assets\\" + textureType;
-        File folder = new File(path);
-        File[] textures = folder.listFiles();
 
-        return textures[random.nextInt(textures.length)].getName();
+        if (textureType == "GreeneryTexture"){
+            return Constants.getGrassTexture()[random.nextInt(Constants.getGrassTexture().length)];
+        }
+        else if (textureType == "BuildingTexture"){
+            return Constants.getGrassTexture()[random.nextInt(Constants.getBuildingTexture().length)];
+        }
+
+        else
+        {
+            throw new IllegalArgumentException(textureType + " not textureType");
+        }
+
+
+
     }
 
 

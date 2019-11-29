@@ -19,10 +19,14 @@ public final class Constants {
     private static int FORTRESS_COUNT = 4;
     private static int FIREENGINE_COUNT = 2;
 
-    private static String MAP_FILE_NAME = "testmap.csv";
+    private static String MAP_FILE_NAME = "yorkMap.csv";
 
     private static int STATION_REFILL_AMOUNT = 10;
     private static int STATION_REPAIR_AMOUNT = 10;
+
+    private static String[] GRASS_TEXTURES = {"GreeneryTexture/grassTile.png"};
+    private static String[] BUILDING_TEXTURE = {"BuildingTexture/tileBuild.png"};
+
 
 
 	// this is another comment
@@ -92,6 +96,8 @@ public final class Constants {
         return STATION_REPAIR_AMOUNT;
     }
 
+    public static String[] getGrassTexture(){ return GRASS_TEXTURES; }
+    public static String[] getBuildingTexture(){ return BUILDING_TEXTURE; }
 
 }
 
