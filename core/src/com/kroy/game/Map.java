@@ -43,7 +43,7 @@ public class Map {
 
     ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException
     {
-        ArrayList<String[]> rowData = new ArrayList<String[]>();
+        ArrayList<String[]> rowData;
         String row;
         rowData = null;
 
@@ -53,6 +53,7 @@ public class Map {
             while ((row = csvReader.readLine()) != null)
             {
                 String[] data = row.split(",");
+                assert rowData != null;
                 rowData.add(data);
             }
 
