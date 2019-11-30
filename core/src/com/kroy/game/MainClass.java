@@ -6,9 +6,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import java.io.File;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.DirectoryIteratorException;
 
 
 public class MainClass extends ApplicationAdapter {
@@ -26,7 +28,7 @@ public class MainClass extends ApplicationAdapter {
 	public void create () {
 
 		initSetting();
-		loadTextures();
+		loadTextures("");
 
 
 
@@ -57,7 +59,7 @@ public class MainClass extends ApplicationAdapter {
 
 		}
 		else{
-			System.out.println("--LOADING-- " + Constants.getManager().getProgress() + " --LOADING--");
+			//System.out.println("--LOADING-- " + Constants.getManager().getProgress() + " --LOADING--");
 		}
 
 
@@ -70,12 +72,38 @@ public class MainClass extends ApplicationAdapter {
 		batch.dispose();
 	}
 
-	public void loadTextures(){
+	public void loadTextures(String root){
+		/*
+
 		Constants.getManager().load("grassTile.png", Texture.class);
 		Constants.getManager().load("roadTile.png", Texture.class);
 		Constants.getManager().load("borderArt.png", Texture.class);
+		Constants.getManager().load("BuildingTexture/TileBuild.png", Texture.class);
 		Constants.getManager().load("stationTile.png", Texture.class);
-		Constants.getManager().load("fortressTile.png", Texture.class);
+		 */
+
+		File dir = new File(Constants.getResourceRoot()+ root);
+		System.out.println("Searching in: " + root);
+		File[] directoryListing = dir.listFiles();
+		if (directoryListing != null) {
+			for (File child : directoryListing) {
+				if (child.isDirectory())
+				{
+					loadTextures( child.getName()+"/");
+				}
+				else {
+					System.out.println("Asset Found: " + root+child.getName());
+					Constants.getManager().load(root+child.getName(), Texture.class);
+				}
+			}
+		}
+		else
+		{
+			System.out.println(root + " cannot be Found");
+		}
+
+
+
 
 	}
 
@@ -88,11 +116,11 @@ public class MainClass extends ApplicationAdapter {
 
 	public void renderMap(SpriteBatch batch)
 	{
-		for(int width = 0; width < mapData.getMapWidth(); width++)
+		for(int height = 0; height < mapData.getMapHeight(); height++)
 		{
-			for(int height = 0; height < mapData.getMapHeight(); height++)
+			for(int width = 0; width < mapData.getMapWidth(); width++)
 			{
-				batch.draw(Constants.getManager().get(mapData.getMapData()[width][height].getTexName(), Texture.class),(width * Constants.getTileSize()) + mapData.getShiftX(),(height*Constants.getTileSize())+ mapData.getShiftY(), Constants.getTileSize(),Constants.getTileSize(),0,0,32,32,false,false);
+				batch.draw(Constants.getManager().get(mapData.getMapData()[height][width].getTexName(), Texture.class),(width * Constants.getTileSize()) + mapData.getShiftX(),(height*Constants.getTileSize())+ mapData.getShiftY(), Constants.getTileSize(),Constants.getTileSize(),0,0,32,32,false,false);
 			}
 		}
 	}

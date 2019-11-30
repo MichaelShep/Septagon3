@@ -21,7 +21,7 @@ public class Map {
 
         try
         {
-            readMapCSV(directory);
+            generateMap(readMapCSV(directory));
         }
         catch (IOException e)
         {
@@ -39,11 +39,11 @@ public class Map {
     }
 
 
-    void readMapCSV(String mapCSVFile) throws IOException
+    ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException
     {
         ArrayList<String[]> rowData = new ArrayList<String[]>();
         String row;
-        //rowData = null;
+
 
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader(mapCSVFile));
@@ -65,60 +65,90 @@ public class Map {
             throw new IOException();
         }
 
-        mapWidth = (rowData.get(0).length)-1;
-        mapHeight = (rowData.size())-1;
+        mapWidth = (rowData.get(0).length);
+        mapHeight = (rowData.size());
+        mapData = new Tile[mapHeight][mapWidth];
 
-        mapData = new Tile[mapWidth][mapHeight];
-        generateMap(rowData);
+        return rowData;
+
 
     }
 
 
     public void generateMap(ArrayList<String[]> mapTileData)
     {
-        int tileCode;
 
-        for (int width = 0; width < mapWidth-1; width++)
+        int tileCode;
+        for (int height = 0; height < mapHeight; height++)
         {
-            for (int height = 0; height < mapHeight-1; height++)
+            for (int width = 0; width < mapWidth; width++)
             {
-                System.out.println("WIDTH: " + width + " HEIGHT: " + height);
-                tileCode = (Integer.parseInt(mapTileData.get(width)[height])-1);
+                //System.out.println("WIDTH: " + width + " HEIGHT: " + height);
+                tileCode = (Integer.parseInt(mapTileData.get(height)[width])-1);
+
+                if (tileCode == 0)
+                {
+                    int[] adjacentTiles = getAdjacentTileCodes(width,height,mapTileData);
+                    mapData[height][width] = new Tile(width, height,mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
+                }
+                else
+                {
+                    mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                }
+
+
+
+                /*
                 switch (tileCode)
                 {
                     case 1:
                         int[] adjacentTiles = getAdjacentTileCodes(width,height,mapTileData);
-                        mapData[width][height] = new Tile(width, height,mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
+                        mapData[height][width] = new Tile(width, height,mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
+                        break;
+
                     case 2:
-                        mapData[width][height] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        break;
                     case 3:
-                        mapData[width][height] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        break;
                     case 4:
-                        mapData[width][height] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        break;
                     case 5:
-                        mapData[width][height] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        break;
                     case 6:
-                        mapData[width][height] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        break;
+                    default:
+                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                        break;
+
                 }
+                         */
             }
         }
+
+        System.out.println("Map Generated");
+
     }
 
 
     private String mapTextures(int textureCode)
     {
         switch (textureCode) {
-            case 1:
+            case 0:
                 return "roadTile.png";
-            case 2:
+            case 1:
                 return "waterTile.png";
-            case 3:
+            case 2:
                 return rndTexture("GreeneryTexture");
-            case 4:
+            case 3:
                 return rndTexture("BuildingTexture");
-            case 5:
+            case 4:
                 return "fortressTile.png";
-            case 6:
+            case 5:
                 return "stationTile.png";
             default:
                 throw new IllegalArgumentException(textureCode + " is not implemented in mapTextures()");
@@ -130,40 +160,49 @@ public class Map {
     private int[] getAdjacentTileCodes(int xPos, int yPos, ArrayList<String[]> mapTileData)
     {
         int[] adjacentTileCodes = new int[4];
+        int tempValue;
 
-        if (yPos + 1 <= mapHeight)
+
+        //System.out.println("WIDTH: " + xPos + " HEIGHT: " + yPos);
+
+
+        if (yPos + 1 < mapHeight)
         {
-            adjacentTileCodes[0] = Integer.parseInt(mapTileData.get(xPos)[yPos + 1]);
+            tempValue = Integer.parseInt(mapTileData.get(yPos + 1)[xPos]);
+            adjacentTileCodes[0] = (tempValue == 1) ? 1 : 0;
         }
         else {
-            adjacentTileCodes[0] = 9;
+            adjacentTileCodes[0] = 0;
         }
 
-        if (xPos + 1 <= mapWidth)
+        if (xPos + 1 < mapWidth)
         {
-            adjacentTileCodes[1] = Integer.parseInt(mapTileData.get(xPos + 1)[yPos]);
+            tempValue = Integer.parseInt(mapTileData.get(yPos)[xPos+1]);
+            adjacentTileCodes[1] = (tempValue == 1) ? 1 : 0;
         }
         else
         {
-            adjacentTileCodes[1] = 9;
+            adjacentTileCodes[1] = 0;
         }
 
         if(yPos - 1 >= 0)
         {
-            adjacentTileCodes[2] = Integer.parseInt(mapTileData.get(xPos)[yPos - 1]);
+            tempValue = Integer.parseInt(mapTileData.get(yPos - 1)[xPos]);
+            adjacentTileCodes[2] = (tempValue == 1) ? 1 : 0;
         }
         else
         {
-            adjacentTileCodes[2] = 9;
+            adjacentTileCodes[2] = 0;
         }
 
         if (xPos - 1 >= 0)
         {
-            adjacentTileCodes[3] = Integer.parseInt(mapTileData.get(xPos - 1)[yPos]);
+            tempValue = Integer.parseInt(mapTileData.get(yPos)[xPos - 1]);
+            adjacentTileCodes[3] = (tempValue == 1) ? 1 : 0;
         }
         else
         {
-            adjacentTileCodes[3] = 9;
+            adjacentTileCodes[3] = 0;
         }
 
         return adjacentTileCodes;
@@ -175,83 +214,60 @@ public class Map {
     {
         switch((adjacentTileTypes[0] + adjacentTileTypes[1] + adjacentTileTypes[2] + adjacentTileTypes[3]))
         {
-            case 4:
-                return("RoadFourWay.png");
-            case 3:
-                if (adjacentTileTypes[0] != 1)
-                {
-                    return("RoadThreeWayNoUp.png");
+            case 1: {
+                if (adjacentTileTypes[0] == 1) {
+                    return ("RoadVertical.png");
                 }
-                else if (adjacentTileTypes[1] != 1)
-                {
-                    return("RoadThreeWayNoRight.png");
+                else if (adjacentTileTypes[1] == 1) {
+                    return ("RoadHorizontal.png");
                 }
-                else if (adjacentTileTypes[2] != 1)
-                {
-                    return("RoadThreeWayNoDown.png");
+                else if (adjacentTileTypes[2] == 1) {
+                    return ("RoadVertical.png");
                 }
-                else
-                {
-                    return("RoadThreeWayNoLeft.png");
+                else {
+                    return ("RoadHorizontal.png");
                 }
 
-            case 2:
-                if (adjacentTileTypes[0] == 1)
-                {
-                    if (adjacentTileTypes[2] != 1)
-                    {
-                        if (adjacentTileTypes[1] == 1)
-                        {
-                            return("RoadTwoWayRightUp.png");
+            }
+            case 2: {
+                if (adjacentTileTypes[0] == 1) {
+                    if (adjacentTileTypes[2] != 1) {
+                        if (adjacentTileTypes[1] == 1) {
+                            return ("RoadTwoWayRightUp.png");
+                        } else {
+                            return ("RoadTwoWayLeftUp.png");
                         }
-                        else
-                        {
-                            return("RoadTwoWayLeftUp.png");
-                        }
-                    }
-                    else
-                    {
+                    } else {
                         return ("RoadVertical.png");
                     }
+                } else if (adjacentTileTypes[2] == 1) {
+                    if (adjacentTileTypes[1] == 1) {
+                        return ("RoadTwoWayRightDown.png");
+                    } else {
+                        return ("RoadTwoWayLeftDown.png");
+                    }
+                } else {
+                    return ("RoadHorizontal.png");
                 }
-                else
-                    if(adjacentTileTypes[2] == 1)
-                    {
-                        if (adjacentTileTypes[1] == 1)
-                        {
-                            return("RoadTwoWayRightDown.png");
-                        }
-                        else
-                        {
-                            return("RoadTwoWayLeftDown.png");
-                        }
-                    }
-                    else
-                    {
-                        return("RoadHorizontal.png");
-                    }
+            }
+            case 3: {
+                if (adjacentTileTypes[0] != 1) {
+                    return ("RoadThreeWayNoUp.png");
+                } else if (adjacentTileTypes[1] != 1) {
+                    return ("RoadThreeWayNoRight.png");
+                } else if (adjacentTileTypes[2] != 1) {
+                    return ("RoadThreeWayNoDown.png");
+                } else {
+                    return ("RoadThreeWayNoLeft.png");
+                }
+            }
 
-            case 1:
-                if (adjacentTileTypes[0] == 1)
-                {
-                    return("RoadVertical.png");
-                }
-                else if(adjacentTileTypes[1] == 1)
-                {
-                    return("RoadHorizontal.png");
-                }
-                else if (adjacentTileTypes[2] == 1)
-                {
-                    return("RoadVertical.png");
-                }
-                else
-                {
-                    return("RoadHorizontal.png");
-                }
+            case 4:
+                return("RoadFourWay.png");
 
 
             default:
-                return("RoadHorizontal.png");
+                return("BuildingTexture/TileBuild.png");
         }
     }
 
@@ -264,7 +280,7 @@ public class Map {
             return Constants.getGrassTexture()[random.nextInt(Constants.getGrassTexture().length)];
         }
         else if (textureType == "BuildingTexture"){
-            return Constants.getGrassTexture()[random.nextInt(Constants.getBuildingTexture().length)];
+            return Constants.getBuildingTexture()[random.nextInt(Constants.getBuildingTexture().length)];
         }
 
         else

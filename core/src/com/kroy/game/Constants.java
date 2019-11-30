@@ -13,7 +13,7 @@ public final class Constants {
     private static int ROAD_DENSITY = 7;
 
     //private static int TILE_SIZE = (int)Math.sqrt((RESOLUTION_WIDTH*RESOLUTION_HEIGHT)/(MAP_WIDTH*MAP_HEIGHT));
-    private static int TILE_SIZE = 32;
+    private static int TILE_SIZE = 20;
     private  static AssetManager MANAGER = new AssetManager();
 
     private static int FORTRESS_COUNT = 4;
@@ -25,7 +25,9 @@ public final class Constants {
     private static int STATION_REPAIR_AMOUNT = 10;
 
     private static String[] GRASS_TEXTURES = {"GreeneryTexture/grassTile.png"};
-    private static String[] BUILDING_TEXTURE = {"BuildingTexture/tileBuild.png"};
+    private static String[] BUILDING_TEXTURE = {"BuildingTexture/TileBuild.png"};
+
+    private static String RESOURCE_ROOT = System.getProperty("user.dir") + "\\core\\assets\\";
 
 
 
@@ -98,6 +100,10 @@ public final class Constants {
 
     public static String[] getGrassTexture(){ return GRASS_TEXTURES; }
     public static String[] getBuildingTexture(){ return BUILDING_TEXTURE; }
+    public static String getResourceRoot()
+    {
+        return RESOURCE_ROOT;
+    }
 
 }
 
