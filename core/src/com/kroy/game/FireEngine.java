@@ -1,5 +1,7 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.graphics.Texture;
+
 public class FireEngine extends Character {
 
     private int speed;
@@ -7,11 +9,12 @@ public class FireEngine extends Character {
     private int waterCapacity;
     private boolean disabled;
 
-    public FireEngine(int health, int damage, int range, Tile location, int speed, int waterCapacity) {
-        super(health, damage, range, location, "badlogic.jpg");
+    public FireEngine(int health, int damage, int range, Tile location, int speed, int waterCapacity, String charTex) {
+        super(health, damage, range, location, charTex);
         this.speed = speed;
         this.waterCapacity = waterCapacity;
         this.disabled = false;
+
         // this.team.add(this);
     }
 

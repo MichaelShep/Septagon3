@@ -3,13 +3,15 @@ package com.kroy.game;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeMap;
+import java.util.Collection;
 
 
 public class Map {
 
-    Tile[][] mapData;
-    Station stationPosition;
-    Tile[] fortressPositions;
+    private Tile[][] mapData;
+    private Station stationPosition;
+
 
     private int mapWidth,mapHeight;
     private int shiftX,shiftY;
@@ -90,6 +92,11 @@ public class Map {
                 {
                     int[] adjacentTiles = getAdjacentTileCodes(width,height,mapTileData);
                     mapData[height][width] = new Tile(width, height,mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
+                }
+                else if (tileCode == 5)
+                {
+                    stationPosition = new Station(width, height);
+                    mapData[height][width] = stationPosition;
                 }
                 else
                 {
@@ -297,14 +304,7 @@ public class Map {
 
     private FireEngine getNewFireEngine(Tile characterPosition)
     {
-        //encapsulates the balance
-        int health = 100;
-        int damage = 10;
-        int range = 3;
-        int speed = 3;
-        int waterCapacity = 100;
 
-        return new FireEngine(health,damage,range,characterPosition,speed,waterCapacity);
 
 
     }
@@ -353,6 +353,131 @@ public class Map {
     {
         return  mapData;
     }
+
+    public Tile getStationPosition()
+    {
+        return stationPosition;
+    }
+
+
+
+    private double distanceBetween(Tile source, Tile target)
+    {
+        double distance = Math.sqrt(Math.pow(source.getMapX() - target.getMapX(),2) + Math.pow((source.getMapY()- target.getMapY()),2));
+        return distance;
+
+    }
+
+    private TreeMap<Double,Tile> getSortedTilesAbout(Tile hub) throws Exception
+    {
+        TreeMap<Double,Tile> sortedRangeTiles = new TreeMap<Double,Tile>();
+        Tile referenceTile;
+        for (int height = 0; height < mapHeight; height++) {
+            for (int width = 0; width < mapWidth; width++) {
+                referenceTile = mapData[height][width];
+                if (!(referenceTile == hub))
+                {
+                    sortedRangeTiles.put(distanceBetween(hub,referenceTile),referenceTile);
+                }
+            }
+        }
+
+        if (!sortedRangeTiles.isEmpty())
+        {
+            return sortedRangeTiles;
+        }
+        else
+        {
+            throw new Exception("Distances from this hub could not be found");
+        }
+
+    }
+
+
+
+    public Tile[] getNClosest(int n, Tile hub)
+    {
+        TreeMap<Double,Tile> sortedRangeTiles;
+        Tile[] outputTiles = new Tile[n];
+
+        try
+        {
+            sortedRangeTiles = getSortedTilesAbout(hub);
+            if (sortedRangeTiles.values().size() >= n)
+            {
+                for (int tiles = 0; tiles < n; tiles++)
+                {
+                    outputTiles[tiles] = ((ArrayList<Tile>)sortedRangeTiles.values()).get(tiles);
+                }
+
+                return outputTiles;
+
+            }
+            else
+            {
+                throw new Exception("Firetruck spawn number is greater than tiles available");
+            }
+        }
+        catch(Exception e){
+            System.exit(0);
+        }
+
+
+
+
+        System.out.println("getNClosest Failed");
+        return null;
+
+    }
+
+    public Tile[] getNClosest(int n, Tile hub, TileType type)
+    {
+        TreeMap<Double,Tile> sortedRangePairs;
+        int tilesFound = 0;
+        Tile[] outputTiles = new Tile[n];
+
+        try
+        {
+            sortedRangePairs = getSortedTilesAbout(hub);
+            //ArrayList<Tile> sortedTiles = ((ArrayList<Tile>)sortedRangePairs.values());
+            ArrayList<Tile> sortedTiles = new ArrayList<Tile>(sortedRangePairs.values());
+            if (sortedTiles.size() >= n)
+            {
+                for (int tiles = 0; tiles < sortedTiles.size(); tiles++)
+                {
+                    if (tilesFound < n)
+                    {
+                        if (sortedTiles.get(tiles).getType() == type)
+                        {
+                            outputTiles[tilesFound] = sortedTiles.get(tiles);
+                            tilesFound++;
+                        }
+                    }
+                    else
+                    {
+                        return outputTiles;
+                    }
+                }
+
+
+            }
+            else
+            {
+                throw new Exception("Firetruck spawn number is greater than tiles available");
+            }
+        }
+        catch(Exception e){
+            System.exit(0);
+        }
+
+
+
+        System.out.println("getNClosest Failed");
+        return null;
+
+    }
+
+
 
 
 

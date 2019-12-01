@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 public class FireEngineTests
 {
     Tile testTile = new Tile();
-    FireEngine testFireEngine = new FireEngine(100,10,10, testTile,10,100);
+    FireEngine testFireEngine = new FireEngine(100,10,10, testTile,10,100,"fireEngineSprite.png");
     Class ReflectionClass = FireEngine.class;
 
     @Test

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Enemy extends Player {
 
-    public Enemy(String name, Boolean myTurn)
+    public Enemy(String name, Boolean myTurn, int teamSize)
     {
-        super(name,myTurn);
+        super(name,myTurn, teamSize);
 
     }
 

@@ -3,14 +3,15 @@ import java.util.ArrayList;
 
 abstract public class Player {
 
-    private static int turns = 1;
-    private String name;
+    protected static int turns = 1;
+    protected String name;
     protected boolean myTurn;
-    private Character[] team;
+    protected Character[] team;
 
-    public Player(String name, boolean myTurn) {
+    public Player(String name, boolean myTurn, int teamSize) {
         this.name = name;
         this.myTurn = myTurn;
+        team = new Character[teamSize];
     }
 
     protected void resolveDeaths() {

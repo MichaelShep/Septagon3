@@ -6,8 +6,15 @@ public class Human extends Player {
 
 
 
-    public Human(String name, boolean myTurn) {
-        super(name, myTurn);
+    public Human(String name, boolean myTurn, int teamSize)
+    {
+        super(name, myTurn,teamSize);
+        for (int members = 0; members < teamSize; members++)
+        {
+            team[members] = createFireEngine();
+        }
+
+
 
     }
 
@@ -19,5 +26,29 @@ public class Human extends Player {
     }
 
 
+
+
+    public FireEngine createFireEngine()
+    {
+        //encapsulates the balance
+        int health = 100;
+        int damage = 10;
+        int range = 3;
+        int speed = 3;
+        int waterCapacity = 100;
+
+        return new FireEngine(health,damage,range,null  ,speed,waterCapacity,"fireEngineSprite.png");
+    }
+
+    public void distributeTeamLocation(Tile[] locations)
+    {
+        for(int locationIndex = 0; locationIndex < locations.length; locationIndex++)
+        {
+
+            team[locationIndex].setLocation(locations[locationIndex]);
+            locations[locationIndex].setInhabitant(team[locationIndex]);
+
+        }
+    }
 
 }

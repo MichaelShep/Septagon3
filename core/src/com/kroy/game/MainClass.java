@@ -30,11 +30,18 @@ public class MainClass extends ApplicationAdapter {
 		initSetting();
 		loadTextures("");
 
+		while(!Constants.getManager().update())
+		{
+			//System.out.println("--LOADING-- " + Constants.getManager().getProgress() + " --LOADING--");
+		}
+		System.out.println("Finished Loading!");
 
 
 		mapData = new Map(Constants.getMapFileName());
-		humanData = new Human("humanName",true);
-		enemyData = new Enemy("EnemyName",false);
+		humanData = new Human("humanName",true, Constants.getFireengineCount());
+		enemyData = new Enemy("EnemyName",false, Constants.getFortressCount());
+
+		humanData.distributeTeamLocation(mapData.getNClosest(Constants.getFireengineCount(),mapData.getStationPosition(),TileType.TILE_TYPES_ROAD));
 
 
 
@@ -59,7 +66,6 @@ public class MainClass extends ApplicationAdapter {
 
 		}
 		else{
-			//System.out.println("--LOADING-- " + Constants.getManager().getProgress() + " --LOADING--");
 		}
 
 

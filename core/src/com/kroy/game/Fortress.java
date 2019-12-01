@@ -3,8 +3,13 @@ package com.kroy.game;
 
 class Fortress extends Character {
 
-    public Fortress(int health, int damage, int range, Tile location, String name) {
-        super(health, damage, range, location, "badlogic.png");
+    String name;
+
+    public Fortress(int health, int damage, int range, Tile location, String charName, String charTex) {
+        super(health, damage, range, location, charTex);
+
+        name = charName;
+
     }
 
 
