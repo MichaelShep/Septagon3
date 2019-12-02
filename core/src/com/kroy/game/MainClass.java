@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.DirectoryIteratorException;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class MainClass extends ApplicationAdapter {
@@ -65,10 +66,9 @@ public class MainClass extends ApplicationAdapter {
 
 
 
-		cam = new OrthographicCamera(Constants.getResolutionWidth(),Constants.getResolutionHeight());
-		cam.zoom = 64;
-		//cam.position.set(0,0,0);
-		//cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
+		cam = new OrthographicCamera();
+		cam.position.set(Constants.getResolutionWidth()/2f,Constants.getResolutionHeight()/2f,0);
+		cam.zoom = 0.5f;
 		cam.update();
 
 	}
@@ -76,19 +76,20 @@ public class MainClass extends ApplicationAdapter {
 	@Override
 	public void render () {
 		if (Constants.getManager().update()){
-			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 
 			handleInput();
 			cam.update();
 			batch.setProjectionMatrix(cam.combined);
 
+
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			//render loop
 			batch.begin();
 			renderMap(batch);
 			renderFortresses();
 			renderFireEngines();
-			renderUI();
+			//renderUI();
             batch.end();
 
 		}
@@ -183,7 +184,7 @@ public class MainClass extends ApplicationAdapter {
 
 
 	private void handleInput() {
-		int moveSpeed = 8;
+		int moveSpeed = 20;
 
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			cam.translate(-moveSpeed, 0, 0);
@@ -198,16 +199,18 @@ public class MainClass extends ApplicationAdapter {
 			cam.translate(0, moveSpeed, 0);
 		}
 
-		cam.position.x = MathUtils.clamp(cam.position.x, -(Constants.getResolutionWidth()/2f), Constants.getResolutionWidth() - cam.viewportWidth / 2f);
-		cam.position.y = MathUtils.clamp(cam.position.y, cam.viewportHeight / 2f, Constants.getResolutionHeight() - cam.viewportHeight / 2f);
+		//fix later
+		cam.position.x = MathUtils.clamp(cam.position.x, Constants.getResolutionWidth()-(((mapData.getMapWidth()/2f)-1)*Constants.getTileSize()), 1728);
+		//cam.position.y = MathUtils.clamp(cam.position.y, -256, 970);
 
+		System.out.println("X: " + cam.position.x + " Y: " + cam.position.y);
 
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		cam.viewportWidth = 30f;
-		cam.viewportHeight = 30f * height/width;
+		cam.viewportWidth = mapData.getMapWidth()*Constants.getTileSize();
+		cam.viewportHeight = mapData.getMapHeight()*Constants.getTileSize();
 		cam.update();
 	}
 

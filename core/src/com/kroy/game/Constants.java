@@ -4,8 +4,19 @@ import com.badlogic.gdx.assets.AssetManager;
 
 public final class Constants {
 
-    private static int RESOLUTION_WIDTH = 1280;
-    private static int RESOLUTION_HEIGHT = 720;
+
+
+    private static int RESOLUTION_WIDTH = 1920;
+    private static int RESOLUTION_HEIGHT = 1080;
+
+    //private static int RESOLUTION_WIDTH = 1280;
+    //private static int RESOLUTION_HEIGHT = 720;
+
+    //private static int RESOLUTION_WIDTH = 640;
+    //private static int RESOLUTION_HEIGHT = 360;
+
+
+
 
     private static int MAP_WIDTH = 32;
     private static int MAP_HEIGHT = 18;
