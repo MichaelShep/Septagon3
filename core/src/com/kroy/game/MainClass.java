@@ -6,6 +6,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sun.tools.javac.util.SharedNameTable;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.MathUtils;
+
 import java.io.File;
 
 import java.io.FileNotFoundException;
@@ -18,8 +23,10 @@ public class MainClass extends ApplicationAdapter {
 
 	Map mapData;
 	SpriteBatch batch;
+	OrthographicCamera cam;
 	Human humanData;
 	Enemy enemyData;
+
 
 
 
@@ -42,14 +49,28 @@ public class MainClass extends ApplicationAdapter {
 		enemyData = new Enemy("EnemyName",false, Constants.getFortressCount());
 
 		humanData.distributeTeamLocation(mapData.getNClosest(Constants.getFireengineCount(),mapData.getStationPosition(),TileType.TILE_TYPES_ROAD));
+		enemyData.distributeTeamLocation(mapData.getFortressTiles());
 
 		for(Character fe: humanData.getTeam())
 		{
 			mapData.placeOnMap(fe);
 		}
 
+		for(Character fort: enemyData.getTeam())
+		{
+			mapData.placeOnMap(fort);
+		}
 
 		batch = new SpriteBatch();
+
+
+
+		cam = new OrthographicCamera(Constants.getResolutionWidth(),Constants.getResolutionHeight());
+		cam.zoom = 64;
+		//cam.position.set(0,0,0);
+		//cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
+		cam.update();
+
 	}
 
 	@Override
@@ -58,14 +79,16 @@ public class MainClass extends ApplicationAdapter {
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 
+			handleInput();
+			cam.update();
+			batch.setProjectionMatrix(cam.combined);
+
+			//render loop
 			batch.begin();
-
-
 			renderMap(batch);
+			renderFortresses();
 			renderFireEngines();
-            batch.draw(Constants.getManager().get("borderArt.png", Texture.class), 0, 0, Constants.getResolutionWidth(), Constants.getResolutionHeight(),0,0,1280,720,false,false);
-
-
+			renderUI();
             batch.end();
 
 		}
@@ -142,10 +165,51 @@ public class MainClass extends ApplicationAdapter {
 		{
 			humanCharacters[feIndex].draw(batch);
 		}
+	}
+
+	public void renderUI()
+	{
+		batch.draw(Constants.getManager().get("borderArt.png", Texture.class), 0, 0, Constants.getResolutionWidth(), Constants.getResolutionHeight(),0,0,1280,720,false,false);
+	}
+
+	public void renderFortresses()
+	{
+		Character[] enemyCharacters = enemyData.getTeam();
+		for (int fortIndex = 0; fortIndex < enemyCharacters.length; fortIndex++)
+		{
+			enemyCharacters[fortIndex].draw(batch);
+		}
+	}
+
+
+	private void handleInput() {
+		int moveSpeed = 8;
+
+		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+			cam.translate(-moveSpeed, 0, 0);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+			cam.translate(moveSpeed, 0, 0);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+			cam.translate(0, -moveSpeed, 0);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+			cam.translate(0, moveSpeed, 0);
+		}
+
+		cam.position.x = MathUtils.clamp(cam.position.x, -(Constants.getResolutionWidth()/2f), Constants.getResolutionWidth() - cam.viewportWidth / 2f);
+		cam.position.y = MathUtils.clamp(cam.position.y, cam.viewportHeight / 2f, Constants.getResolutionHeight() - cam.viewportHeight / 2f);
 
 
 	}
 
+	@Override
+	public void resize(int width, int height) {
+		cam.viewportWidth = 30f;
+		cam.viewportHeight = 30f * height/width;
+		cam.update();
+	}
 
 
 

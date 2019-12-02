@@ -13,7 +13,7 @@ public final class Constants {
     private static int ROAD_DENSITY = 7;
 
     //private static int TILE_SIZE = (int)Math.sqrt((RESOLUTION_WIDTH*RESOLUTION_HEIGHT)/(MAP_WIDTH*MAP_HEIGHT));
-    private static int TILE_SIZE = 16;
+    private static int TILE_SIZE = 64;
     private  static AssetManager MANAGER = new AssetManager();
 
     private static int FORTRESS_COUNT = 4;

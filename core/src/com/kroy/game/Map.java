@@ -1,6 +1,7 @@
 package com.kroy.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sun.jvm.hotspot.utilities.ObjectReader;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -298,6 +299,34 @@ public class Map {
         }
 
 
+
+    }
+
+
+
+    public Tile[] getFortressTiles()
+    {
+        Tile[] locations = new Tile[Constants.getFortressCount()];
+
+        for (int height = 0; height < mapHeight; height++) {
+            for (int width = 0; width < mapWidth; width++) {
+
+                if (mapData[height][width].getType() == TileType.TILE_TYPES_FORTRESS)
+                {
+                    for (int fortIndex = 0; fortIndex < locations.length; fortIndex++)
+                    {
+                        if  (locations[fortIndex] == null)
+                        {
+                            locations[fortIndex] = mapData[height][width];
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        return locations;
 
     }
 

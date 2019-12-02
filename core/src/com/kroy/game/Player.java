@@ -31,6 +31,17 @@ abstract public class Player {
         }
     }
 
+    public void distributeTeamLocation(Tile[] locations)
+    {
+        for(int locationIndex = 0; locationIndex < locations.length; locationIndex++)
+        {
+            team[locationIndex].setLocation(locations[locationIndex]);
+            locations[locationIndex].setInhabitant(team[locationIndex]);
+        }
+    }
+
+
+
     public int getTurns() {
         return Player.turns;
     }

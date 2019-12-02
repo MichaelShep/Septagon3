@@ -17,7 +17,9 @@ abstract public class Character extends Sprite
 
     public Character(int health, int damage, int range, Tile spawn, String spriteTex)
     {
-        super(Constants.getManager().get(spriteTex, Texture.class),Constants.getTileSize(),Constants.getTileSize());
+        //super(Constants.getManager().get(spriteTex, Texture.class),Constants.getTileSize(),Constants.getTileSize());
+        super(Constants.getManager().get(spriteTex,Texture.class),0,0,32,32);
+        setSize(Constants.getTileSize(),Constants.getTileSize());
         this.health = health;
         this.damage = damage;
         this.range = range;

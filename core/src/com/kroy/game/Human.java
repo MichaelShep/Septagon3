@@ -19,12 +19,6 @@ public class Human extends Player {
     }
 
 
-    private void constructTeam(int size) {
-        for(int i = 0; i < size; i ++) {
-            // not sure how this will look
-        }
-    }
-
 
 
 
@@ -40,15 +34,5 @@ public class Human extends Player {
         return new FireEngine(health,damage,range,null  ,speed,waterCapacity,"fireEngineSprite.png");
     }
 
-    public void distributeTeamLocation(Tile[] locations)
-    {
-        for(int locationIndex = 0; locationIndex < locations.length; locationIndex++)
-        {
-
-            team[locationIndex].setLocation(locations[locationIndex]);
-            locations[locationIndex].setInhabitant(team[locationIndex]);
-
-        }
-    }
 
 }

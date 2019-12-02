@@ -8,9 +8,34 @@ public class Enemy extends Player {
     {
         super(name,myTurn, teamSize);
 
+        for (int members = 0; members < teamSize; members++)
+        {
+            team[members] = createFortress();
+        }
+
     }
 
 
+
+    public Fortress createFortress()
+    {
+        //encapsulates the balance
+        int health = 100;
+        int damage = 10;
+        int range = 3;
+        int speed = 3;
+        int waterCapacity = 100;
+
+        return new Fortress(health,damage,range,null,"Default Fortress Name","fortressSprite.png");
+    }
+
+
+
+
+
+
+
+}
 
 /*
     public Enemy(String name, boolean myTurn, ArrayList<Fortress> team) {
@@ -36,4 +61,3 @@ public class Enemy extends Player {
 
 */
 
-}
