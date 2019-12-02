@@ -380,7 +380,7 @@ public class Map {
                 if (!(referenceTile == hub))
                 {
                     double distance = distanceBetween(hub,referenceTile);
-                    while (sortedRangeTiles.containsKey(distance))
+                    if (sortedRangeTiles.containsKey(distance))
                     {
                         System.out.println("Tile was already in");
                     }
