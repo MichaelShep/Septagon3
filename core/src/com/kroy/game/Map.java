@@ -1,5 +1,7 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -377,7 +379,12 @@ public class Map {
                 referenceTile = mapData[height][width];
                 if (!(referenceTile == hub))
                 {
-                    sortedRangeTiles.put(distanceBetween(hub,referenceTile),referenceTile);
+                    double distance = distanceBetween(hub,referenceTile);
+                    while (sortedRangeTiles.containsKey(distance))
+                    {
+                        System.out.println("Tile was already in");
+                    }
+                    sortedRangeTiles.put(distance,referenceTile);
                 }
             }
         }
@@ -476,6 +483,12 @@ public class Map {
         return null;
 
     }
+
+    public void placeOnMap(Character placedObject)
+    {
+        placedObject.setPosition((placedObject.getLocation().getMapX()*Constants.getTileSize()+shiftX),(placedObject.getLocation().getMapY()*Constants.getTileSize()+shiftY));
+    }
+
 
 
 

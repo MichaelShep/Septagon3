@@ -43,7 +43,10 @@ public class MainClass extends ApplicationAdapter {
 
 		humanData.distributeTeamLocation(mapData.getNClosest(Constants.getFireengineCount(),mapData.getStationPosition(),TileType.TILE_TYPES_ROAD));
 
-
+		for(Character fe: humanData.getTeam())
+		{
+			mapData.placeOnMap(fe);
+		}
 
 
 		batch = new SpriteBatch();
@@ -59,13 +62,14 @@ public class MainClass extends ApplicationAdapter {
 
 
 			renderMap(batch);
+			renderFireEngines();
             batch.draw(Constants.getManager().get("borderArt.png", Texture.class), 0, 0, Constants.getResolutionWidth(), Constants.getResolutionHeight(),0,0,1280,720,false,false);
 
 
             batch.end();
 
 		}
-		else{
+		else {
 		}
 
 
@@ -130,6 +134,18 @@ public class MainClass extends ApplicationAdapter {
 			}
 		}
 	}
+
+	public void renderFireEngines()
+	{
+		Character[] humanCharacters = humanData.getTeam();
+		for (int feIndex = 0; feIndex < humanCharacters.length; feIndex++)
+		{
+			humanCharacters[feIndex].draw(batch);
+		}
+
+
+	}
+
 
 
 
