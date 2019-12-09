@@ -6,11 +6,11 @@ public final class Constants {
 
 
 
-    private static int RESOLUTION_WIDTH = 1920;
-    private static int RESOLUTION_HEIGHT = 1080;
+    //private static int RESOLUTION_WIDTH = 1920;
+    //private static int RESOLUTION_HEIGHT = 1080;
 
-    //private static int RESOLUTION_WIDTH = 1280;
-    //private static int RESOLUTION_HEIGHT = 720;
+    private static int RESOLUTION_WIDTH = 1280;
+    private static int RESOLUTION_HEIGHT = 720;
 
     //private static int RESOLUTION_WIDTH = 640;
     //private static int RESOLUTION_HEIGHT = 360;
@@ -28,15 +28,15 @@ public final class Constants {
     private  static AssetManager MANAGER = new AssetManager();
 
     private static int FORTRESS_COUNT = 4;
-    private static int FIREENGINE_COUNT = 80;
+    private static int FIREENGINE_COUNT = 2;
 
     private static String MAP_FILE_NAME = "yorkMap.csv";
 
     private static int STATION_REFILL_AMOUNT = 10;
     private static int STATION_REPAIR_AMOUNT = 10;
 
-    private static String[] GRASS_TEXTURES = {"GreeneryTexture/grassTile.png"};
-    private static String[] BUILDING_TEXTURE = {"BuildingTexture/TileBuild.png"};
+    private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png","GreeneryTexture/BushTile1.png","GreeneryTexture/GrassTile1.png","GreeneryTexture/TreeTile1.png","GreeneryTexture/GrassTile1.png","GreeneryTexture/GrassTile1.png",};
+    private static String[] BUILDING_TEXTURE = {"BuildingTexture/TileBuild1.png","BuildingTexture/TileBuild2.png","BuildingTexture/TileBuild3.png"};
 
     private static String RESOURCE_ROOT = System.getProperty("user.dir") + "\\core\\assets\\";
 

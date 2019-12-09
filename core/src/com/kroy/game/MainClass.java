@@ -67,7 +67,7 @@ public class MainClass extends ApplicationAdapter {
 
 
 		cam = new OrthographicCamera();
-		cam.position.set(Constants.getResolutionWidth()/2f,Constants.getResolutionHeight()/2f,0);
+		cam.position.set(0,0,0);
 		cam.zoom = 0.5f;
 		cam.update();
 
@@ -94,6 +94,8 @@ public class MainClass extends ApplicationAdapter {
 
 		}
 		else {
+		    // do something while waiting for assets to load
+
 		}
 
 
@@ -107,14 +109,6 @@ public class MainClass extends ApplicationAdapter {
 	}
 
 	public void loadTextures(String root){
-		/*
-
-		Constants.getManager().load("grassTile.png", Texture.class);
-		Constants.getManager().load("roadTile.png", Texture.class);
-		Constants.getManager().load("borderArt.png", Texture.class);
-		Constants.getManager().load("BuildingTexture/TileBuild.png", Texture.class);
-		Constants.getManager().load("stationTile.png", Texture.class);
-		 */
 
 		File dir = new File(Constants.getResourceRoot()+ root);
 		System.out.println("Searching in: " + root);
@@ -126,8 +120,15 @@ public class MainClass extends ApplicationAdapter {
 					loadTextures( child.getName()+"/");
 				}
 				else {
-					System.out.println("Asset Found: " + root+child.getName());
-					Constants.getManager().load(root+child.getName(), Texture.class);
+				    if (child.getName().contains("Thumbs.db"))
+                    {
+                        System.out.println("Thumbs was found.");
+                    }
+				    else
+                    {
+                        System.out.println("Asset Found: " + root+child.getName());
+                        Constants.getManager().load(root+child.getName(), Texture.class);
+                    }
 				}
 			}
 		}
@@ -154,7 +155,7 @@ public class MainClass extends ApplicationAdapter {
 		{
 			for(int width = 0; width < mapData.getMapWidth(); width++)
 			{
-				batch.draw(Constants.getManager().get(mapData.getMapData()[height][width].getTexName(), Texture.class),(width * Constants.getTileSize()) + mapData.getShiftX(),(height*Constants.getTileSize())+ mapData.getShiftY(), Constants.getTileSize(),Constants.getTileSize(),0,0,32,32,false,false);
+				batch.draw(Constants.getManager().get(mapData.getMapData()[height][width].getTexName(), Texture.class),(width * Constants.getTileSize()) + mapData.getShiftX(),(height*Constants.getTileSize())+ mapData.getShiftY(), Constants.getTileSize(),Constants.getTileSize(),0,0,Constants.getTileSize(),Constants.getTileSize(),false,false);
 			}
 		}
 	}
@@ -162,6 +163,11 @@ public class MainClass extends ApplicationAdapter {
 	public void renderFireEngines()
 	{
 		Character[] humanCharacters = humanData.getTeam();
+		for(Character fe: humanCharacters)
+		{
+			mapData.placeOnMap(fe);
+		}
+
 		for (int feIndex = 0; feIndex < humanCharacters.length; feIndex++)
 		{
 			humanCharacters[feIndex].draw(batch);
@@ -176,6 +182,12 @@ public class MainClass extends ApplicationAdapter {
 	public void renderFortresses()
 	{
 		Character[] enemyCharacters = enemyData.getTeam();
+
+		for(Character fort: enemyCharacters)
+		{
+			mapData.placeOnMap(fort);
+		}
+
 		for (int fortIndex = 0; fortIndex < enemyCharacters.length; fortIndex++)
 		{
 			enemyCharacters[fortIndex].draw(batch);
@@ -184,26 +196,36 @@ public class MainClass extends ApplicationAdapter {
 
 
 	private void handleInput() {
-		int moveSpeed = 20;
+		int moveSpeed = 32;
 
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-			cam.translate(-moveSpeed, 0, 0);
+			//cam.translate(-moveSpeed, 0, 0);
+			mapData.setShiftX(mapData.getShiftX() + moveSpeed);
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			cam.translate(moveSpeed, 0, 0);
+			//cam.translate(moveSpeed, 0, 0);
+			mapData.setShiftX(mapData.getShiftX() - moveSpeed);
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-			cam.translate(0, -moveSpeed, 0);
+			//cam.translate(0, -moveSpeed, 0);
+			mapData.setShiftY(mapData.getShiftY() + moveSpeed);
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-			cam.translate(0, moveSpeed, 0);
+			//cam.translate(0, moveSpeed, 0);
+			mapData.setShiftY(mapData.getShiftY() - moveSpeed);
 		}
 
 		//fix later
-		cam.position.x = MathUtils.clamp(cam.position.x, Constants.getResolutionWidth()-(((mapData.getMapWidth()/2f)-1)*Constants.getTileSize()), 1728);
+
+		//cam.position.x = MathUtils.clamp(cam.position.x, -704, 1344);
 		//cam.position.y = MathUtils.clamp(cam.position.y, -256, 970);
 
-		System.out.println("X: " + cam.position.x + " Y: " + cam.position.y);
+		mapData.setShiftX(MathUtils.clamp(mapData.getShiftX(),-3072,-1024));
+		mapData.setShiftY(MathUtils.clamp(mapData.getShiftY(),-1728,-576));
+
+
+		//System.out.println("X: " + cam.position.x + " Y: " + cam.position.y);
+		//System.out.println("shiftY: " + mapData.getShiftY());
 
 	}
 
