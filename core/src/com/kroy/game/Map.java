@@ -390,7 +390,13 @@ public class Map {
         return stationPosition;
     }
 
+    public void setShiftX(int shiftX) {
+        this.shiftX = shiftX;
+    }
 
+    public void setShiftY(int shiftY) {
+        this.shiftY = shiftY;
+    }
 
     private double distanceBetween(Tile source, Tile target)
     {
