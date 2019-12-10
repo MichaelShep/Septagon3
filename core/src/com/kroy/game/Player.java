@@ -1,9 +1,8 @@
 package com.kroy.game;
-import java.util.ArrayList;
 
 abstract public class Player {
 
-    protected static int turns = 1;
+    protected static int turnCount = 1;
     protected String name;
     protected boolean myTurn;
     protected Character[] team;
@@ -23,14 +22,6 @@ abstract public class Player {
         }
     }
 
-    protected void resolveMove() {    // not sure how to set moves yet
-        if((turns % 2) == 0) {
-            Player.turns += 1;
-        } else {
-            Player.turns += 1;
-        }
-    }
-
     public void distributeTeamLocation(Tile[] locations)
     {
         for(int locationIndex = 0; locationIndex < locations.length; locationIndex++)
@@ -43,16 +34,13 @@ abstract public class Player {
 
 
     public int getTurns() {
-        return Player.turns;
+        return Player.turnCount;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public boolean getMyTurn() {
-        return this.myTurn;
-    }
 
     public void setMyTurn(boolean state) {
         this.myTurn = state;
@@ -62,5 +50,7 @@ abstract public class Player {
         return this.team;
     }
 
-
+    public boolean isMyTurn() {
+        return myTurn;
+    }
 }

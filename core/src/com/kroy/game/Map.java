@@ -30,7 +30,7 @@ public class Map {
         }
         catch (IOException e)
         {
-            System.out.println(e + "Map Could not be read" );
+            System.out.println(e + "Map could not be read" );
             System.exit(0);
         }
 
@@ -417,7 +417,7 @@ public class Map {
                     double distance = distanceBetween(hub,referenceTile);
                     if (sortedRangeTiles.containsKey(distance))
                     {
-                        System.out.println("Tile was already in");
+                        //System.out.println("Tile was already in");
                     }
                     sortedRangeTiles.put(distance,referenceTile);
                 }
