@@ -6,20 +6,16 @@ public final class Constants {
 
 
 
-    //private static int RESOLUTION_WIDTH = 1920;
-    //private static int RESOLUTION_HEIGHT = 1080;
+    private static int RESOLUTION_WIDTH = 1920;
+    private static int RESOLUTION_HEIGHT = 1080;
 
     //private static int RESOLUTION_WIDTH = 1280;
     //private static int RESOLUTION_HEIGHT = 720;
 
-    private static int RESOLUTION_WIDTH = 640;
-    private static int RESOLUTION_HEIGHT = 360;
+    //private static int RESOLUTION_WIDTH = 640;
+    //private static int RESOLUTION_HEIGHT = 360;
 
 
-
-
-    private static int MAP_WIDTH = 32;
-    private static int MAP_HEIGHT = 18;
 
     private static int ROAD_DENSITY = 7;
 
@@ -36,7 +32,7 @@ public final class Constants {
     private static int STATION_REPAIR_AMOUNT = 10;
 
     private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png","GreeneryTexture/BushTile1.png","GreeneryTexture/GrassTile1.png","GreeneryTexture/TreeTile1.png","GreeneryTexture/GrassTile1.png","GreeneryTexture/GrassTile1.png",};
-    private static String[] BUILDING_TEXTURE = {"BuildingTexture/TileBuild1.png","BuildingTexture/TileBuild2.png","BuildingTexture/TileBuild3.png"};
+    private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png","BuildingTexture/BuildingTile2.png","BuildingTexture/BuildingTile3.png","BuildingTexture/BuildingTile4.png","BuildingTexture/BuildingTile5.png","BuildingTexture/BuildingTile6.png","BuildingTexture/BuildingTile7.png","BuildingTexture/BuildingTile8.png","BuildingTexture/BuildingTile9.png",};
 
     private static String RESOURCE_ROOT = System.getProperty("user.dir") + "\\core\\assets\\";
 
@@ -69,15 +65,7 @@ public final class Constants {
         return TILE_SIZE;
     }
 
-    public static int getMapWidth()
-    {
-        return  MAP_WIDTH;
-    }
 
-    public  static  int getMapHeight()
-    {
-        return  MAP_HEIGHT;
-    }
 
     public static  int getRoadDensity()
     {

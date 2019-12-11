@@ -4,7 +4,7 @@ public class HighlightMap {
 
     private Tile[][] mapData;
     private int mapWidth,mapHeight;
-    boolean render;
+    private boolean render;
     private int shiftX,shiftY;
 
 
@@ -40,6 +40,21 @@ public class HighlightMap {
 
 
     }
+
+    public void resetMap()
+    {
+        for (int height = 0; height < mapHeight; height++)
+        {
+            for (int width = 0; width < mapWidth; width++)
+            {
+                mapData[height][width].setTexName("HighlightTexture/blank.png");
+            }
+        }
+
+    }
+
+
+
 
 
     public Tile[][] getMapData()

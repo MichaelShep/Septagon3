@@ -207,7 +207,7 @@ public class MainClass extends ApplicationAdapter {
 
 
 	private void handleInput() {
-		int moveSpeed = 32;
+		int moveSpeed = Constants.getTileSize();
 
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			//cam.translate(-moveSpeed, 0, 0);
@@ -240,11 +240,39 @@ public class MainClass extends ApplicationAdapter {
 
 		if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))
 		{
+
+
+            double remapedShiftX = Remap(map.getShiftX(),-3072,-1024,0,map.getMapWidth()*Constants.getTileSize()*cam.zoom);
+            double remapedShiftY = Remap(map.getShiftY(),-1728,-576,0,map.getMapHeight()*Constants.getTileSize()*cam.zoom);
+
+
+
 			System.out.println("MOUSE PRESSED!");
-			int tileX = (int)Math.floor((Gdx.input.getX()/(float)Constants.getResolutionWidth())* map.getMapWidth());
-			int tileY = (int)Math.floor((Gdx.input.getY()/(float)Constants.getResolutionHeight())* map.getMapHeight());
-			System.out.println("X tile: " + tileX + " Y tile: " + tileY);
-			//tileClicked(tileX, tileY);
+			//int tileX = (int)Math.floor((Gdx.input.getX()/(float)Constants.getResolutionWidth())* map.getMapWidth());
+			//int tileY = (int)Math.floor((Gdx.input.getY()/(float)Constants.getResolutionHeight())* map.getMapHeight());
+
+			//double tileX = (Gdx.input.getX()/(float)Constants.getResolutionWidth())* map.getMapWidth();
+			//double tileY = (Gdx.input.getY()/(float)Constants.getResolutionHeight())* map.getMapHeight();
+
+			//int tileX = (int)Math.floor(Gdx.input.getX()/((float)Constants.getTileSize()*cam.zoom));
+			//int tileY = map.getMapHeight() - (int)Math.floor(Gdx.input.getY()/((float)Constants.getTileSize()*cam.zoom)) ;
+
+			int tileX = (int)Math.floor(((Gdx.input.getX())/(float)Constants.getResolutionWidth())*map.getMapWidth()*cam.zoom) + (int)(map.getMapWidth()*cam.zoom - (remapedShiftX/Constants.getTileSize()));
+			int tileY = map.getMapHeight() - ((int)Math.floor(((Gdx.input.getY())/(float)Constants.getResolutionHeight())*map.getMapHeight()*cam.zoom)  + (int)((remapedShiftY/Constants.getTileSize()))) - 1;
+
+			System.out.println("["+Gdx.input.getX()+"]X tile: " + tileX + " ["+Gdx.input.getY()+"] Y tile: " + tileY);
+			System.out.println("X shift: " + remapedShiftX +" Y shift: " + remapedShiftY);
+
+
+
+			//int tileX = (int)Math.floor((Gdx.input.getX()/(Constants.getResolutionWidth()/(float)map.getMapWidth())));
+			//int tileY = (int)Math.floor((Gdx.input.getY()/(Constants.getResolutionHeight()/(float)map.getMapHeight())));
+
+
+
+
+
+			tileClicked(tileX, tileY);
 
 		}
 
@@ -256,16 +284,30 @@ public class MainClass extends ApplicationAdapter {
 	public void tileClicked(int x, int y)
 	{
 		//clicking tiles can only be done on your turn
+        Tile queryTile = map.getMapData()[y][x];
+
 		if (humanData.isMyTurn())
 		{
 			if (selectedTile == null)
 			{
-				selectedTile = map.getMapData()[y][x];
-				//selectedTile.setTexName("HighlightTexture/attack.png");
-				highLightMap.getMapData()[y][x].setTexName("HighlightTexture/selected.png");
-				highLightMap.setRender(true);
+			    if (queryTile.getInhabitant() instanceof FireEngine)
+                {
+                    selectedTile = queryTile;
+                    highLightMap.getMapData()[y][x].setTexName("HighlightTexture/selected.png");
+                    highLightMap.setRender(true);
+                }
 
 			}
+
+			else if (selectedTile.getMapX() == x && selectedTile.getMapY() == y)
+            {
+                selectedTile = null;
+                highLightMap.resetMap();
+                highLightMap.setRender(false);
+
+
+            }
+
 
 
 		}
@@ -273,6 +315,9 @@ public class MainClass extends ApplicationAdapter {
 
 
 	}
+
+
+
 
 
 
@@ -286,6 +331,11 @@ public class MainClass extends ApplicationAdapter {
 
 
 
+    //helper function
+    public static float Remap (float value, float from1, float to1, float from2, float to2)
+    {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
 
 
 

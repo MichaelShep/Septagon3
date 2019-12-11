@@ -157,7 +157,7 @@ public class Map {
             case 3:
                 return rndTexture("BuildingTexture");
             case 4:
-                return "fortressTile.png";
+                return "lavaTile.png";
             case 5:
                 return "stationTile.png";
             default:
