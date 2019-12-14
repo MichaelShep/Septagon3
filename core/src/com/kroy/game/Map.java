@@ -3,11 +3,9 @@ package com.kroy.game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 //import sun.jvm.hotspot.utilities.ObjectReader;
 
+import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.TreeMap;
-import java.util.Collection;
+import java.util.*;
 
 
 public class Map {
@@ -405,9 +403,9 @@ public class Map {
 
     }
 
-    private TreeMap<Double,Tile> getSortedTilesAbout(Tile hub) throws Exception
+    private TreeMap<Double,ArrayList<Tile>> getSortedTilesAbout(Tile hub) throws Exception
     {
-        TreeMap<Double,Tile> sortedRangeTiles = new TreeMap<Double,Tile>();
+        TreeMap<Double,ArrayList<Tile>> sortedRangeTiles = new TreeMap<Double,ArrayList<Tile>>();
         Tile referenceTile;
         for (int height = 0; height < mapHeight; height++) {
             for (int width = 0; width < mapWidth; width++) {
@@ -417,9 +415,11 @@ public class Map {
                     double distance = distanceBetween(hub,referenceTile);
                     if (sortedRangeTiles.containsKey(distance))
                     {
-                        //System.out.println("Tile was already in");
+                        sortedRangeTiles.get(distance).add(referenceTile);
                     }
-                    sortedRangeTiles.put(distance,referenceTile);
+                    else {
+                        sortedRangeTiles.put(distance, new ArrayList<Tile>(Arrays.asList(referenceTile)));
+                    }
                 }
             }
         }
@@ -439,7 +439,8 @@ public class Map {
 
     public Tile[] getNClosest(int n, Tile hub)
     {
-        TreeMap<Double,Tile> sortedRangeTiles;
+        TreeMap<Double,ArrayList<Tile>> sortedRangeTiles;
+        int tilesFound = 0;
         Tile[] outputTiles = new Tile[n];
 
         try
@@ -447,12 +448,22 @@ public class Map {
             sortedRangeTiles = getSortedTilesAbout(hub);
             if (sortedRangeTiles.values().size() >= n)
             {
-                for (int tiles = 0; tiles < n; tiles++)
+                for (ArrayList<Tile> bundledTile: sortedRangeTiles.values())
                 {
-                    outputTiles[tiles] = ((ArrayList<Tile>)sortedRangeTiles.values()).get(tiles);
+                    for (Tile tile: bundledTile)
+                    {
+                        if (tilesFound < n)
+                        {
+                            outputTiles[tilesFound] = tile;
+                            tilesFound++;
+                        }
+                        else
+                        {
+                            return outputTiles;
+                        }
+                    }
                 }
 
-                return outputTiles;
 
             }
             else
@@ -474,7 +485,7 @@ public class Map {
 
     public Tile[] getNClosest(int n, Tile hub, TileType type)
     {
-        TreeMap<Double,Tile> sortedRangePairs;
+        TreeMap<Double,ArrayList<Tile>> sortedRangePairs;
         int tilesFound = 0;
         Tile[] outputTiles = new Tile[n];
 
@@ -482,22 +493,25 @@ public class Map {
         {
             sortedRangePairs = getSortedTilesAbout(hub);
             //ArrayList<Tile> sortedTiles = ((ArrayList<Tile>)sortedRangePairs.values());
-            ArrayList<Tile> sortedTiles = new ArrayList<Tile>(sortedRangePairs.values());
+            ArrayList<ArrayList<Tile>> sortedTiles = new ArrayList<ArrayList<Tile>>(sortedRangePairs.values());
             if (sortedTiles.size() >= n)
             {
-                for (int tiles = 0; tiles < sortedTiles.size(); tiles++)
+                for (ArrayList<Tile> bundledTiles: sortedTiles)
                 {
-                    if (tilesFound < n)
+                    for (Tile tile : bundledTiles)
                     {
-                        if (sortedTiles.get(tiles).getType() == type)
+                        if (tilesFound < n)
                         {
-                            outputTiles[tilesFound] = sortedTiles.get(tiles);
-                            tilesFound++;
+                            if (tile.getType() == type)
+                            {
+                                outputTiles[tilesFound] = tile;
+                                tilesFound++;
+                            }
                         }
-                    }
-                    else
-                    {
-                        return outputTiles;
+                        else
+                        {
+                            return outputTiles;
+                        }
                     }
                 }
 
@@ -505,10 +519,11 @@ public class Map {
             }
             else
             {
-                throw new Exception("Firetruck spawn number is greater than tiles available");
+                throw new Exception("Not enough tiles on map to satisfy parameters");
             }
         }
         catch(Exception e){
+            System.out.println(e);
             System.exit(0);
         }
 
@@ -524,21 +539,74 @@ public class Map {
         placedObject.setPosition((placedObject.getLocation().getMapX()*Constants.getTileSize()+shiftX),(placedObject.getLocation().getMapY()*Constants.getTileSize()+shiftY));
     }
 
+    public ArrayList<Tile> getWithRangeOfHub(Tile hub, int range)
+    {
+        TreeMap<Double,ArrayList<Tile>> sortedRangePairs;
+        ArrayList<Tile> outputTiles = new ArrayList<Tile>();
+
+        try{
+            sortedRangePairs = getSortedTilesAbout(hub);
+            for (double distance: sortedRangePairs.keySet())
+            {
+                if (distance < range)
+                {
+                    for (Tile tile: sortedRangePairs.get(distance))
+                    {
+                        outputTiles.add(tile);
+                    }
+                }
+
+
+            }
 
 
 
 
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            System.exit(0);
+        }
+
+        return outputTiles;
+    }
+
+    public ArrayList<Tile> getWithRangeOfHub(Tile hub, int range, TileType type)
+    {
+        TreeMap<Double,ArrayList<Tile>> sortedRangePairs;
+        ArrayList<Tile> outputTiles = new ArrayList<Tile>();
+
+        try{
+            sortedRangePairs = getSortedTilesAbout(hub);
+            for (double distance: sortedRangePairs.keySet())
+            {
+                if (distance < range)
+                {
+                    for (Tile tile: sortedRangePairs.get(distance))
+                    {
+                        if (tile.getType() == type)
+                        {
+                            outputTiles.add(tile);
+                        }
+                    }
+                }
+
+
+            }
 
 
 
 
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            System.exit(0);
+        }
 
-
-
-
-
-
-
+        return outputTiles;
+    }
 
 
 

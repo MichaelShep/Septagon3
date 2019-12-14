@@ -10,6 +10,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class MainClass extends ApplicationAdapter {
@@ -292,9 +293,31 @@ public class MainClass extends ApplicationAdapter {
 			{
 			    if (queryTile.getInhabitant() instanceof FireEngine)
                 {
+
                     selectedTile = queryTile;
                     highLightMap.getMapData()[y][x].setTexName("HighlightTexture/selected.png");
+
+                    //place green moves
+					ArrayList<Tile> moveSpaces = map.getWithRangeOfHub(queryTile,((FireEngine) queryTile.getInhabitant()).getSpeed(),TileType.TILE_TYPES_ROAD);
+                    for (Tile tile: moveSpaces) {
+						if (tile.getInhabitant() == null) {
+							highLightMap.setTile(tile.getMapX(), tile.getMapY(), TileType.TILE_TYPES_ROAD);
+
+						}
+					}
+
+					ArrayList<Tile> attackSpaces = map.getWithRangeOfHub(queryTile,queryTile.getInhabitant().getRange());
+					for (Tile tile: attackSpaces) {
+						if (tile.getInhabitant() instanceof Fortress) {
+							highLightMap.setTile(tile.getMapX(), tile.getMapY(), TileType.TILE_TYPES_FORTRESS);
+						}
+					}
+
+
+
+
                     highLightMap.setRender(true);
+
                 }
 
 			}

@@ -27,8 +27,8 @@ public class Human extends Player {
         //encapsulates the balance
         int health = 100;
         int damage = 10;
-        int range = 3;
-        int speed = 3;
+        int range = 12;
+        int speed = 12;
         int waterCapacity = 100;
 
         return new FireEngine(health,damage,range,null  ,speed,waterCapacity,"fireEngineSprite.png");

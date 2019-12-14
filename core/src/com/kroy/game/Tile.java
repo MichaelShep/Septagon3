@@ -74,9 +74,8 @@ public class Tile
     public void setMapY(int newMapY) {
         this.mapY = mapY;
     }
-
     public void setTexName(String newTexName) {
-        this.texName = newTexName;
+        texName = newTexName;
     }
     public void setType(TileType newType)
     {

@@ -157,6 +157,7 @@ public class MapTests
         }
     }
 
+/*
 
     @Test
     public void getNClosestTest()
@@ -165,10 +166,11 @@ public class MapTests
         Tile[] expectedClosest = {tile1};
 
         Tile hub = new Tile(1,1);
-        Tile[] actualClosest = mapTest.getNClosest(1, hub);
+        //Tile[] actualClosest = mapTest.getNClosest(1, hub);
 
-        assertEquals(expectedClosest, actualClosest);
+        //assertEquals(expectedClosest, actualClosest);
     }
 
+ */
 
 }

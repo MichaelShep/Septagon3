@@ -56,6 +56,74 @@ public class FireEngine extends Character {
             target.takeDamage(canShoot(target));
         }
     }
+
+    @Override
+    public boolean getDisabled() {
+        return super.getDisabled();
+    }
+
+
+    @Override
+    public int getDamage() {
+        return super.getDamage();
+    }
+
+    @Override
+    public int getHealth() {
+        return super.getHealth();
+    }
+
+    @Override
+    public int getRange() {
+        return super.getRange();
+    }
+
+    @Override
+    public Tile getLocation() {
+        return super.getLocation();
+    }
+
+    @Override
+    public void setDamage(int newDamage) {
+        super.setDamage(newDamage);
+    }
+
+    @Override
+    public void setHealth(int newHealth) {
+        super.setHealth(newHealth);
+    }
+
+    @Override
+    public void setLocation(Tile newLocation) {
+        super.setLocation(newLocation);
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getWaterAmount() {
+        return waterAmount;
+    }
+
+    public int getWaterCapacity() {
+        return waterCapacity;
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+
 }
 
 

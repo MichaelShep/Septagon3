@@ -54,6 +54,20 @@ public class HighlightMap {
     }
 
 
+    public void setTile(int x, int y, TileType type)
+    {
+        if (type == TileType.TILE_TYPES_ROAD)
+        {
+            mapData[y][x].setTexName("HighlightTexture/move.png");
+        }
+        else if (type == TileType.TILE_TYPES_FORTRESS)
+        {
+            mapData[y][x].setTexName("HighlightTexture/attack.png");
+        }
+
+
+    }
+
 
 
 
