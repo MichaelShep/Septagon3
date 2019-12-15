@@ -49,13 +49,17 @@ public class FireEngine extends Character {
         return 0;
     }
 
-    private void shoot(Fortress target) throws Exception {
+    public void shoot(Fortress target) throws Exception {
         if (canShoot(target) == 0) {
             throw new Exception("Cannot shoot, don't waste turn");
         } else {
             target.takeDamage(canShoot(target));
         }
     }
+
+
+
+
 
     @Override
     public boolean getDisabled() {

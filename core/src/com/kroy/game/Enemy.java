@@ -1,6 +1,11 @@
 package com.kroy.game;
 
+import sun.awt.geom.AreaOp;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.TreeMap;
 
 public class Enemy extends Player {
 
@@ -21,12 +26,64 @@ public class Enemy extends Player {
     {
         //encapsulates the balance
         int health = 100;
-        int damage = 10;
-        int range = 3;
-        int speed = 3;
+        int damage = 50;
+        int range = 5;
+        int speed = 5;
         int waterCapacity = 100;
 
         return new Fortress(health,damage,range,null,"Default Fortress Name","fortressSprite.png");
+    }
+
+
+
+    public HashMap<Fortress,Tile> calculateTargets(Map mapData)
+    {
+        HashMap<Fortress,Tile> targetLocations = new HashMap<>();
+
+        for (Character fort: team)
+        {
+            for (Tile tile: mapData.getWithRangeOfHub(fort.getLocation(),fort.getRange()))
+            {
+                if (tile.getInhabitant() instanceof FireEngine)
+                {
+                    Fortress castData = (Fortress)fort;
+                    targetLocations.put(castData,tile);
+                }
+            }
+
+        }
+
+        return targetLocations;
+
+
+    }
+
+
+    public void decideTarget(HashMap<Fortress,Tile> targets)
+    {
+        FireEngine target;
+        Fortress source;
+
+        if (targets.isEmpty())
+        {
+            //no targets in range
+            target = null;
+            source = null;
+        }
+        else
+        {
+            //decide how to target characters
+            Random rand = new Random();
+            ArrayList<Fortress> ableToShoot = new ArrayList<Fortress>(targets.keySet());
+
+            source = ableToShoot.get(rand.nextInt(ableToShoot.size()));
+            target = (FireEngine)(targets.get(source).getInhabitant());
+
+            source.shootTarget(target);
+            System.out.println("A target was shot at: " + target.getLocation().getMapX() + ", "  + target.getLocation().getMapY());
+
+        }
+
     }
 
 

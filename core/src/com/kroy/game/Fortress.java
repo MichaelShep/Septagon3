@@ -3,7 +3,7 @@ package com.kroy.game;
 
 class Fortress extends Character {
 
-    String name;
+    private String name;
 
     public Fortress(int health, int damage, int range, Tile location, String charName, String charTex) {
         super(health, damage, range, location, charTex);
@@ -12,8 +12,14 @@ class Fortress extends Character {
 
     }
 
+    public void shootTarget(FireEngine target)
+    {
+        target.setHealth(Math.max(0, target.getHealth() - damage));
 
-    /**public canShoot() {
-     } maybe return an array of all fire engines within range. Then what?
-     }**/
+    }
+
+
+
+
+
 }

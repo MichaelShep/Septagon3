@@ -8,11 +8,11 @@ import java.lang.Math;
 
 abstract public class Character extends Sprite
 {
-    private int health;
-    private int damage;
-    private int range;
-    private boolean disabled;
-    private Tile location;
+    protected int health;
+    protected int damage;
+    protected int range;
+    protected boolean disabled;
+    protected Tile location;
 
 
     public Character(int health, int damage, int range, Tile spawn, String spriteTex)
@@ -54,6 +54,14 @@ abstract public class Character extends Sprite
             this.health = 0;
         }
     }
+
+    protected void transferTo(Tile newLocation)
+    {
+        location.setInhabitant(null);
+        location = newLocation;
+        newLocation.setInhabitant(this);
+    }
+
 
     public int getHealth() {
         return this.health;

@@ -30,11 +30,15 @@ public class MainClass extends ApplicationAdapter {
 
 
 
+
+
 	@Override
 	public void create () {
 
 		initSetting();
 		loadTextures("");
+
+		//Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 
 		while(!Constants.getManager().update())
 		{
@@ -73,12 +77,35 @@ public class MainClass extends ApplicationAdapter {
 		if (Constants.getManager().update()){
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 
-			handleInput();
 			cam.update();
 			batch.setProjectionMatrix(cam.combined);
 
-
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+			map.setShiftX(map.getShiftX() - (map.getShiftX()%Constants.getTileSize()));
+			map.setShiftY(map.getShiftY() - (map.getShiftY()%Constants.getTileSize()));
+
+			highLightMap.setShiftX(map.getShiftX() - (map.getShiftX()%Constants.getTileSize()));
+			highLightMap.setShiftY(map.getShiftY() - (map.getShiftY()%Constants.getTileSize()));
+
+			//player turn
+			handleInput();
+
+
+			//enemy turn
+			if (enemyData.isMyTurn())
+			{
+				enemyData.decideTarget(enemyData.calculateTargets(map));
+
+				enemyData.setMyTurn(false);
+				humanData.setMyTurn(true);
+
+				System.out.println("Enemy took their turn!");
+
+			}
+
+
+
 			//render loop
 			batch.begin();
 			renderMap();
@@ -210,6 +237,12 @@ public class MainClass extends ApplicationAdapter {
 	private void handleInput() {
 		int moveSpeed = Constants.getTileSize();
 
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+		{
+			Gdx.app.exit();
+			System.exit(0);
+		}
+
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			//cam.translate(-moveSpeed, 0, 0);
 			map.setShiftX(map.getShiftX() + moveSpeed);
@@ -231,6 +264,8 @@ public class MainClass extends ApplicationAdapter {
 			map.setShiftY(map.getShiftY() - moveSpeed);
 			highLightMap.setShiftY(highLightMap.getShiftY() - moveSpeed);
 		}
+
+
 
 		map.setShiftX(MathUtils.clamp(map.getShiftX(),-3072,-1024));
 		map.setShiftY(MathUtils.clamp(map.getShiftY(),-1728,-576));
@@ -322,13 +357,31 @@ public class MainClass extends ApplicationAdapter {
 
 			}
 
-			else if (selectedTile.getMapX() == x && selectedTile.getMapY() == y)
+			//a tile is already selected
+			else
             {
-                selectedTile = null;
-                highLightMap.resetMap();
-                highLightMap.setRender(false);
+            	System.out.println("---- " + highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName());
+				if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == "HighlightTexture/move.png")
+				{
+					System.out.println("MOVE");
+					selectedTile.getInhabitant().transferTo(queryTile);
 
-
+					selectedTile = null;
+					highLightMap.resetMap();
+					highLightMap.setRender(false);
+					humanData.setMyTurn(false);
+					enemyData.setMyTurn(true);
+				}
+				else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == "HighlightTexture/attack.png")
+				{
+					System.out.println("ATTACK");
+				}
+				else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == "HighlightTexture/selected.png")
+				{
+					selectedTile = null;
+					highLightMap.resetMap();
+					highLightMap.setRender(false);
+				}
             }
 
 
