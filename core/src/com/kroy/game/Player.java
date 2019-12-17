@@ -16,10 +16,26 @@ abstract public class Player {
     protected void resolveDeaths() {
 
         for(int i = 0; i < team.length; i ++) {
-            if(team[i].getDisabled()) {
-                team[i] = null;
+            if (!(team[i] == null))
+                if(team[i].getDisabled()) {
+                    team[i].getLocation().setInhabitant(null);
+                    team[i] = null;
+                }
+        }
+    }
+
+    protected int getAliveCharacters()
+    {
+        int alive = 0;
+        for (Character character: team)
+        {
+            if (!(character == null))
+            {
+                alive++;
             }
         }
+
+        return  alive;
     }
 
     public void distributeTeamLocation(Tile[] locations)

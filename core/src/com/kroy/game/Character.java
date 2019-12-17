@@ -53,6 +53,13 @@ abstract public class Character extends Sprite
         if(this.health < 0) {
             this.health = 0;
         }
+
+        if (health == 0)
+        {
+            System.out.println("DIED");
+            disabled = true;
+        }
+
     }
 
     protected void transferTo(Tile newLocation)
@@ -60,6 +67,13 @@ abstract public class Character extends Sprite
         location.setInhabitant(null);
         location = newLocation;
         newLocation.setInhabitant(this);
+    }
+
+    public void shootTarget(Character target)
+    {
+        target.takeDamage(damage);
+        System.out.println("Character at: " + this.location.getMapX() + ", " + this.location.getMapY() + " shot target at: " + target.getLocation().getMapX() + ", " + target.getLocation().getMapY());
+
     }
 
 

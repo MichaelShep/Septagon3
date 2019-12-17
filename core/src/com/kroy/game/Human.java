@@ -26,7 +26,7 @@ public class Human extends Player {
     {
         //encapsulates the balance
         int health = 100;
-        int damage = 10;
+        int damage = 50;
         int range = 12;
         int speed = 12;
         int waterCapacity = 100;

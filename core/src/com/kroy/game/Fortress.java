@@ -12,11 +12,7 @@ class Fortress extends Character {
 
     }
 
-    public void shootTarget(FireEngine target)
-    {
-        target.setHealth(Math.max(0, target.getHealth() - damage));
 
-    }
 
 
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.MathUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.TransferQueue;
 
 
 public class MainClass extends ApplicationAdapter {
@@ -88,6 +89,23 @@ public class MainClass extends ApplicationAdapter {
 			highLightMap.setShiftX(map.getShiftX() - (map.getShiftX()%Constants.getTileSize()));
 			highLightMap.setShiftY(map.getShiftY() - (map.getShiftY()%Constants.getTileSize()));
 
+
+            if  (isEnemyWon())
+            {
+                System.out.println("ENEMY HAS WON!");
+                System.exit(0);
+
+            }
+
+            if (isHumanWon())
+            {
+                System.out.println("HUMAN HAS WON!");
+                System.exit(0);
+            }
+
+
+
+
 			//player turn
 			handleInput();
 
@@ -95,6 +113,8 @@ public class MainClass extends ApplicationAdapter {
 			//enemy turn
 			if (enemyData.isMyTurn())
 			{
+			    //check for deaths
+
 				enemyData.decideTarget(enemyData.calculateTargets(map));
 
 				enemyData.setMyTurn(false);
@@ -203,13 +223,13 @@ public class MainClass extends ApplicationAdapter {
 		Character[] humanCharacters = humanData.getTeam();
 		for(Character fe: humanCharacters)
 		{
-			map.placeOnMap(fe);
+		    if (!(fe == null))
+            {
+			    map.placeOnMap(fe);
+			    fe.draw(batch);
+            }
 		}
 
-		for (int feIndex = 0; feIndex < humanCharacters.length; feIndex++)
-		{
-			humanCharacters[feIndex].draw(batch);
-		}
 	}
 
 	public void renderUI()
@@ -224,13 +244,13 @@ public class MainClass extends ApplicationAdapter {
 
 		for(Character fort: enemyCharacters)
 		{
-			map.placeOnMap(fort);
+		    if (!(fort == null))
+            {
+			    map.placeOnMap(fort);
+			    fort.draw(batch);
+            }
 		}
 
-		for (int fortIndex = 0; fortIndex < enemyCharacters.length; fortIndex++)
-		{
-			enemyCharacters[fortIndex].draw(batch);
-		}
 	}
 
 
@@ -375,6 +395,15 @@ public class MainClass extends ApplicationAdapter {
 				else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == "HighlightTexture/attack.png")
 				{
 					System.out.println("ATTACK");
+				    selectedTile.getInhabitant().shootTarget(queryTile.getInhabitant());
+
+                    selectedTile = null;
+                    highLightMap.resetMap();
+                    highLightMap.setRender(false);
+                    humanData.setMyTurn(false);
+                    enemyData.setMyTurn(true);
+
+
 				}
 				else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == "HighlightTexture/selected.png")
 				{
@@ -411,6 +440,32 @@ public class MainClass extends ApplicationAdapter {
     public static float Remap (float value, float from1, float to1, float from2, float to2)
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
+
+
+
+    public boolean isEnemyWon()
+    {
+        humanData.resolveDeaths();
+        if (humanData.getAliveCharacters() == 0)
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public boolean isHumanWon()
+    {
+        enemyData.resolveDeaths();
+        if (enemyData.getAliveCharacters() == 0)
+        {
+            return true;
+        }
+
+        return false;
+
     }
 
 

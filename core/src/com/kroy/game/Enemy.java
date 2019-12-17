@@ -69,6 +69,7 @@ public class Enemy extends Player {
             //no targets in range
             target = null;
             source = null;
+            System.out.println("Enemy had no targets to shoot at");
         }
         else
         {
@@ -80,7 +81,6 @@ public class Enemy extends Player {
             target = (FireEngine)(targets.get(source).getInhabitant());
 
             source.shootTarget(target);
-            System.out.println("A target was shot at: " + target.getLocation().getMapX() + ", "  + target.getLocation().getMapY());
 
         }
 
