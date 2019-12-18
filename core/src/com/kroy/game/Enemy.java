@@ -42,12 +42,13 @@ public class Enemy extends Player {
 
         for (Character fort: team)
         {
-            for (Tile tile: mapData.getWithRangeOfHub(fort.getLocation(),fort.getRange()))
-            {
-                if (tile.getInhabitant() instanceof FireEngine)
-                {
-                    Fortress castData = (Fortress)fort;
-                    targetLocations.put(castData,tile);
+            if (!(fort == null)) {
+
+                for (Tile tile : mapData.getWithRangeOfHub(fort.getLocation(), fort.getRange())) {
+                    if (tile.getInhabitant() instanceof FireEngine) {
+                        Fortress castData = (Fortress) fort;
+                        targetLocations.put(castData, tile);
+                    }
                 }
             }
 
