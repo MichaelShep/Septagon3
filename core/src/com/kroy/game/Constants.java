@@ -15,6 +15,8 @@ public final class Constants {
     //private static int RESOLUTION_WIDTH = 640;
     //private static int RESOLUTION_HEIGHT = 360;
 
+    private static boolean FULLSCREEN = false;
+
 
 
     private static int ROAD_DENSITY = 7;
@@ -23,8 +25,8 @@ public final class Constants {
     private static int TILE_SIZE = 64;
     private  static AssetManager MANAGER = new AssetManager();
 
-    private static int FORTRESS_COUNT = 4;
-    private static int FIREENGINE_COUNT = 2;
+    private static int FORTRESS_COUNT = 1;
+    private static int FIREENGINE_COUNT = 1;
 
     private static String MAP_FILE_NAME = "yorkMap.csv";
 
@@ -104,6 +106,9 @@ public final class Constants {
         return RESOURCE_ROOT;
     }
 
+    public static boolean isFULLSCREEN() {
+        return FULLSCREEN;
+    }
 }
 
 

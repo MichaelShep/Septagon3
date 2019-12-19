@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.graphics.g2d.freetype.*;
+import sun.jvm.hotspot.debugger.posix.elf.ELFException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,13 +48,16 @@ public class MainClass extends ApplicationAdapter {
 
         initSetting();
         loadTextures("");
-        //Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        loadFont();
+        if (Constants.isFULLSCREEN())
+        {
+            Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        }
 
         while (!Constants.getManager().update()) {
             //System.out.println("--LOADING-- " + Constants.getManager().getProgress() + " --LOADING--");
         }
         runTime = 0;
-        initMainMenuScreen();
         batch = new SpriteBatch();
 
 
@@ -62,6 +66,10 @@ public class MainClass extends ApplicationAdapter {
         cam.zoom = 0.5f;
         cam.update();
 
+        initMainMenuScreen();
+        //initGameScreen();
+        //initHumanWinScreen();
+        //initEnemyWinScreen();
     }
 
     @Override
@@ -83,6 +91,14 @@ public class MainClass extends ApplicationAdapter {
                 //game actions
                 resolveGameScreen();
                 renderGameScreen();
+            } else if (scene == SceneType.SCENE_TYPE_HUMANWIN) {
+                //humanWinScreen actions
+                resolveHumanWinScreen();
+                renderHumanWinScreen();
+            } else if (scene == SceneType.SCENE_TYPE_ENEMYWIN) {
+                //humanWinScreen actions
+                resolveEnemyWinScreen();
+                renderEnemyWinScreen();
             }
         }
         //assets still loading
@@ -99,6 +115,7 @@ public class MainClass extends ApplicationAdapter {
     }
 
     public void loadTextures(String root) {
+        //all loading is auto, place all assets somewhere in the asset Root. Use Constants.Manager to access.
 
         File dir = new File(Constants.getResourceRoot() + root);
         System.out.println("Searching in: " + root);
@@ -176,7 +193,7 @@ public class MainClass extends ApplicationAdapter {
     private void handleInput() {
         if (scene == SceneType.SCENE_TYPE_MAINMENU)
         {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.A))
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
             {
                 initGameScreen();
             }
@@ -249,6 +266,14 @@ public class MainClass extends ApplicationAdapter {
 
                 tileClicked(tileX, tileY);
 
+            }
+
+        }
+        else if (scene == SceneType.SCENE_TYPE_HUMANWIN || scene == SceneType.SCENE_TYPE_ENEMYWIN)
+        {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+            {
+                initMainMenuScreen();
             }
 
         }
@@ -339,14 +364,15 @@ public class MainClass extends ApplicationAdapter {
 
             cam.viewportWidth = map.getMapWidth() * Constants.getTileSize();
             cam.viewportHeight = map.getMapHeight() * Constants.getTileSize();
-            cam.update();
         }
         else
         {
             cam.viewportWidth = Constants.getResolutionWidth();
             cam.viewportHeight = Constants.getResolutionHeight();
-            cam.update();
         }
+
+
+        cam.update();
     }
 
 
@@ -386,14 +412,11 @@ public class MainClass extends ApplicationAdapter {
         highLightMap.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));
 
         if (isEnemyWon()) {
-            System.out.println("ENEMY HAS WON!");
-            System.exit(0);
-
+            initEnemyWinScreen();
         }
 
         if (isHumanWon()) {
-            System.out.println("HUMAN HAS WON!");
-            System.exit(0);
+            initHumanWinScreen();
         }
 
         //enemy turn
@@ -410,6 +433,22 @@ public class MainClass extends ApplicationAdapter {
         }
 
     }
+
+    public void loadFont()
+    {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(System.getProperty("user.dir") + "/core/src/Data/"+"RedHatDisplay.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = (int)(64 * (Constants.getResolutionWidth()/1280f));
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = 3;
+        parameter.color = Color.ORANGE;
+        parameter.shadowColor = Color.BROWN;
+        parameter.shadowOffsetX= 5;
+        parameter.shadowOffsetY= 5;
+        font = generator.generateFont(parameter);
+        generator.dispose();
+    }
+
 
     public void renderGameScreen() {
         //renders the game screen
@@ -430,6 +469,11 @@ public class MainClass extends ApplicationAdapter {
         //titleSprite.setCenterX();
         titleSprite.setX((titleSprite.getX() - (float)Math.sin(2*runTime)));
         titleSprite.setY((titleSprite.getY() + (float)Math.sin(4*runTime)));
+
+
+        font.setColor(1f,1f,1f,(float)Math.pow(Math.sin(0.5*runTime),2));
+        cam.zoom = (float)(1.9 - Math.sin(0.5*runTime)/10f);
+
     }
 
     public void renderMainMenuScreen() {
@@ -437,8 +481,8 @@ public class MainClass extends ApplicationAdapter {
 
         batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class),-Constants.getResolutionWidth(),-Constants.getResolutionHeight(),Constants.getResolutionWidth()*2,Constants.getResolutionHeight()*2,0,0,1880,1058,false,false);
         titleSprite.draw(batch);
-        font.draw(batch, "Press -SPACE- To Start",-390,0);
-        font.draw(batch, "Press -ESC- To Exit",-340,-100);
+        font.draw(batch, "Press -SPACE- To Start",-(Constants.getResolutionWidth()/2.8f),0);
+        font.draw(batch, "Press -ESC- To Exit",-(Constants.getResolutionWidth()/3.3f),-150);
 
         batch.end();
     }
@@ -447,21 +491,16 @@ public class MainClass extends ApplicationAdapter {
         scene = SceneType.SCENE_TYPE_MAINMENU;
         titleSprite = new Sprite(Constants.getManager().get("title.png", Texture.class),0,0,621,168);
         //titleSprite.setBounds(0,0, Constants.getResolutionWidth()/2,Constants.getResolutionHeight()/2);
-        titleSprite.setScale(2);
+        titleSprite.setScale(2 * Constants.getResolutionWidth()/1280f);
         titleSprite.setCenterX(0);
         titleSprite.setCenterY(Constants.getResolutionHeight() / 4);
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(System.getProperty("user.dir") + "/core/src/Data/"+"RedHatDisplay.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = (int)(64 * (Constants.getResolutionWidth()/1280));
-        parameter.borderColor = Color.BLACK;
-        parameter.borderWidth = 3;
-        parameter.color = Color.ORANGE;
-        parameter.shadowColor = Color.BROWN;
-        parameter.shadowOffsetX= 5;
-        parameter.shadowOffsetY= 5;
-        font = generator.generateFont(parameter); // font size 12 pixels
-        generator.dispose(); // don't forget to dispose to avoid memory leaks!
+
+
+
+        cam.viewportWidth = Constants.getResolutionWidth();
+        cam.viewportHeight = Constants.getResolutionHeight();
+        cam.zoom = 2f;
 
 
 
@@ -469,6 +508,14 @@ public class MainClass extends ApplicationAdapter {
 
     public void initGameScreen() {
         scene = SceneType.SCENE_TYPE_GAME;
+
+        /*
+
+        cam = new OrthographicCamera();
+        cam.position.set(0, 0, 0);
+        cam.update();
+         */
+
 
         map = new Map(Constants.getMapFileName());
         highLightMap = new HighlightMap(map.getMapWidth(), map.getMapHeight());
@@ -479,7 +526,72 @@ public class MainClass extends ApplicationAdapter {
 
         humanData.distributeTeamLocation(map.getNClosest(Constants.getFireengineCount(), map.getStationPosition(), TileType.TILE_TYPES_ROAD));
         enemyData.distributeTeamLocation(map.getFortressTiles());
-        
+
+        cam.viewportWidth = map.getMapWidth() * Constants.getTileSize();
+        cam.viewportHeight = map.getMapHeight() * Constants.getTileSize();
+        cam.zoom = 0.5f;
 
     }
+
+    public void initHumanWinScreen()
+    {
+        //set humanWinScreen Components;
+        scene = SceneType.SCENE_TYPE_HUMANWIN;
+        font.setColor(1f,1f,1f,1f);
+        cam.zoom = 2f;
+        cam.viewportWidth = Constants.getResolutionWidth();
+        cam.viewportHeight = Constants.getResolutionHeight();
+
+
+
+    }
+    public void initEnemyWinScreen()
+    {
+        //set humanWinScreen Components;
+        scene = SceneType.SCENE_TYPE_ENEMYWIN;
+        font.setColor(1f,1f,1f,1f);
+        cam.zoom = 2f;
+        cam.viewportWidth = Constants.getResolutionWidth();
+        cam.viewportHeight = Constants.getResolutionHeight();
+
+
+    }
+
+    public void resolveHumanWinScreen()
+    {
+        //resolve actions during this scene
+    }
+
+    public void resolveEnemyWinScreen()
+    {
+        //resolve actions during this scene
+    }
+
+
+    public void renderHumanWinScreen()
+    {
+        batch.begin();
+        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class),-Constants.getResolutionWidth(),-Constants.getResolutionHeight(),Constants.getResolutionWidth()*2,Constants.getResolutionHeight()*2,0,0,1880,1058,false,false);
+
+        font.draw(batch, "YOU WIN",-(Constants.getResolutionWidth()/6f),100);
+        font.draw(batch, "THE KROY ARE NO MORE!",-(Constants.getResolutionWidth()/2.8f),0);
+        font.draw(batch, "Press -SPACE- To RETURN",-(Constants.getResolutionWidth()/2.75f),-100);
+        batch.end();
+
+    }
+
+    public void renderEnemyWinScreen()
+    {
+        batch.begin();
+        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class),-Constants.getResolutionWidth(),-Constants.getResolutionHeight(),Constants.getResolutionWidth()*2,Constants.getResolutionHeight()*2,0,0,1880,1058,false,false);
+
+        font.draw(batch, "YOU LOSE",-(Constants.getResolutionWidth()/6f),100);
+        font.draw(batch, "OUR HEROES HAVE FALLEN!",-(Constants.getResolutionWidth()/2.65f),0);
+        font.draw(batch, "Press -SPACE- To RETURN",-(Constants.getResolutionWidth()/2.9f),-100);
+        batch.end();
+
+    }
+
+
+
 }
