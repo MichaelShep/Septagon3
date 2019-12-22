@@ -73,6 +73,10 @@ abstract public class Character extends Sprite
     {
         target.takeDamage(damage);
         System.out.println("Character at: " + this.location.getMapX() + ", " + this.location.getMapY() + " shot target at: " + target.getLocation().getMapX() + ", " + target.getLocation().getMapY());
+        if (this instanceof FireEngine)
+        {
+            ((FireEngine)this).decrementWaterAmount();
+        }
 
     }
 

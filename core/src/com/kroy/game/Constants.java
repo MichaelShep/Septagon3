@@ -2,6 +2,8 @@ package com.kroy.game;
 
 import com.badlogic.gdx.assets.AssetManager;
 
+import java.awt.*;
+
 public final class Constants {
 
 
@@ -9,13 +11,17 @@ public final class Constants {
     //private static int RESOLUTION_WIDTH = 1920;
     //private static int RESOLUTION_HEIGHT = 1080;
 
-    private static int RESOLUTION_WIDTH = 1280;
-    private static int RESOLUTION_HEIGHT = 720;
+    private static int RESOLUTION_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
+    private static int RESOLUTION_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+    //private static int RESOLUTION_WIDTH = 1280;
+    //private static int RESOLUTION_HEIGHT = 720;
 
     //private static int RESOLUTION_WIDTH = 640;
     //private static int RESOLUTION_HEIGHT = 360;
 
-    private static boolean FULLSCREEN = false;
+    private static boolean FULLSCREEN = true;
+    //private static boolean FULLSCREEN = false;
 
 
 
@@ -25,8 +31,8 @@ public final class Constants {
     private static int TILE_SIZE = 64;
     private  static AssetManager MANAGER = new AssetManager();
 
-    private static int FORTRESS_COUNT = 1;
-    private static int FIREENGINE_COUNT = 1;
+    private static int FORTRESS_COUNT = 4;
+    private static int FIREENGINE_COUNT = 2;
 
     private static String MAP_FILE_NAME = "yorkMap.csv";
 

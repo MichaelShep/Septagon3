@@ -24,14 +24,14 @@ public class Enemy extends Player {
 
     public Fortress createFortress()
     {
-        //encapsulates the balance
-        int health = 100;
-        int damage = 50;
-        int range = 5;
-        int speed = 5;
-        int waterCapacity = 100;
+        Random r = new Random();
 
-        return new Fortress(health,damage,range,null,"Default Fortress Name","fortressSprite.png");
+        //encapsulates the balance
+        int health = r.nextInt((22 - 7) + 1) + 7;;
+        int damage = r.nextInt((4 - 2) + 1) + 2;;
+        int range = r.nextInt((6 - 3) + 1) + 3;;
+
+        return new Fortress(health,damage,range,null,"Default Fortress Name","fortressTile.png");
     }
 
 

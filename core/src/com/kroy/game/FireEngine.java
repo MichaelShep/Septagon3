@@ -13,6 +13,7 @@ public class FireEngine extends Character {
         super(health, damage, range, location, charTex);
         this.speed = speed;
         this.waterCapacity = waterCapacity;
+        this.waterAmount = waterCapacity;
         this.disabled = false;
 
         // this.team.add(this);
@@ -127,6 +128,18 @@ public class FireEngine extends Character {
         this.speed = speed;
     }
 
+    public void setWaterAmount(int waterAmount) {
+        this.waterAmount = waterAmount;
+    }
+
+    public void setWaterCapacity(int waterCapacity) {
+        this.waterCapacity = waterCapacity;
+    }
+
+    public void decrementWaterAmount()
+    {
+        waterAmount = Math.max(0, waterAmount-1);
+    }
 
 }
 
