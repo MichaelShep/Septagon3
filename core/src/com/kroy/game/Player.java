@@ -15,38 +15,32 @@ abstract public class Player {
 
     protected void resolveDeaths() {
 
-        for(int i = 0; i < team.length; i ++) {
+        for (int i = 0; i < team.length; i++) {
             if (!(team[i] == null))
-                if(team[i].getDisabled()) {
+                if (team[i].getDisabled()) {
                     team[i].getLocation().setInhabitant(null);
                     team[i] = null;
                 }
         }
     }
 
-    protected int getAliveCharacters()
-    {
+    protected int getAliveCharacters() {
         int alive = 0;
-        for (Character character: team)
-        {
-            if (!(character == null))
-            {
+        for (Character character : team) {
+            if (!(character == null)) {
                 alive++;
             }
         }
 
-        return  alive;
+        return alive;
     }
 
-    public void distributeTeamLocation(Tile[] locations)
-    {
-        for(int locationIndex = 0; locationIndex < locations.length; locationIndex++)
-        {
+    public void distributeTeamLocation(Tile[] locations) {
+        for (int locationIndex = 0; locationIndex < locations.length; locationIndex++) {
             team[locationIndex].setLocation(locations[locationIndex]);
             locations[locationIndex].setInhabitant(team[locationIndex]);
         }
     }
-
 
 
     public int getTurns() {
@@ -57,16 +51,15 @@ abstract public class Player {
         return this.name;
     }
 
-
-    public void setMyTurn(boolean state) {
-        this.myTurn = state;
-    }
-
     public Character[] getTeam() {
         return this.team;
     }
 
     public boolean isMyTurn() {
         return myTurn;
+    }
+
+    public void setMyTurn(boolean state) {
+        this.myTurn = state;
     }
 }

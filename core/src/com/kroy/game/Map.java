@@ -1,11 +1,15 @@
 package com.kroy.game;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-//import sun.jvm.hotspot.utilities.ObjectReader;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.TreeMap;
 
-import java.awt.*;
-import java.io.*;
-import java.util.*;
+//import sun.jvm.hotspot.utilities.ObjectReader;
 
 
 public class Map {
@@ -14,36 +18,30 @@ public class Map {
     private Station stationPosition;
 
 
-    private int mapWidth,mapHeight;
-    private int shiftX,shiftY;
+    private int mapWidth, mapHeight;
+    private int shiftX, shiftY;
 
     //this comment exists because i forgot to split my comits
-    public Map(String fileName)
-    {
-        String directory = System.getProperty("user.dir") + "/core/src/Data/" + fileName;
+    public Map(String fileName) {
+        //String directory = System.getProperty("user.dir") + "/core/src/Data/" + fileName;
+        String directory = fileName;
 
-        try
-        {
+        try {
             generateMap(readMapCSV(directory));
-        }
-        catch (IOException e)
-        {
-            System.out.println(e + "Map could not be read" );
+        } catch (IOException e) {
+            System.out.println(e + " -- Map could not be read");
             System.exit(0);
         }
 
 
-
-
-        shiftX = (Constants.getResolutionWidth() - (mapWidth*Constants.getTileSize()))/2;
-        shiftY = (Constants.getResolutionHeight() - (mapHeight*Constants.getTileSize()))/2;
+        shiftX = (Constants.getResolutionWidth() - (mapWidth * Constants.getTileSize())) / 2;
+        shiftY = (Constants.getResolutionHeight() - (mapHeight * Constants.getTileSize())) / 2;
 
 
     }
 
 
-    ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException
-    {
+    ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException {
         ArrayList<String[]> rowData = new ArrayList<String[]>();
         String row;
 
@@ -51,20 +49,15 @@ public class Map {
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader(mapCSVFile));
 
-            while ((row = csvReader.readLine()) != null)
-            {
+            while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
                 rowData.add(data);
             }
 
             csvReader.close();
-        }
-        catch(FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             throw new FileNotFoundException();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new IOException();
         }
 
@@ -78,30 +71,22 @@ public class Map {
     }
 
 
-    public void generateMap(ArrayList<String[]> mapTileData)
-    {
+    public void generateMap(ArrayList<String[]> mapTileData) {
 
         int tileCode;
-        for (int height = 0; height < mapHeight; height++)
-        {
-            for (int width = 0; width < mapWidth; width++)
-            {
+        for (int height = 0; height < mapHeight; height++) {
+            for (int width = 0; width < mapWidth; width++) {
                 //System.out.println("WIDTH: " + width + " HEIGHT: " + height);
-                tileCode = (Integer.parseInt(mapTileData.get(height)[width])-1);
+                tileCode = (Integer.parseInt(mapTileData.get(height)[width]) - 1);
 
-                if (tileCode == 0)
-                {
-                    int[] adjacentTiles = getAdjacentTileCodes(width,height,mapTileData);
-                    mapData[height][width] = new Tile(width, height,mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
-                }
-                else if (tileCode == 5)
-                {
+                if (tileCode == 0) {
+                    int[] adjacentTiles = getAdjacentTileCodes(width, height, mapTileData);
+                    mapData[height][width] = new Tile(width, height, mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
+                } else if (tileCode == 5) {
                     stationPosition = new Station(width, height);
                     mapData[height][width] = stationPosition;
-                }
-                else
-                {
-                    mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
+                } else {
+                    mapData[height][width] = new Tile(width, height, mapTextures(tileCode), TileType.values()[tileCode]);
                 }
 
 
@@ -143,8 +128,7 @@ public class Map {
     }
 
 
-    private String mapTextures(int textureCode)
-    {
+    private String mapTextures(int textureCode) {
         switch (textureCode) {
             case 0:
                 return "roadTile.png";
@@ -165,8 +149,7 @@ public class Map {
 
 
     //ths is hideous
-    private int[] getAdjacentTileCodes(int xPos, int yPos, ArrayList<String[]> mapTileData)
-    {
+    private int[] getAdjacentTileCodes(int xPos, int yPos, ArrayList<String[]> mapTileData) {
         int[] adjacentTileCodes = new int[4];
         int tempValue;
 
@@ -174,42 +157,31 @@ public class Map {
         //System.out.println("WIDTH: " + xPos + " HEIGHT: " + yPos);
 
 
-        if (yPos + 1 < mapHeight)
-        {
+        if (yPos + 1 < mapHeight) {
             tempValue = Integer.parseInt(mapTileData.get(yPos + 1)[xPos]);
             adjacentTileCodes[0] = (tempValue == 1) ? 1 : 0;
-        }
-        else {
+        } else {
             adjacentTileCodes[0] = 0;
         }
 
-        if (xPos + 1 < mapWidth)
-        {
-            tempValue = Integer.parseInt(mapTileData.get(yPos)[xPos+1]);
+        if (xPos + 1 < mapWidth) {
+            tempValue = Integer.parseInt(mapTileData.get(yPos)[xPos + 1]);
             adjacentTileCodes[1] = (tempValue == 1) ? 1 : 0;
-        }
-        else
-        {
+        } else {
             adjacentTileCodes[1] = 0;
         }
 
-        if(yPos - 1 >= 0)
-        {
+        if (yPos - 1 >= 0) {
             tempValue = Integer.parseInt(mapTileData.get(yPos - 1)[xPos]);
             adjacentTileCodes[2] = (tempValue == 1) ? 1 : 0;
-        }
-        else
-        {
+        } else {
             adjacentTileCodes[2] = 0;
         }
 
-        if (xPos - 1 >= 0)
-        {
+        if (xPos - 1 >= 0) {
             tempValue = Integer.parseInt(mapTileData.get(yPos)[xPos - 1]);
             adjacentTileCodes[3] = (tempValue == 1) ? 1 : 0;
-        }
-        else
-        {
+        } else {
             adjacentTileCodes[3] = 0;
         }
 
@@ -218,21 +190,16 @@ public class Map {
 
 
     //if someone can do this neater please do
-    private String mapRoadTextures(int[] adjacentTileTypes)
-    {
-        switch((adjacentTileTypes[0] + adjacentTileTypes[1] + adjacentTileTypes[2] + adjacentTileTypes[3]))
-        {
+    private String mapRoadTextures(int[] adjacentTileTypes) {
+        switch ((adjacentTileTypes[0] + adjacentTileTypes[1] + adjacentTileTypes[2] + adjacentTileTypes[3])) {
             case 1: {
                 if (adjacentTileTypes[0] == 1) {
                     return ("RoadVertical.png");
-                }
-                else if (adjacentTileTypes[1] == 1) {
+                } else if (adjacentTileTypes[1] == 1) {
                     return ("RoadHorizontal.png");
-                }
-                else if (adjacentTileTypes[2] == 1) {
+                } else if (adjacentTileTypes[2] == 1) {
                     return ("RoadVertical.png");
-                }
-                else {
+                } else {
                     return ("RoadHorizontal.png");
                 }
 
@@ -271,50 +238,39 @@ public class Map {
             }
 
             case 4:
-                return("RoadFourWay.png");
+                return ("RoadFourWay.png");
 
 
             default:
-                return("BuildingTexture/TileBuild.png");
+                return ("BuildingTexture/TileBuild.png");
         }
     }
 
 
-    String rndTexture(String textureType)
-    {
+    String rndTexture(String textureType) {
         Random random = new Random();
 
-        if (textureType == "GreeneryTexture"){
+        if (textureType == "GreeneryTexture") {
             return Constants.getGrassTexture()[random.nextInt(Constants.getGrassTexture().length)];
-        }
-        else if (textureType == "BuildingTexture"){
+        } else if (textureType == "BuildingTexture") {
             return Constants.getBuildingTexture()[random.nextInt(Constants.getBuildingTexture().length)];
-        }
-
-        else
-        {
+        } else {
             throw new IllegalArgumentException(textureType + " not textureType");
         }
 
 
-
     }
 
 
-
-    public Tile[] getFortressTiles()
-    {
+    public Tile[] getFortressTiles() {
         Tile[] locations = new Tile[Constants.getFortressCount()];
 
         for (int height = 0; height < mapHeight; height++) {
             for (int width = 0; width < mapWidth; width++) {
 
-                if (mapData[height][width].getType() == TileType.TILE_TYPES_FORTRESS)
-                {
-                    for (int fortIndex = 0; fortIndex < locations.length; fortIndex++)
-                    {
-                        if  (locations[fortIndex] == null)
-                        {
+                if (mapData[height][width].getType() == TileType.TILE_TYPES_FORTRESS) {
+                    for (int fortIndex = 0; fortIndex < locations.length; fortIndex++) {
+                        if (locations[fortIndex] == null) {
                             locations[fortIndex] = mapData[height][width];
                             break;
                         }
@@ -354,128 +310,97 @@ public class Map {
  */
 
 
-
-
-
     //getters
-    public int getMapWidth()
-    {
-        return  mapWidth;
+    public int getMapWidth() {
+        return mapWidth;
     }
 
-    public int getMapHeight()
-    {
-        return  mapHeight;
+    public int getMapHeight() {
+        return mapHeight;
     }
 
-    public int getShiftX()
-    {
-        return  shiftX;
-    }
-
-    public int getShiftY()
-    {
-        return  shiftY;
-    }
-
-    public Tile[][] getMapData()
-    {
-        return  mapData;
-    }
-
-    public Tile getStationPosition()
-    {
-        return stationPosition;
+    public int getShiftX() {
+        return shiftX;
     }
 
     public void setShiftX(int shiftX) {
         this.shiftX = shiftX;
     }
 
+    public int getShiftY() {
+        return shiftY;
+    }
+
     public void setShiftY(int shiftY) {
         this.shiftY = shiftY;
     }
 
-    private double distanceBetween(Tile source, Tile target)
-    {
-        double distance = Math.sqrt(Math.pow(source.getMapX() - target.getMapX(),2) + Math.pow((source.getMapY()- target.getMapY()),2));
+    public Tile[][] getMapData() {
+        return mapData;
+    }
+
+    public Tile getStationPosition() {
+        return stationPosition;
+    }
+
+    private double distanceBetween(Tile source, Tile target) {
+        double distance = Math.sqrt(Math.pow(source.getMapX() - target.getMapX(), 2) + Math.pow((source.getMapY() - target.getMapY()), 2));
         return distance;
 
     }
 
-    private TreeMap<Double,ArrayList<Tile>> getSortedTilesAbout(Tile hub) throws Exception
-    {
-        TreeMap<Double,ArrayList<Tile>> sortedRangeTiles = new TreeMap<Double,ArrayList<Tile>>();
+    private TreeMap<Double, ArrayList<Tile>> getSortedTilesAbout(Tile hub) throws Exception {
+        TreeMap<Double, ArrayList<Tile>> sortedRangeTiles = new TreeMap<Double, ArrayList<Tile>>();
         Tile referenceTile;
         for (int height = 0; height < mapHeight; height++) {
             for (int width = 0; width < mapWidth; width++) {
                 referenceTile = mapData[height][width];
-                if (!(referenceTile == hub))
-                {
-                    double distance = distanceBetween(hub,referenceTile);
-                    if (sortedRangeTiles.containsKey(distance))
-                    {
+                if (!(referenceTile == hub)) {
+                    double distance = distanceBetween(hub, referenceTile);
+                    if (sortedRangeTiles.containsKey(distance)) {
                         sortedRangeTiles.get(distance).add(referenceTile);
-                    }
-                    else {
+                    } else {
                         sortedRangeTiles.put(distance, new ArrayList<Tile>(Arrays.asList(referenceTile)));
                     }
                 }
             }
         }
 
-        if (!sortedRangeTiles.isEmpty())
-        {
+        if (!sortedRangeTiles.isEmpty()) {
             return sortedRangeTiles;
-        }
-        else
-        {
+        } else {
             throw new Exception("Distances from this hub could not be found");
         }
 
     }
 
 
-
-    public Tile[] getNClosest(int n, Tile hub)
-    {
-        TreeMap<Double,ArrayList<Tile>> sortedRangeTiles;
+    public Tile[] getNClosest(int n, Tile hub) {
+        TreeMap<Double, ArrayList<Tile>> sortedRangeTiles;
         int tilesFound = 0;
         Tile[] outputTiles = new Tile[n];
 
-        try
-        {
+        try {
             sortedRangeTiles = getSortedTilesAbout(hub);
-            if (sortedRangeTiles.values().size() >= n)
-            {
-                for (ArrayList<Tile> bundledTile: sortedRangeTiles.values())
-                {
-                    for (Tile tile: bundledTile)
-                    {
-                        if (tilesFound < n)
-                        {
+            if (sortedRangeTiles.values().size() >= n) {
+                for (ArrayList<Tile> bundledTile : sortedRangeTiles.values()) {
+                    for (Tile tile : bundledTile) {
+                        if (tilesFound < n) {
                             outputTiles[tilesFound] = tile;
                             tilesFound++;
-                        }
-                        else
-                        {
+                        } else {
                             return outputTiles;
                         }
                     }
                 }
 
 
-            }
-            else
-            {
+            } else {
                 throw new Exception("Firetruck spawn number is greater than tiles available");
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.exit(0);
         }
-
-
 
 
         System.out.println("getNClosest Failed");
@@ -483,75 +408,57 @@ public class Map {
 
     }
 
-    public Tile[] getNClosest(int n, Tile hub, TileType type)
-    {
-        TreeMap<Double,ArrayList<Tile>> sortedRangePairs;
+    public Tile[] getNClosest(int n, Tile hub, TileType type) {
+        TreeMap<Double, ArrayList<Tile>> sortedRangePairs;
         int tilesFound = 0;
         Tile[] outputTiles = new Tile[n];
 
-        try
-        {
+        try {
             sortedRangePairs = getSortedTilesAbout(hub);
             //ArrayList<Tile> sortedTiles = ((ArrayList<Tile>)sortedRangePairs.values());
             ArrayList<ArrayList<Tile>> sortedTiles = new ArrayList<ArrayList<Tile>>(sortedRangePairs.values());
-            if (sortedTiles.size() >= n)
-            {
-                for (ArrayList<Tile> bundledTiles: sortedTiles)
-                {
-                    for (Tile tile : bundledTiles)
-                    {
-                        if (tilesFound < n)
-                        {
-                            if (tile.getType() == type)
-                            {
+            if (sortedTiles.size() >= n) {
+                for (ArrayList<Tile> bundledTiles : sortedTiles) {
+                    for (Tile tile : bundledTiles) {
+                        if (tilesFound < n) {
+                            if (tile.getType() == type) {
                                 outputTiles[tilesFound] = tile;
                                 tilesFound++;
                             }
-                        }
-                        else
-                        {
+                        } else {
                             return outputTiles;
                         }
                     }
                 }
 
 
-            }
-            else
-            {
+            } else {
                 throw new Exception("Not enough tiles on map to satisfy parameters");
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             System.exit(0);
         }
 
 
-
         System.out.println("getNClosest Failed");
         return null;
 
     }
 
-    public void placeOnMap(Character placedObject)
-    {
-        placedObject.setPosition((placedObject.getLocation().getMapX()*Constants.getTileSize()+shiftX),(placedObject.getLocation().getMapY()*Constants.getTileSize()+shiftY));
+    public void placeOnMap(Character placedObject) {
+        placedObject.setPosition((placedObject.getLocation().getMapX() * Constants.getTileSize() + shiftX), (placedObject.getLocation().getMapY() * Constants.getTileSize() + shiftY));
     }
 
-    public ArrayList<Tile> getWithRangeOfHub(Tile hub, int range)
-    {
-        TreeMap<Double,ArrayList<Tile>> sortedRangePairs;
+    public ArrayList<Tile> getWithRangeOfHub(Tile hub, int range) {
+        TreeMap<Double, ArrayList<Tile>> sortedRangePairs;
         ArrayList<Tile> outputTiles = new ArrayList<Tile>();
 
-        try{
+        try {
             sortedRangePairs = getSortedTilesAbout(hub);
-            for (double distance: sortedRangePairs.keySet())
-            {
-                if (distance < range)
-                {
-                    for (Tile tile: sortedRangePairs.get(distance))
-                    {
+            for (double distance : sortedRangePairs.keySet()) {
+                if (distance < range) {
+                    for (Tile tile : sortedRangePairs.get(distance)) {
                         outputTiles.add(tile);
                     }
                 }
@@ -560,11 +467,7 @@ public class Map {
             }
 
 
-
-
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
             System.exit(0);
         }
@@ -572,21 +475,16 @@ public class Map {
         return outputTiles;
     }
 
-    public ArrayList<Tile> getWithRangeOfHub(Tile hub, int range, TileType type)
-    {
-        TreeMap<Double,ArrayList<Tile>> sortedRangePairs;
+    public ArrayList<Tile> getWithRangeOfHub(Tile hub, int range, TileType type) {
+        TreeMap<Double, ArrayList<Tile>> sortedRangePairs;
         ArrayList<Tile> outputTiles = new ArrayList<Tile>();
 
-        try{
+        try {
             sortedRangePairs = getSortedTilesAbout(hub);
-            for (double distance: sortedRangePairs.keySet())
-            {
-                if (distance < range)
-                {
-                    for (Tile tile: sortedRangePairs.get(distance))
-                    {
-                        if (tile.getType() == type)
-                        {
+            for (double distance : sortedRangePairs.keySet()) {
+                if (distance < range) {
+                    for (Tile tile : sortedRangePairs.get(distance)) {
+                        if (tile.getType() == type) {
                             outputTiles.add(tile);
                         }
                     }
@@ -596,18 +494,13 @@ public class Map {
             }
 
 
-
-
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
             System.exit(0);
         }
 
         return outputTiles;
     }
-
 
 
 }

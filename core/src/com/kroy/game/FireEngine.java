@@ -1,7 +1,5 @@
 package com.kroy.game;
 
-import com.badlogic.gdx.graphics.Texture;
-
 public class FireEngine extends Character {
 
     private int speed;
@@ -29,12 +27,12 @@ public class FireEngine extends Character {
 
     private int canShoot(Fortress target) {
 
-        if(this.waterAmount == 0) {
+        if (this.waterAmount == 0) {
             return 0;
         }
 
 
-        if(inRange(target.getLocation())) {
+        if (inRange(target.getLocation())) {
             if (this.waterAmount >= 20) {
                 this.waterAmount -= 20;
                 return this.getDamage();
@@ -59,9 +57,6 @@ public class FireEngine extends Character {
     }
 
 
-
-
-
     @Override
     public boolean getDisabled() {
         return super.getDisabled();
@@ -74,8 +69,18 @@ public class FireEngine extends Character {
     }
 
     @Override
+    public void setDamage(int newDamage) {
+        super.setDamage(newDamage);
+    }
+
+    @Override
     public int getHealth() {
         return super.getHealth();
+    }
+
+    @Override
+    public void setHealth(int newHealth) {
+        super.setHealth(newHealth);
     }
 
     @Override
@@ -89,16 +94,6 @@ public class FireEngine extends Character {
     }
 
     @Override
-    public void setDamage(int newDamage) {
-        super.setDamage(newDamage);
-    }
-
-    @Override
-    public void setHealth(int newHealth) {
-        super.setHealth(newHealth);
-    }
-
-    @Override
     public void setLocation(Tile newLocation) {
         super.setLocation(newLocation);
     }
@@ -107,38 +102,37 @@ public class FireEngine extends Character {
         return disabled;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
-    public int getWaterAmount() {
-        return waterAmount;
-    }
-
-    public int getWaterCapacity() {
-        return waterCapacity;
-    }
-
     @Override
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public void setSpeed(int speed) {
         this.speed = speed;
     }
 
+    public int getWaterAmount() {
+        return waterAmount;
+    }
+
     public void setWaterAmount(int waterAmount) {
         this.waterAmount = waterAmount;
+    }
+
+    public int getWaterCapacity() {
+        return waterCapacity;
     }
 
     public void setWaterCapacity(int waterCapacity) {
         this.waterCapacity = waterCapacity;
     }
 
-    public void decrementWaterAmount()
-    {
-        waterAmount = Math.max(0, waterAmount-1);
+    public void decrementWaterAmount() {
+        waterAmount = Math.max(0, waterAmount - 1);
     }
 
 }

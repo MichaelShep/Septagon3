@@ -1,6 +1,5 @@
 package com.kroy.game;
 
-import javax.tools.Tool;
 import java.util.HashMap;
 
 public class Tooltip {
@@ -9,11 +8,10 @@ public class Tooltip {
     private boolean render;
     private int iconSize;
     private int fontSpacing;
-    private HashMap<String,Object> values;
+    private HashMap<String, Object> values;
 
 
-    public Tooltip(int xPosition, int yPosition, int sizeOfTile, int sizeOfFont)
-    {
+    public Tooltip(int xPosition, int yPosition, int sizeOfTile, int sizeOfFont) {
         x = xPosition;
         y = yPosition;
         iconSize = sizeOfTile;
@@ -23,26 +21,20 @@ public class Tooltip {
     }
 
 
-    public void addValue(String iconRoot, Object value)
-    {
-        if (!(values.containsKey(iconRoot)))
-        {
+    public void addValue(String iconRoot, Object value) {
+        if (!(values.containsKey(iconRoot))) {
             values.put(iconRoot, value);
-        }
-        else {
+        } else {
             //icon is already being used in this tool tip
 
         }
     }
 
 
-    public void updateValue(String iconRoot, Object value)
-    {
-        if (values.containsKey(iconRoot))
-        {
-            values.replace(iconRoot,value);
-        }
-        else {
+    public void updateValue(String iconRoot, Object value) {
+        if (values.containsKey(iconRoot)) {
+            values.put(iconRoot, value);
+        } else {
             //icon is not used in values for tooltip
 
         }
@@ -53,6 +45,10 @@ public class Tooltip {
         return render;
     }
 
+    public void setRender(boolean render) {
+        this.render = render;
+    }
+
     public HashMap<String, Object> getValues() {
         return values;
     }
@@ -61,24 +57,20 @@ public class Tooltip {
         return x;
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public void setRender(boolean render) {
-        this.render = render;
-    }
-
-    public void updateValue(HashMap<String, Object> values) {
-        this.values = values;
-    }
-
     public void setX(int x) {
         this.x = x;
     }
 
+    public int getY() {
+        return y;
+    }
+
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void updateValue(HashMap<String, Object> values) {
+        this.values = values;
     }
 
     public int getIconSize() {

@@ -13,9 +13,4 @@ class Fortress extends Character {
     }
 
 
-
-
-
-
-
 }

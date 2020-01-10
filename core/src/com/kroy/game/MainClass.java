@@ -1,18 +1,17 @@
 package com.kroy.game;
 
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.graphics.g2d.freetype.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,17 +41,23 @@ public class MainClass extends ApplicationAdapter {
     float runTime;
 
     BitmapFont font;
-    public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
+    //public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
 
+    //helper function
+    public static float Remap(float value, float from1, float to1, float from2, float to2) {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
 
     @Override
     public void create() {
 
         initSetting();
+
+        System.out.println("BASE ROOT: " + Constants.getResourceRoot());
+
         loadTextures("");
         loadFont();
-        if (Constants.isFULLSCREEN())
-        {
+        if (Constants.isFULLSCREEN()) {
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
         }
 
@@ -68,8 +73,8 @@ public class MainClass extends ApplicationAdapter {
         cam.zoom = 0.5f;
         cam.update();
 
-        //initMainMenuScreen();
-        initGameScreen();
+        initMainMenuScreen();
+        //initGameScreen();
         //initHumanWinScreen();
         //initEnemyWinScreen();
     }
@@ -110,7 +115,6 @@ public class MainClass extends ApplicationAdapter {
         }
     }
 
-
     @Override
     public void dispose() {
         batch.dispose();
@@ -118,25 +122,25 @@ public class MainClass extends ApplicationAdapter {
 
     public void loadTextures(String root) {
         //all loading is auto, place all assets somewhere in the asset Root. Use Constants.Manager to access.
-
+        System.out.println("---------------------------------------");
         File dir = new File(Constants.getResourceRoot() + root);
-        System.out.println("Searching in: " + root);
+        System.out.println("Trying to load: " + Constants.getResourceRoot() + root);
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
                 if (child.isDirectory()) {
-                    loadTextures(child.getName() + "/");
+                    loadTextures(child.getName() + "\\");
                 } else {
-                    if (child.getName().contains("Thumbs.db")) {
-                        System.out.println("Thumbs was found.");
-                    } else {
+                    if (child.getName().contains(".png") || child.getName().contains(".jpeg")) {
                         System.out.println("Asset Found: " + root + child.getName());
                         Constants.getManager().load(root + child.getName(), Texture.class);
+                    } else {
+                        System.out.println("Asset not an image: " + child.getName());
                     }
                 }
             }
         } else {
-            System.out.println(root + " cannot be Found");
+            System.out.println(root + " was an empty location\n-------------------------");
         }
 
 
@@ -145,7 +149,6 @@ public class MainClass extends ApplicationAdapter {
     public void initSetting() {
         Gdx.graphics.setWindowedMode(Constants.getResolutionWidth(), Constants.getResolutionHeight());
     }
-
 
     public void renderMap() {
         for (int height = 0; height < map.getMapHeight(); height++) {
@@ -175,8 +178,9 @@ public class MainClass extends ApplicationAdapter {
     }
 
     public void renderUI() {
-        //come back fix for varying map sizes
         batch.draw(Constants.getManager().get("borderArt.png", Texture.class), -1024, -576, 2048, 1152, 0, 0, 1280, 720, false, false);
+
+
     }
 
     public void renderFortresses() {
@@ -191,21 +195,16 @@ public class MainClass extends ApplicationAdapter {
 
     }
 
-
     public void handleInput() {
-        if (scene == SceneType.SCENE_TYPE_MAINMENU)
-        {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-            {
+        if (scene == SceneType.SCENE_TYPE_MAINMENU) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 initGameScreen();
             }
 
-        }
-        else if (scene == SceneType.SCENE_TYPE_GAME) {
+        } else if (scene == SceneType.SCENE_TYPE_GAME) {
 
 
             int moveSpeed = Constants.getTileSize();
-
 
 
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -302,20 +301,14 @@ public class MainClass extends ApplicationAdapter {
 
             }
 
-            if (!Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
-            {
+            if (!Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
                 humanToolTip.setRender(false);
                 enemyToolTip.setRender(false);
             }
 
 
-
-
-        }
-        else if (scene == SceneType.SCENE_TYPE_HUMANWIN || scene == SceneType.SCENE_TYPE_ENEMYWIN)
-        {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-            {
+        } else if (scene == SceneType.SCENE_TYPE_HUMANWIN || scene == SceneType.SCENE_TYPE_ENEMYWIN) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 initMainMenuScreen();
             }
 
@@ -328,7 +321,6 @@ public class MainClass extends ApplicationAdapter {
 
 
     }
-
 
     public void tileClicked(int x, int y) {
         //clicking tiles can only be done on your turn
@@ -378,16 +370,14 @@ public class MainClass extends ApplicationAdapter {
                     enemyData.setMyTurn(true);
                 } else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == "HighlightTexture/attack.png") {
                     System.out.println("ATTACK");
-                    if (((FireEngine)selectedTile.getInhabitant()).getWaterAmount() > 0) {
+                    if (((FireEngine) selectedTile.getInhabitant()).getWaterAmount() > 0) {
                         selectedTile.getInhabitant().shootTarget(queryTile.getInhabitant());
                         selectedTile = null;
                         highLightMap.resetMap();
                         highLightMap.setRender(false);
                         humanData.setMyTurn(false);
                         enemyData.setMyTurn(true);
-                    }
-                    else
-                    {
+                    } else {
                         //has no water routine
 
 
@@ -407,24 +397,19 @@ public class MainClass extends ApplicationAdapter {
 
     }
 
-    public void tileRightClicked(int x, int y)
-    {
+    public void tileRightClicked(int x, int y) {
         Tile queryTile = map.getMapData()[y][x];
         Character queryInhabitant = queryTile.getInhabitant();
 
-        if (!(queryInhabitant == null))
-        {
-            if (queryInhabitant instanceof FireEngine)
-            {
+        if (!(queryInhabitant == null)) {
+            if (queryInhabitant instanceof FireEngine) {
                 humanToolTip.updateValue("Icons/healthIcon.png", queryInhabitant.getHealth());
                 humanToolTip.updateValue("Icons/damageIcon.png", queryInhabitant.getDamage());
                 humanToolTip.updateValue("Icons/rangeIcon.png", queryInhabitant.getRange());
                 humanToolTip.updateValue("Icons/speedIcon.png", ((FireEngine) queryInhabitant).getSpeed());
-                humanToolTip.updateValue("Icons/waterIcon.png", ((FireEngine) queryInhabitant).getWaterAmount()+ "/" + ((FireEngine) queryInhabitant).getWaterCapacity());
+                humanToolTip.updateValue("Icons/waterIcon.png", ((FireEngine) queryInhabitant).getWaterAmount() + "/" + ((FireEngine) queryInhabitant).getWaterCapacity());
                 humanToolTip.setRender(true);
-            }
-            else if (queryInhabitant instanceof Fortress)
-            {
+            } else if (queryInhabitant instanceof Fortress) {
                 enemyToolTip.updateValue("Icons/healthIcon.png", queryInhabitant.getHealth());
                 enemyToolTip.updateValue("Icons/damageIcon.png", queryInhabitant.getDamage());
                 enemyToolTip.updateValue("Icons/rangeIcon.png", queryInhabitant.getRange());
@@ -434,10 +419,7 @@ public class MainClass extends ApplicationAdapter {
         }
 
 
-
-
     }
-
 
     @Override
     public void resize(int width, int height) {
@@ -445,9 +427,7 @@ public class MainClass extends ApplicationAdapter {
 
             cam.viewportWidth = map.getMapWidth() * Constants.getTileSize();
             cam.viewportHeight = map.getMapHeight() * Constants.getTileSize();
-        }
-        else
-        {
+        } else {
             cam.viewportWidth = Constants.getResolutionWidth();
             cam.viewportHeight = Constants.getResolutionHeight();
         }
@@ -455,13 +435,6 @@ public class MainClass extends ApplicationAdapter {
 
         cam.update();
     }
-
-
-    //helper function
-    public static float Remap(float value, float from1, float to1, float from2, float to2) {
-        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
-    }
-
 
     public boolean isEnemyWon() {
         humanData.resolveDeaths();
@@ -515,9 +488,10 @@ public class MainClass extends ApplicationAdapter {
 
     }
 
-    public void loadFont()
-    {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(System.getProperty("user.dir") + "/core/src/Data/"+"RedHatDisplay.ttf"));
+    public void loadFont() {
+
+        //FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("desktop/build/resources/main/Fonts/RedHatDisplay.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/RedHatDisplay.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = (int)(64 * (Constants.getResolutionWidth()/1280f));
         parameter.borderColor = Color.BLACK;
@@ -528,6 +502,10 @@ public class MainClass extends ApplicationAdapter {
         parameter.shadowOffsetY= 5;
         font = generator.generateFont(parameter);
         generator.dispose();
+
+
+
+        //font = new BitmapFont();
     }
 
 
@@ -541,12 +519,10 @@ public class MainClass extends ApplicationAdapter {
             renderHighLightMap();
         }
 
-        if (humanToolTip.isRender())
-        {
+        if (humanToolTip.isRender()) {
             renderTooltip(humanToolTip);
         }
-        if (enemyToolTip.isRender())
-        {
+        if (enemyToolTip.isRender()) {
             renderTooltip(enemyToolTip);
         }
 
@@ -555,36 +531,32 @@ public class MainClass extends ApplicationAdapter {
         batch.end();
     }
 
-    public void resolveMainMenuScreen()
-    {
+    public void resolveMainMenuScreen() {
         //titleSprite.setCenterX();
-        titleSprite.setX((titleSprite.getX() - (float)Math.sin(2*runTime)));
-        titleSprite.setY((titleSprite.getY() + (float)Math.sin(4*runTime)));
+        titleSprite.setX((titleSprite.getX() - (float) Math.sin(2 * runTime)));
+        titleSprite.setY((titleSprite.getY() + (float) Math.sin(4 * runTime)));
 
 
-        font.setColor(1f,1f,1f,(float)Math.pow(Math.sin(0.5*runTime),2));
-        cam.zoom = (float)(1.9 - Math.sin(0.5*runTime)/10f);
+        font.setColor(1f, 1f, 1f, (float) Math.pow(Math.sin(0.5 * runTime), 2));
+        cam.zoom = (float) (1.9 - Math.sin(0.5 * runTime) / 10f);
 
     }
 
 
-
     public void initMainMenuScreen() {
         scene = SceneType.SCENE_TYPE_MAINMENU;
-        titleSprite = new Sprite(Constants.getManager().get("title.png", Texture.class),0,0,621,168);
+
+
+        titleSprite = new Sprite(Constants.getManager().get("title.png", Texture.class), 0, 0, 621, 168);
         //titleSprite.setBounds(0,0, Constants.getResolutionWidth()/2,Constants.getResolutionHeight()/2);
-        titleSprite.setScale(2 * Constants.getResolutionWidth()/1280f);
+        titleSprite.setScale(2 * Constants.getResolutionWidth() / 1280f);
         titleSprite.setCenterX(0);
         titleSprite.setCenterY(Constants.getResolutionHeight() / 4);
-
-
-
 
 
         cam.viewportWidth = Constants.getResolutionWidth();
         cam.viewportHeight = Constants.getResolutionHeight();
         cam.zoom = 2f;
-
 
 
     }
@@ -610,29 +582,29 @@ public class MainClass extends ApplicationAdapter {
         humanData = new Human("humanName", true, Constants.getFireengineCount());
         enemyData = new Enemy("EnemyName", false, Constants.getFortressCount());
 
-        humanToolTip = new Tooltip(0,0, (int)(Constants.getTileSize()*(Constants.getResolutionWidth()/1280f)), 312*(int)(Constants.getResolutionWidth()/1280f));
+        humanToolTip = new Tooltip(0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
         humanToolTip.addValue("Icons/healthIcon.png", 0);
         humanToolTip.addValue("Icons/damageIcon.png", 0);
         humanToolTip.addValue("Icons/rangeIcon.png", 0);
         humanToolTip.addValue("Icons/speedIcon.png", 0);
         humanToolTip.addValue("Icons/waterIcon.png", 0);
-        humanToolTip.setX((int)(-((humanToolTip.getIconSize()+humanToolTip.getFontSpacing())*humanToolTip.getValues().size())/2f));
+        humanToolTip.setX((int) (-((humanToolTip.getIconSize() + humanToolTip.getFontSpacing()) * humanToolTip.getValues().size()) / 2f));
         //humanToolTip.setY(200*(int)(Constants.getResolutionWidth()/1280f));
-        humanToolTip.setY(Constants.getResolutionHeight()/2 - (int)(200*(Constants.getResolutionWidth()/1280f - 1))*2);
+        humanToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
 
 
-
-        enemyToolTip = new Tooltip(0,0,(int)(Constants.getTileSize()*(Constants.getResolutionWidth()/1280f)), 312*(int)(Constants.getResolutionWidth()/1280f));
+        enemyToolTip = new Tooltip(0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
         enemyToolTip.addValue("Icons/healthIcon.png", 0);
         enemyToolTip.addValue("Icons/damageIcon.png", 0);
         enemyToolTip.addValue("Icons/rangeIcon.png", 0);
-        enemyToolTip.setX((int)(-((enemyToolTip.getIconSize()+enemyToolTip.getFontSpacing())*enemyToolTip.getValues().size())/2f));
-        enemyToolTip.setY(Constants.getResolutionHeight()/2 - (int)(200*(Constants.getResolutionWidth()/1280f - 1))*2);
-
+        enemyToolTip.setX((int) (-((enemyToolTip.getIconSize() + enemyToolTip.getFontSpacing()) * enemyToolTip.getValues().size()) / 2f));
+        enemyToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
 
 
         humanData.distributeTeamLocation(map.getNClosest(Constants.getFireengineCount(), map.getStationPosition(), TileType.TILE_TYPES_ROAD));
         enemyData.distributeTeamLocation(map.getFortressTiles());
+
+        font.setColor(1f, 1f, 1f, 1f);
 
         cam.viewportWidth = map.getMapWidth() * Constants.getTileSize();
         cam.viewportHeight = map.getMapHeight() * Constants.getTileSize();
@@ -640,23 +612,21 @@ public class MainClass extends ApplicationAdapter {
 
     }
 
-    public void initHumanWinScreen()
-    {
+    public void initHumanWinScreen() {
         //set humanWinScreen Components;
         scene = SceneType.SCENE_TYPE_HUMANWIN;
-        font.setColor(1f,1f,1f,1f);
+        font.setColor(1f, 1f, 1f, 1f);
         cam.zoom = 2f;
         cam.viewportWidth = Constants.getResolutionWidth();
         cam.viewportHeight = Constants.getResolutionHeight();
 
 
-
     }
-    public void initEnemyWinScreen()
-    {
+
+    public void initEnemyWinScreen() {
         //set humanWinScreen Components;
         scene = SceneType.SCENE_TYPE_ENEMYWIN;
-        font.setColor(1f,1f,1f,1f);
+        font.setColor(1f, 1f, 1f, 1f);
         cam.zoom = 2f;
         cam.viewportWidth = Constants.getResolutionWidth();
         cam.viewportHeight = Constants.getResolutionHeight();
@@ -664,37 +634,33 @@ public class MainClass extends ApplicationAdapter {
 
     }
 
-    public void resolveHumanWinScreen()
-    {
+    public void resolveHumanWinScreen() {
         //resolve actions during this scene
     }
 
-    public void resolveEnemyWinScreen()
-    {
+    public void resolveEnemyWinScreen() {
         //resolve actions during this scene
     }
 
 
-    public void renderHumanWinScreen()
-    {
+    public void renderHumanWinScreen() {
         batch.begin();
-        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class),-Constants.getResolutionWidth(),-Constants.getResolutionHeight(),Constants.getResolutionWidth()*2,Constants.getResolutionHeight()*2,0,0,1880,1058,false,false);
+        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
 
-        font.draw(batch, "YOU WIN",-(Constants.getResolutionWidth()/6f),100);
-        font.draw(batch, "THE KROY ARE NO MORE!",-(Constants.getResolutionWidth()/2.8f),0);
-        font.draw(batch, "Press -SPACE- To RETURN",-(Constants.getResolutionWidth()/2.75f),-100);
+        font.draw(batch, "YOU WIN", -(Constants.getResolutionWidth() / 6f), 100);
+        font.draw(batch, "THE KROY ARE NO MORE!", -(Constants.getResolutionWidth() / 2.8f), 0);
+        font.draw(batch, "Press -SPACE- To RETURN", -(Constants.getResolutionWidth() / 2.75f), -100);
         batch.end();
 
     }
 
-    public void renderEnemyWinScreen()
-    {
+    public void renderEnemyWinScreen() {
         batch.begin();
-        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class),-Constants.getResolutionWidth(),-Constants.getResolutionHeight(),Constants.getResolutionWidth()*2,Constants.getResolutionHeight()*2,0,0,1880,1058,false,false);
+        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
 
-        font.draw(batch, "YOU LOSE",-(Constants.getResolutionWidth()/6f),100);
-        font.draw(batch, "OUR HEROES HAVE FALLEN!",-(Constants.getResolutionWidth()/2.65f),0);
-        font.draw(batch, "Press -SPACE- To RETURN",-(Constants.getResolutionWidth()/2.9f),-100);
+        font.draw(batch, "YOU LOSE", -(Constants.getResolutionWidth() / 6f), 100);
+        font.draw(batch, "OUR HEROES HAVE FALLEN!", -(Constants.getResolutionWidth() / 2.65f), 0);
+        font.draw(batch, "Press -SPACE- To RETURN", -(Constants.getResolutionWidth() / 2.9f), -100);
         batch.end();
 
     }
@@ -702,40 +668,41 @@ public class MainClass extends ApplicationAdapter {
     public void renderMainMenuScreen() {
         batch.begin();
 
-        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class),-Constants.getResolutionWidth(),-Constants.getResolutionHeight(),Constants.getResolutionWidth()*2,Constants.getResolutionHeight()*2,0,0,1880,1058,false,false);
+        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
         titleSprite.draw(batch);
-        font.draw(batch, "Press -SPACE- To Start",-(Constants.getResolutionWidth()/2.8f),0);
-        font.draw(batch, "Press -ESC- To Exit",-(Constants.getResolutionWidth()/3.3f),-150);
+        font.draw(batch, "Press -SPACE- To Start", -(Constants.getResolutionWidth() / 2.8f), 0);
+        font.draw(batch, "Press -ESC- To Exit", -(Constants.getResolutionWidth() / 3.3f), -150);
+
 
         batch.end();
     }
 
-    public void renderTooltip(Tooltip data)
-    {
+    public void renderTooltip(Tooltip data) {
         int baseIconSize = data.getIconSize();
         int textSize = data.getFontSpacing();
 
-        int baseWidth = data.getValues().size()*(baseIconSize+textSize);
-        int baseHeight = (int)(200*(Constants.getResolutionWidth()/1280f));
+        int baseWidth = data.getValues().size() * (baseIconSize + textSize);
+        int baseHeight = (int) (200 * (Constants.getResolutionWidth() / 1280f));
 
         int xPos = data.getX();
         int yPos = data.getY();
 
 
-        batch.draw(Constants.getManager().get("HighlightTexture/blank.png", Texture.class), xPos, yPos,baseWidth,baseHeight,0,0,64,64,false,false);
+        batch.draw(Constants.getManager().get("HighlightTexture/blank.png", Texture.class), xPos, yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
 
-        xPos += data.getIconSize()/2;
+        xPos += data.getIconSize() / 2;
 
         ArrayList<String> keys = new ArrayList<String>(data.getValues().keySet());
 
-        for (int keyIndex = 0; keyIndex < keys.size(); keyIndex++)
-        {
-            batch.draw(Constants.getManager().get(keys.get(keyIndex),Texture.class),xPos + (keyIndex*(baseIconSize+textSize)) ,yPos+ 100*(int)(Constants.getResolutionWidth()/1280),baseIconSize,baseIconSize,0,0,64,64,false,false);
-            font.draw(batch," : " + (data.getValues().get(keys.get(keyIndex))).toString(),(int)(xPos + (keyIndex*(baseIconSize+textSize)) + baseIconSize), (int)yPos+baseIconSize+ 100*(int)(Constants.getResolutionWidth()/1280));
+        for (int keyIndex = 0; keyIndex < keys.size(); keyIndex++) {
+            batch.draw(Constants.getManager().get(keys.get(keyIndex), Texture.class), xPos + (keyIndex * (baseIconSize + textSize)), yPos + 100 * (int) (Constants.getResolutionWidth() / 1280), baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
+            font.draw(batch, " : " + (data.getValues().get(keys.get(keyIndex))).toString(), (int) (xPos + (keyIndex * (baseIconSize + textSize)) + baseIconSize), (int) yPos + baseIconSize + 100 * (int) (Constants.getResolutionWidth() / 1280));
 
         }
-    }
 
+        batch.draw(Constants.getManager().get("controlInfo.png", Texture.class), Constants.getResolutionWidth() / 3f, -Constants.getResolutionHeight() / 2f, 272, 720, 0, 0, 272, 720, false, false);
+
+    }
 
 
 }

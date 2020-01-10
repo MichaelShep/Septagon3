@@ -2,12 +2,8 @@ package com.kroy.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import java.lang.Math;
-
-abstract public class Character extends Sprite
-{
+abstract public class Character extends Sprite {
     protected int health;
     protected int damage;
     protected int range;
@@ -15,11 +11,10 @@ abstract public class Character extends Sprite
     protected Tile location;
 
 
-    public Character(int health, int damage, int range, Tile spawn, String spriteTex)
-    {
+    public Character(int health, int damage, int range, Tile spawn, String spriteTex) {
         //super(Constants.getManager().get(spriteTex, Texture.class),Constants.getTileSize(),Constants.getTileSize());
-        super(Constants.getManager().get(spriteTex,Texture.class),0,0,Constants.getTileSize(),Constants.getTileSize());
-        setSize(Constants.getTileSize(),Constants.getTileSize());
+        super(Constants.getManager().get(spriteTex, Texture.class), 0, 0, Constants.getTileSize(), Constants.getTileSize());
+        setSize(Constants.getTileSize(), Constants.getTileSize());
         this.health = health;
         this.damage = damage;
         this.range = range;
@@ -27,8 +22,7 @@ abstract public class Character extends Sprite
         this.disabled = false;
     }
 
-    protected boolean inRange(Tile target)
-    {
+    protected boolean inRange(Tile target) {
         /* NEEDS IMPLEMENTING
 
         if (Math.sqrt(Math.pow((this.location.MapX - target.MapX), 2) + (Math.pow((this.location.MapY - target.MapY), 2))) <= this.range) {
@@ -43,39 +37,35 @@ abstract public class Character extends Sprite
     }
 
     protected void death() {
-        if(this.health == 0) {
+        if (this.health == 0) {
             this.disabled = true;
         }
     }
 
     protected void takeDamage(int damageTaken) {
         this.health = this.health - damageTaken;
-        if(this.health < 0) {
+        if (this.health < 0) {
             this.health = 0;
         }
 
-        if (health == 0)
-        {
+        if (health == 0) {
             System.out.println("DIED");
             disabled = true;
         }
 
     }
 
-    protected void transferTo(Tile newLocation)
-    {
+    protected void transferTo(Tile newLocation) {
         location.setInhabitant(null);
         location = newLocation;
         newLocation.setInhabitant(this);
     }
 
-    public void shootTarget(Character target)
-    {
+    public void shootTarget(Character target) {
         target.takeDamage(damage);
         System.out.println("Character at: " + this.location.getMapX() + ", " + this.location.getMapY() + " shot target at: " + target.getLocation().getMapX() + ", " + target.getLocation().getMapY());
-        if (this instanceof FireEngine)
-        {
-            ((FireEngine)this).decrementWaterAmount();
+        if (this instanceof FireEngine) {
+            ((FireEngine) this).decrementWaterAmount();
         }
 
     }
@@ -93,6 +83,7 @@ abstract public class Character extends Sprite
         return this.range;
 
     }
+
     public int getDamage() {
         return this.damage;
     }

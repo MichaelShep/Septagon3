@@ -1,20 +1,18 @@
 package Tests;
 
-import static org.junit.Assert.*;
-
-import com.kroy.game.TileType;
-import org.junit.Test;
-
 import com.kroy.game.Map;
 import com.kroy.game.Tile;
+import com.kroy.game.TileType;
+import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class MapTests
-{
+import static org.junit.Assert.assertEquals;
+
+public class MapTests {
 
     Map mapTest = new Map("MapForTesting");
     Class ReflectionClass = Map.class;
@@ -44,21 +42,19 @@ public class MapTests
 
 
     @Test
-    public void genertaeMapTest()
-    {
+    public void genertaeMapTest() {
         int expectedX = 1;
         int expectedY = 0;
         String expectedTexture = "roadTile.png";
         TileType expectedTileType = TileType.TILE_TYPES_ROAD;
 
 
-        try
-        {
+        try {
             Field mapDataReflection = ReflectionClass.getDeclaredField("mapData");
             mapDataReflection.setAccessible(true);
 
             Object tileData = mapDataReflection.get(mapTest);
-            Tile[][] temp = (Tile[][])tileData;
+            Tile[][] temp = (Tile[][]) tileData;
             Tile testTile = temp[0][1];
 
             assertEquals(expectedX, testTile.getMapX());
@@ -66,30 +62,24 @@ public class MapTests
             assertEquals(expectedTexture, testTile.getTexName());
             assertEquals(expectedTileType, testTile.getType());
 
-        }
-        catch (NoSuchFieldException e)
-        {
+        } catch (NoSuchFieldException e) {
 
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
 
         }
 
     }
 
     @Test
-    public void mapRoadTileTest()
-    {
+    public void mapRoadTileTest() {
         Map mapRoadTest = new Map("MapForRoadTest.csv");
 
-        try
-        {
+        try {
             Field mapDataReflection = ReflectionClass.getDeclaredField("mapData");
             mapDataReflection.setAccessible(true);
 
             Object tileData = mapDataReflection.get(mapRoadTest);
-            Tile[][] temp = (Tile[][])tileData;
+            Tile[][] temp = (Tile[][]) tileData;
             Tile fourWayRoad = temp[1][1];
 
             Tile RoadThreeWayNoUp = temp[0][9];
@@ -120,22 +110,17 @@ public class MapTests
             assertEquals("RoadVertical.csv", RoadVertical.getTexName());
             assertEquals("RoadHorizontal.csv", RoadHorizontal.getTexName());
 
-        }
-        catch (NoSuchFieldException e)
-        {
+        } catch (NoSuchFieldException e) {
 
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
 
         }
     }
 
     @Test
-    public void distanceBetweenTest()
-    {
-        Tile testTile1 = new Tile(1,1);
-        Tile testTile2 = new Tile(4,5);
+    public void distanceBetweenTest() {
+        Tile testTile1 = new Tile(1, 1);
+        Tile testTile2 = new Tile(4, 5);
 
         double expectedDistance = 5;
         double actualDistance;
