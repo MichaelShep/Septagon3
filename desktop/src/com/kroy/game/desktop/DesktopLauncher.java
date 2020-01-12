@@ -19,7 +19,11 @@ public class DesktopLauncher {
 
         //this is a temporary fix. Don't look at it
         if (Constants.getResourceRoot().contains("Release")) {
-            Constants.setResourceRoot(Constants.getResourceRoot() + "assets\\");
+            Constants.setResourceRoot(Constants.getResourceRoot() + "/assets/");
+        }
+        else
+        {
+            //Constants.setResourceRoot(Constants.getResourceRoot() + "/core/assets/");
         }
 
         new LwjglApplication(new MainClass(), config);

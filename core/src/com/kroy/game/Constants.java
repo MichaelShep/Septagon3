@@ -32,7 +32,6 @@ public final class Constants {
     private static int FORTRESS_COUNT = 4;
     private static int FIREENGINE_COUNT = 2;
 
-    private static String MAP_FILE_NAME = "Data/yorkMap.csv";
 
     private static int STATION_REFILL_AMOUNT = 10;
     private static int STATION_REPAIR_AMOUNT = 10;
@@ -40,7 +39,8 @@ public final class Constants {
     private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png", "GreeneryTexture/BushTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/TreeTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/GrassTile1.png",};
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
 
-    private static String RESOURCE_ROOT = System.getProperty("user.dir") + "\\";
+    private static String RESOURCE_ROOT = System.getProperty("user.dir").replace("\\", "/") + "/";
+    private static String MAP_FILE_NAME = "Data/yorkMap.csv";
 
 
     // this is another comment

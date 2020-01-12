@@ -12,6 +12,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.utils.Array;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,6 +70,16 @@ public class MainClass extends ApplicationAdapter {
         }
         runTime = 0;
         batch = new SpriteBatch();
+
+        Array<Texture> allAssetsLoaded = new Array<Texture>();
+        Constants.getManager().getAll(Texture.class,allAssetsLoaded);
+        for (Texture t: allAssetsLoaded)
+        {
+            System.out.println("TEXTURE LOADED: " + t.toString());
+        }
+
+
+
 
 
         cam = new OrthographicCamera();
@@ -129,11 +143,11 @@ public class MainClass extends ApplicationAdapter {
         if (directoryListing != null) {
             for (File child : directoryListing) {
                 if (child.isDirectory()) {
-                    loadTextures(child.getName() + "\\");
+                    loadTextures(child.getName() + "/");
                 } else {
                     if (child.getName().contains(".png") || child.getName().contains(".jpeg")) {
-                        System.out.println("Asset Found: " + root + child.getName());
-                        Constants.getManager().load(root + child.getName(), Texture.class);
+                        //System.out.println("Asset Found: "+ Constants.getResourceRoot() + root + child.getName());
+                        Constants.getManager().load(Constants.getResourceRoot() + root + child.getName(), Texture.class);
                     } else {
                         System.out.println("Asset not an image: " + child.getName());
                     }
@@ -153,7 +167,7 @@ public class MainClass extends ApplicationAdapter {
     public void renderMap() {
         for (int height = 0; height < map.getMapHeight(); height++) {
             for (int width = 0; width < map.getMapWidth(); width++) {
-                batch.draw(Constants.getManager().get(map.getMapData()[height][width].getTexName(), Texture.class), (width * Constants.getTileSize()) + map.getShiftX(), (height * Constants.getTileSize()) + map.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
+                batch.draw(Constants.getManager().get(Constants.getResourceRoot() + map.getMapData()[height][width].getTexName(), Texture.class), (width * Constants.getTileSize()) + map.getShiftX(), (height * Constants.getTileSize()) + map.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
             }
         }
     }
@@ -161,7 +175,7 @@ public class MainClass extends ApplicationAdapter {
     public void renderHighLightMap() {
         for (int height = 0; height < highLightMap.getMapHeight(); height++) {
             for (int width = 0; width < highLightMap.getMapWidth(); width++) {
-                batch.draw(Constants.getManager().get(highLightMap.getMapData()[height][width].getTexName(), Texture.class), (width * Constants.getTileSize()) + highLightMap.getShiftX(), (height * Constants.getTileSize()) + highLightMap.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
+                batch.draw(Constants.getManager().get(Constants.getResourceRoot() + highLightMap.getMapData()[height][width].getTexName(), Texture.class), (width * Constants.getTileSize()) + highLightMap.getShiftX(), (height * Constants.getTileSize()) + highLightMap.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
             }
         }
     }
@@ -178,7 +192,7 @@ public class MainClass extends ApplicationAdapter {
     }
 
     public void renderUI() {
-        batch.draw(Constants.getManager().get("borderArt.png", Texture.class), -1024, -576, 2048, 1152, 0, 0, 1280, 720, false, false);
+        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "borderArt.png", Texture.class), -1024, -576, 2048, 1152, 0, 0, 1280, 720, false, false);
 
 
     }
@@ -331,7 +345,7 @@ public class MainClass extends ApplicationAdapter {
                 if (queryTile.getInhabitant() instanceof FireEngine) {
 
                     selectedTile = queryTile;
-                    highLightMap.getMapData()[y][x].setTexName("HighlightTexture/selected.png");
+                    highLightMap.getMapData()[y][x].setTexName( "HighlightTexture/selected.png");
 
                     //place green moves
                     ArrayList<Tile> moveSpaces = map.getWithRangeOfHub(queryTile, ((FireEngine) queryTile.getInhabitant()).getSpeed(), TileType.TILE_TYPES_ROAD);
@@ -368,7 +382,7 @@ public class MainClass extends ApplicationAdapter {
                     highLightMap.setRender(false);
                     humanData.setMyTurn(false);
                     enemyData.setMyTurn(true);
-                } else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == "HighlightTexture/attack.png") {
+                } else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() =="HighlightTexture/attack.png") {
                     System.out.println("ATTACK");
                     if (((FireEngine) selectedTile.getInhabitant()).getWaterAmount() > 0) {
                         selectedTile.getInhabitant().shootTarget(queryTile.getInhabitant());
@@ -384,7 +398,7 @@ public class MainClass extends ApplicationAdapter {
                     }
 
 
-                } else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == "HighlightTexture/selected.png") {
+                } else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == Constants.getResourceRoot() + "HighlightTexture/selected.png") {
                     selectedTile = null;
                     highLightMap.resetMap();
                     highLightMap.setRender(false);
@@ -403,16 +417,16 @@ public class MainClass extends ApplicationAdapter {
 
         if (!(queryInhabitant == null)) {
             if (queryInhabitant instanceof FireEngine) {
-                humanToolTip.updateValue("Icons/healthIcon.png", queryInhabitant.getHealth());
-                humanToolTip.updateValue("Icons/damageIcon.png", queryInhabitant.getDamage());
-                humanToolTip.updateValue("Icons/rangeIcon.png", queryInhabitant.getRange());
-                humanToolTip.updateValue("Icons/speedIcon.png", ((FireEngine) queryInhabitant).getSpeed());
-                humanToolTip.updateValue("Icons/waterIcon.png", ((FireEngine) queryInhabitant).getWaterAmount() + "/" + ((FireEngine) queryInhabitant).getWaterCapacity());
+                humanToolTip.updateValue( "Icons/healthIcon.png", queryInhabitant.getHealth());
+                humanToolTip.updateValue( "Icons/damageIcon.png", queryInhabitant.getDamage());
+                humanToolTip.updateValue( "Icons/rangeIcon.png", queryInhabitant.getRange());
+                humanToolTip.updateValue( "Icons/speedIcon.png", ((FireEngine) queryInhabitant).getSpeed());
+                humanToolTip.updateValue( "Icons/waterIcon.png", ((FireEngine) queryInhabitant).getWaterAmount() + "/" + ((FireEngine) queryInhabitant).getWaterCapacity());
                 humanToolTip.setRender(true);
             } else if (queryInhabitant instanceof Fortress) {
-                enemyToolTip.updateValue("Icons/healthIcon.png", queryInhabitant.getHealth());
-                enemyToolTip.updateValue("Icons/damageIcon.png", queryInhabitant.getDamage());
-                enemyToolTip.updateValue("Icons/rangeIcon.png", queryInhabitant.getRange());
+                enemyToolTip.updateValue( "Icons/healthIcon.png", queryInhabitant.getHealth());
+                enemyToolTip.updateValue( "Icons/damageIcon.png", queryInhabitant.getDamage());
+                enemyToolTip.updateValue( "Icons/rangeIcon.png", queryInhabitant.getRange());
                 enemyToolTip.setRender(true);
             }
 
@@ -547,7 +561,7 @@ public class MainClass extends ApplicationAdapter {
         scene = SceneType.SCENE_TYPE_MAINMENU;
 
 
-        titleSprite = new Sprite(Constants.getManager().get("title.png", Texture.class), 0, 0, 621, 168);
+        titleSprite = new Sprite(Constants.getManager().get(Constants.getResourceRoot() + "title.png", Texture.class), 0, 0, 621, 168);
         //titleSprite.setBounds(0,0, Constants.getResolutionWidth()/2,Constants.getResolutionHeight()/2);
         titleSprite.setScale(2 * Constants.getResolutionWidth() / 1280f);
         titleSprite.setCenterX(0);
@@ -572,7 +586,7 @@ public class MainClass extends ApplicationAdapter {
          */
 
 
-        map = new Map(Constants.getMapFileName());
+        map = new Map(Constants.getResourceRoot()+ Constants.getMapFileName());
         map.setShiftX(-1024);
         map.setShiftY(-1728);
 
@@ -584,7 +598,7 @@ public class MainClass extends ApplicationAdapter {
 
         humanToolTip = new Tooltip(0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
         humanToolTip.addValue("Icons/healthIcon.png", 0);
-        humanToolTip.addValue("Icons/damageIcon.png", 0);
+        humanToolTip.addValue( "Icons/damageIcon.png", 0);
         humanToolTip.addValue("Icons/rangeIcon.png", 0);
         humanToolTip.addValue("Icons/speedIcon.png", 0);
         humanToolTip.addValue("Icons/waterIcon.png", 0);
@@ -645,7 +659,7 @@ public class MainClass extends ApplicationAdapter {
 
     public void renderHumanWinScreen() {
         batch.begin();
-        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
+        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
 
         font.draw(batch, "YOU WIN", -(Constants.getResolutionWidth() / 6f), 100);
         font.draw(batch, "THE KROY ARE NO MORE!", -(Constants.getResolutionWidth() / 2.8f), 0);
@@ -656,19 +670,19 @@ public class MainClass extends ApplicationAdapter {
 
     public void renderEnemyWinScreen() {
         batch.begin();
-        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
+        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
 
         font.draw(batch, "YOU LOSE", -(Constants.getResolutionWidth() / 6f), 100);
         font.draw(batch, "OUR HEROES HAVE FALLEN!", -(Constants.getResolutionWidth() / 2.65f), 0);
         font.draw(batch, "Press -SPACE- To RETURN", -(Constants.getResolutionWidth() / 2.9f), -100);
         batch.end();
-
+        
     }
 
     public void renderMainMenuScreen() {
         batch.begin();
 
-        batch.draw(Constants.getManager().get("menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
+        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
         titleSprite.draw(batch);
         font.draw(batch, "Press -SPACE- To Start", -(Constants.getResolutionWidth() / 2.8f), 0);
         font.draw(batch, "Press -ESC- To Exit", -(Constants.getResolutionWidth() / 3.3f), -150);
@@ -688,19 +702,19 @@ public class MainClass extends ApplicationAdapter {
         int yPos = data.getY();
 
 
-        batch.draw(Constants.getManager().get("HighlightTexture/blank.png", Texture.class), xPos, yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
+        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos, yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
 
         xPos += data.getIconSize() / 2;
 
         ArrayList<String> keys = new ArrayList<String>(data.getValues().keySet());
 
         for (int keyIndex = 0; keyIndex < keys.size(); keyIndex++) {
-            batch.draw(Constants.getManager().get(keys.get(keyIndex), Texture.class), xPos + (keyIndex * (baseIconSize + textSize)), yPos + 100 * (int) (Constants.getResolutionWidth() / 1280), baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
+            batch.draw(Constants.getManager().get(Constants.getResourceRoot() + keys.get(keyIndex), Texture.class), xPos + (keyIndex * (baseIconSize + textSize)), yPos + 100 * (int) (Constants.getResolutionWidth() / 1280), baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
             font.draw(batch, " : " + (data.getValues().get(keys.get(keyIndex))).toString(), (int) (xPos + (keyIndex * (baseIconSize + textSize)) + baseIconSize), (int) yPos + baseIconSize + 100 * (int) (Constants.getResolutionWidth() / 1280));
 
         }
 
-        batch.draw(Constants.getManager().get("controlInfo.png", Texture.class), Constants.getResolutionWidth() / 3f, -Constants.getResolutionHeight() / 2f, 272, 720, 0, 0, 272, 720, false, false);
+        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "controlInfo.png", Texture.class), Constants.getResolutionWidth() / 3f, -Constants.getResolutionHeight() / 2f, 272, 720, 0, 0, 272, 720, false, false);
 
     }
 

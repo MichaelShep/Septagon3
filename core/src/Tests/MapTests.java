@@ -13,10 +13,11 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class MapTests {
+/*
 
     Map mapTest = new Map("MapForTesting");
     Class ReflectionClass = Map.class;
-    String directory = System.getProperty("user.dir") + "\\core\\src\\Data\\" + "MapForTesting";
+    String directory = System.getProperty("user.dir") + "/core/src/Data/" + "MapForTesting";
 
     @Test
     public void loadCSVTest() {
@@ -157,5 +158,6 @@ public class MapTests {
     }
 
  */
+
 
 }
