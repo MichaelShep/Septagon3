@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 abstract public class Character extends Sprite {
-    protected int health;
+    protected int maxHealth, health;
     protected int damage;
     protected int range;
     protected boolean disabled;
@@ -16,25 +16,13 @@ abstract public class Character extends Sprite {
         super(Constants.getManager().get(Constants.getResourceRoot() + spriteTex, Texture.class), 0, 0, Constants.getTileSize(), Constants.getTileSize());
         setSize(Constants.getTileSize(), Constants.getTileSize());
         this.health = health;
+        this.maxHealth = health;
         this.damage = damage;
         this.range = range;
         this.location = spawn;
         this.disabled = false;
     }
 
-    protected boolean inRange(Tile target) {
-        /* NEEDS IMPLEMENTING
-
-        if (Math.sqrt(Math.pow((this.location.MapX - target.MapX), 2) + (Math.pow((this.location.MapY - target.MapY), 2))) <= this.range) {
-            return true;
-        } else {
-            return false;
-        }
-         */
-
-        return false;
-
-    }
 
     protected void death() {
         if (this.health == 0) {
@@ -108,4 +96,18 @@ abstract public class Character extends Sprite {
     public void setDisabled(boolean state) {
         this.disabled = state;
     }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
 }
+
+

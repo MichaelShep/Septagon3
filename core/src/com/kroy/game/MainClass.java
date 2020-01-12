@@ -417,7 +417,7 @@ public class MainClass extends ApplicationAdapter {
 
         if (!(queryInhabitant == null)) {
             if (queryInhabitant instanceof FireEngine) {
-                humanToolTip.updateValue( "Icons/healthIcon.png", queryInhabitant.getHealth());
+                humanToolTip.updateValue( "Icons/healthIcon.png", queryInhabitant.getHealth() + "/" + queryInhabitant.getMaxHealth());
                 humanToolTip.updateValue( "Icons/damageIcon.png", queryInhabitant.getDamage());
                 humanToolTip.updateValue( "Icons/rangeIcon.png", queryInhabitant.getRange());
                 humanToolTip.updateValue( "Icons/speedIcon.png", ((FireEngine) queryInhabitant).getSpeed());
@@ -497,6 +497,19 @@ public class MainClass extends ApplicationAdapter {
             humanData.setMyTurn(true);
 
             System.out.println("Enemy took their turn!");
+
+            //Station heals and repairs its surroundings
+            for (Tile surroundingTile: map.getWithRangeOfHub(map.getStationPosition(),Constants.getStationRange()))
+            {
+                if (surroundingTile.getInhabitant() instanceof FireEngine)
+                {
+                    surroundingTile.getInhabitant().setHealth(Math.min(surroundingTile.getInhabitant().getHealth()+Constants.getStationRepairAmount(),surroundingTile.getInhabitant().getMaxHealth()));
+                    ((FireEngine) surroundingTile.getInhabitant()).setWaterAmount(Math.min(((FireEngine) surroundingTile.getInhabitant()).getWaterAmount()+Constants.getStationRefillAmount(),((FireEngine) surroundingTile.getInhabitant()).getWaterCapacity()));
+                    System.out.println("Station Healed!");
+                }
+
+            }
+
 
         }
 

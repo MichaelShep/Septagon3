@@ -502,5 +502,7 @@ public class Map {
         return outputTiles;
     }
 
-
+    public void setStationPosition(Station stationPosition) {
+        this.stationPosition = stationPosition;
+    }
 }
