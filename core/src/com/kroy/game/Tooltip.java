@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class Tooltip {
 
+    private String name;
     private int x, y;
     private boolean render;
     private int iconSize;
@@ -11,7 +12,9 @@ public class Tooltip {
     private HashMap<String, Object> values;
 
 
-    public Tooltip(int xPosition, int yPosition, int sizeOfTile, int sizeOfFont) {
+    public Tooltip(String characterName,int xPosition, int yPosition, int sizeOfTile, int sizeOfFont) {
+
+        name = characterName;
         x = xPosition;
         y = yPosition;
         iconSize = sizeOfTile;
@@ -79,5 +82,9 @@ public class Tooltip {
 
     public int getFontSpacing() {
         return fontSpacing;
+    }
+
+    public String getName() {
+        return name;
     }
 }

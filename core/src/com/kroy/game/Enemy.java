@@ -11,13 +11,13 @@ public class Enemy extends Player {
         super(name, myTurn, teamSize);
 
         for (int members = 0; members < teamSize; members++) {
-            team[members] = createFortress();
+            team[members] = createFortress(Constants.getFortressNames()[members]);
         }
 
     }
 
 
-    public Fortress createFortress() {
+    public Fortress createFortress(String name) {
         Random r = new Random();
 
         //encapsulates the balance
@@ -28,7 +28,7 @@ public class Enemy extends Player {
         int range = r.nextInt((6 - 3) + 1) + 3;
         ;
 
-        return new Fortress(health, damage, range, null, "Default Fortress Name", "fortressTile.png");
+        return new Fortress(health, damage, range, null, name, "fortressTile.png");
     }
 
 

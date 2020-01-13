@@ -609,7 +609,7 @@ public class MainClass extends ApplicationAdapter {
         humanData = new Human("humanName", true, Constants.getFireengineCount());
         enemyData = new Enemy("EnemyName", false, Constants.getFortressCount());
 
-        humanToolTip = new Tooltip(0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
+        humanToolTip = new Tooltip("",0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
         humanToolTip.addValue("Icons/healthIcon.png", 0);
         humanToolTip.addValue( "Icons/damageIcon.png", 0);
         humanToolTip.addValue("Icons/rangeIcon.png", 0);
@@ -620,7 +620,7 @@ public class MainClass extends ApplicationAdapter {
         humanToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
 
 
-        enemyToolTip = new Tooltip(0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
+        enemyToolTip = new Tooltip("", 0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
         enemyToolTip.addValue("Icons/healthIcon.png", 0);
         enemyToolTip.addValue("Icons/damageIcon.png", 0);
         enemyToolTip.addValue("Icons/rangeIcon.png", 0);
@@ -716,8 +716,8 @@ public class MainClass extends ApplicationAdapter {
         int yPos = data.getY();
 
 
-
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos, yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
+        font.draw(batch, "name", 50, (int) yPos - (int)(baseHeight/2));
 
         xPos += data.getIconSize() / 2;
 

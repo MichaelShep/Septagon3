@@ -30,7 +30,7 @@ public final class Constants {
     private static AssetManager MANAGER = new AssetManager();
 
     private static int FORTRESS_COUNT = 4;
-    private static int FIREENGINE_COUNT = 2;
+    private static int FIREENGINE_COUNT = 80;
 
 
     private static int STATION_REFILL_AMOUNT = 2;
@@ -43,6 +43,8 @@ public final class Constants {
     private static String MAP_FILE_NAME = "Data/yorkMap.csv";
 
     private static int STATION_RANGE = 3;
+
+    private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles"};
 
 
     // this is another comment
@@ -119,6 +121,9 @@ public final class Constants {
         return STATION_RANGE;
     }
 
+    public static String[] getFortressNames() {
+        return fortressNames;
+    }
 }
 
 
