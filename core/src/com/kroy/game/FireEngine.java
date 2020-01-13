@@ -25,6 +25,8 @@ public class FireEngine extends Character {
         }
     }
 
+    /*
+
     private int canShoot(Fortress target) {
 
         if (this.waterAmount == 0) {
@@ -56,6 +58,7 @@ public class FireEngine extends Character {
         }
     }
 
+     */
 
     @Override
     public boolean getDisabled() {

@@ -16,6 +16,7 @@ public class DesktopLauncher {
         config.fullscreen = true;
         config.vSyncEnabled = true;
         config.title = "WARKROY";
+        config.resizable = false;
 
         //this is a temporary fix. Don't look at it
         if (Constants.getResourceRoot().contains("Release")) {
@@ -23,7 +24,7 @@ public class DesktopLauncher {
         }
         else
         {
-            //Constants.setResourceRoot(Constants.getResourceRoot() + "/core/assets/");
+            Constants.setResourceRoot(Constants.getResourceRoot() + "/core/assets/");
         }
 
         new LwjglApplication(new MainClass(), config);

@@ -7,11 +7,11 @@ import java.awt.*;
 public final class Constants {
 
 
-    //private static int RESOLUTION_WIDTH = 1920;
-    //private static int RESOLUTION_HEIGHT = 1080;
+    private static int RESOLUTION_WIDTH = 1920;
+    private static int RESOLUTION_HEIGHT = 1080;
 
-    private static int RESOLUTION_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
-    private static int RESOLUTION_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
+    //private static int RESOLUTION_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
+    //private static int RESOLUTION_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
 
     //private static int RESOLUTION_WIDTH = 1280;
     //private static int RESOLUTION_HEIGHT = 720;
@@ -19,8 +19,8 @@ public final class Constants {
     //private static int RESOLUTION_WIDTH = 640;
     //private static int RESOLUTION_HEIGHT = 360;
 
-    private static boolean FULLSCREEN = true;
-    //private static boolean FULLSCREEN = false;
+    //private static boolean FULLSCREEN = true;
+    private static boolean FULLSCREEN = false;
 
 
     private static int ROAD_DENSITY = 7;

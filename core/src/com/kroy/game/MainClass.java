@@ -398,7 +398,7 @@ public class MainClass extends ApplicationAdapter {
                     }
 
 
-                } else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == Constants.getResourceRoot() + "HighlightTexture/selected.png") {
+                } else if (highLightMap.getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName() == "HighlightTexture/selected.png") {
                     selectedTile = null;
                     highLightMap.resetMap();
                     highLightMap.setRender(false);
@@ -616,7 +616,7 @@ public class MainClass extends ApplicationAdapter {
         humanToolTip.addValue("Icons/speedIcon.png", 0);
         humanToolTip.addValue("Icons/waterIcon.png", 0);
         humanToolTip.setX((int) (-((humanToolTip.getIconSize() + humanToolTip.getFontSpacing()) * humanToolTip.getValues().size()) / 2f));
-        //humanToolTip.setY(200*(int)(Constants.getResolutionWidth()/1280f));
+        //humanToolTip.setY(100*(int)(Constants.getResolutionWidth()/1280f));
         humanToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
 
 
@@ -708,11 +708,13 @@ public class MainClass extends ApplicationAdapter {
         int baseIconSize = data.getIconSize();
         int textSize = data.getFontSpacing();
 
+        //int baseWidth = (int)(data.getValues().size() * (baseIconSize + textSize) / ((float) Constants.getResolutionWidth() / 1280f));
         int baseWidth = data.getValues().size() * (baseIconSize + textSize);
         int baseHeight = (int) (200 * (Constants.getResolutionWidth() / 1280f));
 
         int xPos = data.getX();
         int yPos = data.getY();
+
 
 
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos, yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
