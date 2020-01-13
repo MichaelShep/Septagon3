@@ -1,7 +1,7 @@
 package com.kroy.game;
 
 
-class Fortress extends Character {
+public class Fortress extends Character {
 
     private String name;
 
@@ -9,8 +9,5 @@ class Fortress extends Character {
         super(health, damage, range, location, charTex);
 
         name = charName;
-
     }
-
-
 }
