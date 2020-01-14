@@ -579,56 +579,7 @@ public class MainClass extends ApplicationAdapter {
 
     }
 
-    public void initGameScreen() {
-        scene = SceneType.SCENE_TYPE_GAME;
 
-        /*
-
-        cam = new OrthographicCamera();
-        cam.position.set(0, 0, 0);
-        cam.update();
-         */
-
-
-        map = new Map(Constants.getResourceRoot()+ Constants.getMapFileName());
-        map.setShiftX(-1024);
-        map.setShiftY(-1728);
-
-        highLightMap = new HighlightMap(map.getMapWidth(), map.getMapHeight());
-        selectedTile = null;
-
-        humanData = new Human("humanName", true, Constants.getFireengineCount());
-        enemyData = new Enemy("EnemyName", false, Constants.getFortressCount());
-
-        humanToolTip = new Tooltip("",0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
-        humanToolTip.addValue("Icons/healthIcon.png", 0);
-        humanToolTip.addValue( "Icons/damageIcon.png", 0);
-        humanToolTip.addValue("Icons/rangeIcon.png", 0);
-        humanToolTip.addValue("Icons/speedIcon.png", 0);
-        humanToolTip.addValue("Icons/waterIcon.png", 0);
-        humanToolTip.setX((int) (-((humanToolTip.getIconSize() + humanToolTip.getFontSpacing()) * humanToolTip.getValues().size()) / 2f));
-        //humanToolTip.setY(100*(int)(Constants.getResolutionWidth()/1280f));
-        humanToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
-
-
-        enemyToolTip = new Tooltip("", 0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
-        enemyToolTip.addValue("Icons/healthIcon.png", 0);
-        enemyToolTip.addValue("Icons/damageIcon.png", 0);
-        enemyToolTip.addValue("Icons/rangeIcon.png", 0);
-        enemyToolTip.setX((int) (-((enemyToolTip.getIconSize() + enemyToolTip.getFontSpacing()) * enemyToolTip.getValues().size()) / 2f));
-        enemyToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
-
-
-        humanData.distributeTeamLocation(map.getNClosest(Constants.getFireengineCount(), map.getStationPosition(), TileType.TILE_TYPES_ROAD));
-        enemyData.distributeTeamLocation(map.getFortressTiles());
-
-        font.setColor(1f, 1f, 1f, 1f);
-
-        cam.viewportWidth = map.getMapWidth() * Constants.getTileSize();
-        cam.viewportHeight = map.getMapHeight() * Constants.getTileSize();
-        cam.zoom = 0.5f;
-
-    }
 
     public void initHumanWinScreen() {
         //set humanWinScreen Components;
