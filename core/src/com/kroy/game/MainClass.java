@@ -29,6 +29,8 @@ public class MainClass extends ApplicationAdapter {
     Tile selectedTile;
     SceneType scene;
 
+    SceneManager
+
 
     SpriteBatch batch;
     OrthographicCamera cam;
@@ -82,10 +84,7 @@ public class MainClass extends ApplicationAdapter {
 
 
 
-        cam = new OrthographicCamera();
-        cam.position.set(0, 0, 0);
-        cam.zoom = 0.5f;
-        cam.update();
+
 
         initMainMenuScreen();
         //initGameScreen();
@@ -559,16 +558,7 @@ public class MainClass extends ApplicationAdapter {
         batch.end();
     }
 
-    public void resolveMainMenuScreen() {
-        //titleSprite.setCenterX();
-        titleSprite.setX((titleSprite.getX() - (float) Math.sin(2 * runTime)));
-        titleSprite.setY((titleSprite.getY() + (float) Math.sin(4 * runTime)));
 
-
-        font.setColor(1f, 1f, 1f, (float) Math.pow(Math.sin(0.5 * runTime), 2));
-        cam.zoom = (float) (1.9 - Math.sin(0.5 * runTime) / 10f);
-
-    }
 
 
     public void initMainMenuScreen() {
@@ -693,17 +683,7 @@ public class MainClass extends ApplicationAdapter {
         
     }
 
-    public void renderMainMenuScreen() {
-        batch.begin();
 
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
-        titleSprite.draw(batch);
-        font.draw(batch, "Press -SPACE- To Start", -(Constants.getResolutionWidth() / 2.8f), 0);
-        font.draw(batch, "Press -ESC- To Exit", -(Constants.getResolutionWidth() / 3.3f), -150);
-
-
-        batch.end();
-    }
 
     public void renderTooltip(Tooltip data) {
         int baseIconSize = data.getIconSize();
