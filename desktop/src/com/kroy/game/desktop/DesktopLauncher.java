@@ -24,7 +24,7 @@ public class DesktopLauncher {
         }
         else
         {
-            Constants.setResourceRoot(Constants.getResourceRoot() + "/core/assets/");
+            Constants.setResourceRoot(Constants.getResourceRoot() + "core/assets/");
         }
 
         new LwjglApplication(new MainClass(), config);

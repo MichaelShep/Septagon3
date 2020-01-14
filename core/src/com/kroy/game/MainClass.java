@@ -718,7 +718,7 @@ public class MainClass extends ApplicationAdapter {
 
 
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos, yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
-        font.draw(batch, data.getName(), 50, (int) yPos - (int)(baseHeight/2));
+        font.draw(batch, data.getName(), -(float)Constants.getResolutionWidth()/2f, -Constants.getResolutionHeight()/2.5f);
 
         xPos += data.getIconSize() / 2;
 
@@ -733,6 +733,7 @@ public class MainClass extends ApplicationAdapter {
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "controlInfo.png", Texture.class), Constants.getResolutionWidth() / 3f, -Constants.getResolutionHeight() / 2f, 272, 720, 0, 0, 272, 720, false, false);
 
     }
+
 
 
 }
