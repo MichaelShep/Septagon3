@@ -19,7 +19,7 @@ public class Human extends Player {
         Random r = new Random();
 
         //encapsulates the balance
-        int health = r.nextInt((10 - 5) + 1) + 5;
+        int health = r.nextInt((9 - 5) + 1) + 5;
         ;
         int damage = r.nextInt((7 - 2) + 1) + 2;
         ;

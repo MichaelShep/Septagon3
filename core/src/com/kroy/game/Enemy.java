@@ -21,7 +21,7 @@ public class Enemy extends Player {
         Random r = new Random();
 
         //encapsulates the balance
-        int health = r.nextInt((22 - 7) + 1) + 7;
+        int health = r.nextInt((9 - 2) + 1) + 2;
         ;
         int damage = r.nextInt((4 - 2) + 1) + 2;
         ;
