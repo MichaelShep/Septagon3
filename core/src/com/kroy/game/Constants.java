@@ -30,7 +30,7 @@ public final class Constants {
     private static AssetManager MANAGER = new AssetManager();
 
     private static int FORTRESS_COUNT = 4;
-    private static int FIREENGINE_COUNT = 80;
+    private static int FIREENGINE_COUNT = 2;
 
 
     private static int STATION_REFILL_AMOUNT = 2;

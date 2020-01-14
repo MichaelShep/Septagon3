@@ -11,6 +11,11 @@ public class Fortress extends Character {
         name = charName;
     }
 
+    public String getName() {
+        return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }

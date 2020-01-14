@@ -2,7 +2,7 @@ package com.kroy.game;
 
 import java.util.HashMap;
 
-public class Tooltip {
+public class Tooltip extends MainClass {
 
     private String name;
     private int x, y;
@@ -86,5 +86,9 @@ public class Tooltip {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -424,6 +424,7 @@ public class MainClass extends ApplicationAdapter {
                 humanToolTip.updateValue( "Icons/waterIcon.png", ((FireEngine) queryInhabitant).getWaterAmount() + "/" + ((FireEngine) queryInhabitant).getWaterCapacity());
                 humanToolTip.setRender(true);
             } else if (queryInhabitant instanceof Fortress) {
+                enemyToolTip.setName(((Fortress)queryInhabitant).getName());
                 enemyToolTip.updateValue( "Icons/healthIcon.png", queryInhabitant.getHealth());
                 enemyToolTip.updateValue( "Icons/damageIcon.png", queryInhabitant.getDamage());
                 enemyToolTip.updateValue( "Icons/rangeIcon.png", queryInhabitant.getRange());
@@ -717,7 +718,7 @@ public class MainClass extends ApplicationAdapter {
 
 
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos, yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
-        font.draw(batch, "name", 50, (int) yPos - (int)(baseHeight/2));
+        font.draw(batch, data.getName(), 50, (int) yPos - (int)(baseHeight/2));
 
         xPos += data.getIconSize() / 2;
 
