@@ -10,4 +10,7 @@ public class Fortress extends Character {
 
         name = charName;
     }
+
+    }
+
 }
