@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class MapTests {
-/*
+
 
     Map mapTest = new Map("MapForTesting");
     Class ReflectionClass = Map.class;
@@ -23,22 +23,21 @@ public class MapTests {
     public void loadCSVTest() {
 
         int[][] expectedTileType = {{3, 1, 3, 3}, {1, 1, 1, 1}, {3, 1, 3, 3}, {3, 1, 1, 1}};
-        ArrayList<String[]> actualTyleTypes = new ArrayList<String[]>();
+        ArrayList<String[]> actualTyleTypes = mapTest.readMapCSV(directory);
 
-        try {
-            Method readMapCSVReflection = ReflectionClass.getDeclaredMethod("readMapCSV");
-            readMapCSVReflection.setAccessible(true);
-
-            Object returnedValue = readMapCSVReflection.invoke(directory, ReflectionClass);
-            actualTyleTypes = (ArrayList<String[]>) returnedValue;
-        } catch (NoSuchMethodException e) {
-
-        } catch (IllegalAccessException e) {
-
-        } catch (InvocationTargetException e) {
-
-        }
         assertEquals(expectedTileType, actualTyleTypes);
+
+        String invalidDirectory = directory + "cat";
+
+    }
+
+    @Test(expected = IOException.class)
+    public void IOExceptionLoadCSV(){
+        String invalidDirectory = directory + "cat";
+        ArrayList<String[]> actualTyleTypes = mapTest.readMapCSV(invalidDirectory);
+
+        assertNotEquals(expectedTileType, actualTyleTypes);
+
     }
 
 
@@ -146,7 +145,31 @@ public class MapTests {
 /*
 
     @Test
-    public void getNClosestTest()
+    public void testGetNClosest()
+    {
+        Tile tile1 = new Tile();
+        Tile[] expectedClosest = {tile1};
+
+        Tile hub = new Tile(1,1);
+        //Tile[] actualClosest = mapTest.getNClosest(1, hub);
+
+        //assertEquals(expectedClosest, actualClosest);
+    }
+
+     @Test
+    public void testGetNClosestNull()
+    {
+        Tile tile1 = new Tile();
+        Tile[] expectedClosest = {tile1};
+
+        Tile hub = new Tile(1,1);
+        //Tile[] actualClosest = mapTest.getNClosest(1, hub);
+
+        //assertEquals(expectedClosest, actualClosest);
+    }
+
+    @Test
+    public void testGetNClosestTileType()
     {
         Tile tile1 = new Tile();
         Tile[] expectedClosest = {tile1};

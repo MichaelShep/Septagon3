@@ -41,7 +41,7 @@ public class Map {
     }
 
 
-    ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException {
+    public ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException {
         ArrayList<String[]> rowData = new ArrayList<String[]>();
         String row;
 
