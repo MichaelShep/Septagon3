@@ -101,7 +101,7 @@ public class MainClass extends ApplicationAdapter {
         } else if (sceneHelper.getScene() == SceneType.SCENE_TYPE_GAME) {
             //game actions
             sceneHelper.resolveGameScreen(humanData, enemyData);
-            sceneHelper.renderGameScreen(batch, enemyData, humanData);
+            sceneHelper.renderGameScreen(batch, humanData, enemyData);
         } else if (sceneHelper.getScene() == SceneType.SCENE_TYPE_HUMANWIN) {
             //humanWinScreen actions
             sceneHelper.resolveHumanWinScreen();

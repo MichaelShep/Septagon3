@@ -21,7 +21,10 @@ public class Map {
     private int mapWidth, mapHeight;
     private int shiftX, shiftY;
 
-    //this comment exists because i forgot to split my comits
+    /**
+     * Constructs a new game Map Object
+     * @param fileName the file root of the map data
+     */
     public Map(String fileName) {
         //String directory = System.getProperty("user.dir") + "/core/src/Data/" + fileName;
         String directory = fileName;
@@ -40,7 +43,12 @@ public class Map {
 
     }
 
-
+    /**
+     * Read the map data from CSV
+     * @param mapCSVFile the csv file with the data
+     * @return return a List of string which represent each row of data
+     * @throws IOException if the file cannot be opened
+     */
     public ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException {
         ArrayList<String[]> rowData = new ArrayList<String[]>();
         String row;
@@ -71,6 +79,10 @@ public class Map {
     }
 
 
+    /**
+     * turn the string data from CSV into Tile Data
+     * @param mapTileData a list of Strings with numbers corresponding to enum TILE_TYPE
+     */
     public void generateMap(ArrayList<String[]> mapTileData) {
 
         int tileCode;
@@ -89,37 +101,6 @@ public class Map {
                     mapData[height][width] = new Tile(width, height, mapTextures(tileCode), TileType.values()[tileCode]);
                 }
 
-
-
-                /*
-                switch (tileCode)
-                {
-                    case 1:
-                        int[] adjacentTiles = getAdjacentTileCodes(width,height,mapTileData);
-                        mapData[height][width] = new Tile(width, height,mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
-                        break;
-
-                    case 2:
-                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
-                        break;
-                    case 3:
-                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
-                        break;
-                    case 4:
-                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
-                        break;
-                    case 5:
-                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
-                        break;
-                    case 6:
-                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
-                        break;
-                    default:
-                        mapData[height][width] = new Tile(width, height,mapTextures(tileCode), TileType.values()[tileCode]);
-                        break;
-
-                }
-                         */
             }
         }
 
@@ -127,7 +108,11 @@ public class Map {
 
     }
 
-
+    /**
+     * A function to allocate texture paths to TILE_TYPES
+     * @param textureCode the texture code you want the corresponding root for
+     * @return the texture root for that texture code
+     */
     private String mapTextures(int textureCode) {
         switch (textureCode) {
             case 0:
@@ -148,14 +133,16 @@ public class Map {
     }
 
 
-    //ths is hideous
+    /**
+     * maps tile codes based on the tiles that surround them
+     * @param xPos the x position of the query tile
+     * @param yPos the y position of the query tile
+     * @param mapTileData the tile data of the maps
+     * @return a list of adjacent tile codes
+     */
     private int[] getAdjacentTileCodes(int xPos, int yPos, ArrayList<String[]> mapTileData) {
         int[] adjacentTileCodes = new int[4];
         int tempValue;
-
-
-        //System.out.println("WIDTH: " + xPos + " HEIGHT: " + yPos);
-
 
         if (yPos + 1 < mapHeight) {
             tempValue = Integer.parseInt(mapTileData.get(yPos + 1)[xPos]);
@@ -189,7 +176,11 @@ public class Map {
     }
 
 
-    //if someone can do this neater please do
+    /**
+     * gives a corresponding orientated road texture based on a set of surrounding tiles
+     * @param adjacentTileTypes the list of adjacent tile codes
+     * @return the road texture for a tile that is surrounded by those inputs
+     */
     private String mapRoadTextures(int[] adjacentTileTypes) {
         switch ((adjacentTileTypes[0] + adjacentTileTypes[1] + adjacentTileTypes[2] + adjacentTileTypes[3])) {
             case 1: {
@@ -246,7 +237,11 @@ public class Map {
         }
     }
 
-
+    /**
+     * gets a random texture if the type passed is in a pool category
+     * @param textureType the type you want query
+     * @return a texture in the pool of type passed
+     */
     String rndTexture(String textureType) {
         Random random = new Random();
 
@@ -261,7 +256,10 @@ public class Map {
 
     }
 
-
+    /**
+     * find all the tiles that have fortresses
+     * @return a list of tiles where fortresses are situated
+     */
     public Tile[] getFortressTiles() {
         Tile[] locations = new Tile[Constants.getFortressCount()];
 
@@ -285,29 +283,6 @@ public class Map {
     }
 
 
-/*
-
-    private FireEngine getNewFireEngine(Tile characterPosition)
-    {
-
-
-
-    }
-
-    private Fortress getNewFortress(Tile characterPosition)
-    {
-        //encapsulates the balance
-        int health = 100;
-        int damage = 10;
-        int range = 3;
-        int speed = 3;
-        int waterCapacity = 100;
-
-        return new Fortress(health,damage,range,characterPosition,"fortress Name");
-
-
-    }
- */
 
 
     //getters
@@ -343,12 +318,24 @@ public class Map {
         return stationPosition;
     }
 
+    /**
+     * find the distance between two tiles
+     * @param source the first tile
+     * @param target the second tile
+     * @return the distance between them
+     */
     private double distanceBetween(Tile source, Tile target) {
         double distance = Math.sqrt(Math.pow(source.getMapX() - target.getMapX(), 2) + Math.pow((source.getMapY() - target.getMapY()), 2));
         return distance;
 
     }
 
+    /**
+     * find all the tiles around a point sorted by distance
+     * @param hub the central location of the sort
+     * @return return an array list of tiles sorted by the distance away from the hub
+     * @throws Exception the ranges could not be computed
+     */
     private TreeMap<Double, ArrayList<Tile>> getSortedTilesAbout(Tile hub) throws Exception {
         TreeMap<Double, ArrayList<Tile>> sortedRangeTiles = new TreeMap<Double, ArrayList<Tile>>();
         Tile referenceTile;
@@ -374,7 +361,12 @@ public class Map {
 
     }
 
-
+    /**
+     * gets the n closest tiles to a hub tile
+     * @param n the number of tiles you want back
+     * @param hub the central location of the search
+     * @return and array of n tiles
+     */
     public Tile[] getNClosest(int n, Tile hub) {
         TreeMap<Double, ArrayList<Tile>> sortedRangeTiles;
         int tilesFound = 0;
@@ -408,6 +400,12 @@ public class Map {
 
     }
 
+    /**
+     * gets the n closest tiles to a hub tile of a certain tile type
+     * @param n the number of tiles you want back
+     * @param hub the central location of the search
+     * @return and array of n tiles
+     */
     public Tile[] getNClosest(int n, Tile hub, TileType type) {
         TreeMap<Double, ArrayList<Tile>> sortedRangePairs;
         int tilesFound = 0;
@@ -446,10 +444,20 @@ public class Map {
 
     }
 
+    /**
+     * places a character onto the map
+     * @param placedObject the character you want to place
+     */
     public void placeOnMap(Character placedObject) {
         placedObject.setPosition((placedObject.getLocation().getMapX() * Constants.getTileSize() + shiftX), (placedObject.getLocation().getMapY() * Constants.getTileSize() + shiftY));
     }
 
+    /**
+     * get a list of tiles that must be within a specific range of the hub
+     * @param hub the centre of the search
+     * @param range the maximum range surrounding tiles can be
+     * @return a list of tiles with range of the hub
+     */
     public ArrayList<Tile> getWithRangeOfHub(Tile hub, int range) {
         TreeMap<Double, ArrayList<Tile>> sortedRangePairs;
         ArrayList<Tile> outputTiles = new ArrayList<Tile>();
@@ -475,6 +483,12 @@ public class Map {
         return outputTiles;
     }
 
+    /**
+     * get a list of tiles that must be within a specific range of the hub and of a specific type
+     * @param hub the centre of the search
+     * @param range the maximum range surrounding tiles can be
+     * @return a list of tiles with range of the hub
+     */
     public ArrayList<Tile> getWithRangeOfHub(Tile hub, int range, TileType type) {
         TreeMap<Double, ArrayList<Tile>> sortedRangePairs;
         ArrayList<Tile> outputTiles = new ArrayList<Tile>();
@@ -501,6 +515,7 @@ public class Map {
 
         return outputTiles;
     }
+
 
     public void setStationPosition(Station stationPosition) {
         this.stationPosition = stationPosition;

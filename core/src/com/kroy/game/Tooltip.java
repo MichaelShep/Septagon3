@@ -12,7 +12,16 @@ public class Tooltip {
     private HashMap<String, Object> values;
 
 
-    public Tooltip(String characterName,int xPosition, int yPosition, int sizeOfTile, int sizeOfFont) {
+    /**
+     * Constructs a tooltip to be rendered on the screen
+     *
+     * @param characterName the name that the tool tip represents
+     * @param xPosition     the X position to render at
+     * @param yPosition     the Y position to render at
+     * @param sizeOfTile    the size of icons on tooltip
+     * @param sizeOfFont    the size of the text
+     */
+    public Tooltip(String characterName, int xPosition, int yPosition, int sizeOfTile, int sizeOfFont) {
 
         name = characterName;
         x = xPosition;
@@ -23,7 +32,12 @@ public class Tooltip {
         values = new HashMap<String, Object>();
     }
 
-
+    /**
+     * Add a value to rendered on the tool tip
+     *
+     * @param iconRoot the icon root to be rendered
+     * @param value    the value associated
+     */
     public void addValue(String iconRoot, Object value) {
         if (!(values.containsKey(iconRoot))) {
             values.put(iconRoot, value);
@@ -33,7 +47,12 @@ public class Tooltip {
         }
     }
 
-
+    /**
+     * update an existing value with a new value
+     *
+     * @param iconRoot the icon that you want to update
+     * @param value    the new value
+     */
     public void updateValue(String iconRoot, Object value) {
         if (values.containsKey(iconRoot)) {
             values.put(iconRoot, value);

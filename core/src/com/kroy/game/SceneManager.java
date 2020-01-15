@@ -32,7 +32,11 @@ public class SceneManager {
     Tooltip humanToolTip;
     Tooltip enemyToolTip;
 
-
+    /**
+     * Constructs a Class to manage and render scenes
+     *
+     * @param fontRef the font you want to use in the game
+     */
     SceneManager(BitmapFont fontRef) {
         scene = SceneType.SCENE_TYPE_MAINMENU;
 
@@ -59,7 +63,9 @@ public class SceneManager {
 
     // ------------ MAIN MENU ------------------------
 
-
+    /**
+     * Initialise the data needed for the main menu
+     */
     public void initMainMenuScreen() {
         scene = SceneType.SCENE_TYPE_MAINMENU;
         titleSprite = new Sprite(Constants.getManager().get(Constants.getResourceRoot() + "title.png", Texture.class), 0, 0, 621, 168);
@@ -75,6 +81,11 @@ public class SceneManager {
 
     }
 
+    /**
+     * Calculates actions during main menu scene
+     *
+     * @param runTime the change in time between last resolve
+     */
     public void resolveMainMenuScreen(float runTime) {
         //titleSprite.setCenterX();
         titleSprite.setX((titleSprite.getX() - (float) Math.sin(2 * runTime)));
@@ -86,6 +97,11 @@ public class SceneManager {
 
     }
 
+    /**
+     * Render the main menu scene
+     *
+     * @param batch the batch to render the scene through
+     */
     public void renderMainMenuScreen(Batch batch) {
         batch.begin();
 
@@ -100,6 +116,12 @@ public class SceneManager {
 
     // ------------ GAME SCREEN ------------------------
 
+    /**
+     * Initialise data needed for game screen
+     *
+     * @param humanData the data of the human player
+     * @param enemyData the data of the enemy player
+     */
     public void initGameScreen(Human humanData, Enemy enemyData) {
         scene = SceneType.SCENE_TYPE_GAME;
 
@@ -142,6 +164,12 @@ public class SceneManager {
 
     }
 
+    /**
+     * Calculates actions during game scene
+     *
+     * @param humanData the data of the human player
+     * @param enemyData the data of the enemy player
+     */
     public void resolveGameScreen(Human humanData, Enemy enemyData) {
         //in gameplay actions
         map.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
@@ -170,17 +198,20 @@ public class SceneManager {
             System.out.println("Enemy took their turn!");
 
             //Station heals and repairs its surroundings
-            for (Tile surroundingTile : map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange())) {
-                if (surroundingTile.getInhabitant() instanceof FireEngine) {
-                    surroundingTile.getInhabitant().setHealth(Math.min(surroundingTile.getInhabitant().getHealth() + Constants.getStationRepairAmount(), surroundingTile.getInhabitant().getMaxHealth()));
-                    ((FireEngine) surroundingTile.getInhabitant()).setWaterAmount(Math.min(((FireEngine) surroundingTile.getInhabitant()).getWaterAmount() + Constants.getStationRefillAmount(), ((FireEngine) surroundingTile.getInhabitant()).getWaterCapacity()));
-                    System.out.println("Station Healed!");
-                }
-            }
+            ((Station) map.getStationPosition()).refillTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
+            ((Station) map.getStationPosition()).repairTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
+
         }
     }
 
-    public void renderGameScreen(Batch batch, Enemy enemyData, Human humanData) {
+    /**
+     * render the game screen
+     *
+     * @param batch     the batch to render the scene through
+     * @param humanData the data of the human player
+     * @param enemyData the data of the enemy player
+     */
+    public void renderGameScreen(Batch batch, Human humanData, Enemy enemyData) {
         //renders the game screen
         batch.begin();
         renderMap(batch);
@@ -203,6 +234,9 @@ public class SceneManager {
     }
 
 
+    /**
+     * Initialise the human win screen
+     */
     public void initHumanWinScreen() {
         //set humanWinScreen Components;
         scene = SceneType.SCENE_TYPE_HUMANWIN;
@@ -214,12 +248,18 @@ public class SceneManager {
 
     }
 
-
+    /**
+     * Calculates actions during human win scene
+     */
     public void resolveHumanWinScreen() {
         //resolve actions during this scene
     }
 
-
+    /**
+     * Render human win screen
+     *
+     * @param batch the batch to render the scene through
+     */
     public void renderHumanWinScreen(Batch batch) {
         batch.begin();
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
@@ -234,6 +274,9 @@ public class SceneManager {
 
     // ------------ LOSE SCREEN ------------------------
 
+    /**
+     * Initialise the enemy win screen
+     */
     public void initEnemyWinScreen() {
         //set humanWinScreen Components;
         scene = SceneType.SCENE_TYPE_ENEMYWIN;
@@ -245,10 +288,18 @@ public class SceneManager {
 
     }
 
+    /**
+     * Calculates actions during enemy win scene
+     */
     public void resolveEnemyWinScreen() {
         //resolve actions during this scene
     }
 
+    /**
+     * render the enemy the win screen
+     *
+     * @param batch the batch to render the scene through
+     */
     public void renderEnemyWinScreen(Batch batch) {
         batch.begin();
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
@@ -263,7 +314,12 @@ public class SceneManager {
 
     // ------------ COMPONENTS ------------------------
 
-
+    /**
+     * render a tool tip
+     *
+     * @param data  the tooltip data
+     * @param batch the batch to render it through
+     */
     public void renderTooltip(Tooltip data, Batch batch) {
         int baseIconSize = data.getIconSize();
         int textSize = data.getFontSpacing();
@@ -293,7 +349,12 @@ public class SceneManager {
 
     }
 
-
+    /**
+     * render the fortresses
+     *
+     * @param batch     the batch to render it through
+     * @param enemyData the data of the enemy player
+     */
     public void renderFortresses(Batch batch, Enemy enemyData) {
         Character[] enemyCharacters = enemyData.getTeam();
 
@@ -306,7 +367,12 @@ public class SceneManager {
 
     }
 
-
+    /**
+     * render the fire engines
+     *
+     * @param batch     the batch to render it through
+     * @param humanData the data of the human player
+     */
     public void renderFireEngines(Batch batch, Human humanData) {
         Character[] humanCharacters = humanData.getTeam();
         for (Character fe : humanCharacters) {
@@ -318,12 +384,21 @@ public class SceneManager {
 
     }
 
+    /**
+     * render any UI components
+     *
+     * @param batch the batch to render it through
+     */
     public void renderUI(Batch batch) {
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "borderArt.png", Texture.class), -1024, -576, 2048, 1152, 0, 0, 1280, 720, false, false);
 
     }
 
-
+    /**
+     * render a Map
+     *
+     * @param batch the batch to render it through
+     */
     public void renderMap(Batch batch) {
         for (int height = 0; height < map.getMapHeight(); height++) {
             for (int width = 0; width < map.getMapWidth(); width++) {
@@ -332,6 +407,11 @@ public class SceneManager {
         }
     }
 
+    /**
+     * render a highlight map
+     *
+     * @param batch the batch to render it through
+     */
     public void renderHighLightMap(Batch batch) {
         for (int height = 0; height < highlightMap.getMapHeight(); height++) {
             for (int width = 0; width < highlightMap.getMapWidth(); width++) {
@@ -343,19 +423,35 @@ public class SceneManager {
 
     // ------------ Scene Utility ------------------------
 
+    /**
+     * test if the enemy has won in this scene
+     *
+     * @param humanData the data of the human player
+     * @return the win state of the enemy
+     */
     public boolean isEnemyWon(Human humanData) {
         humanData.resolveDeaths();
         return humanData.getAliveCharacters() == 0;
 
     }
 
+    /**
+     * test if the human has won in this scene
+     *
+     * @param enemyData the data of the enemy player
+     * @return the win state of the human
+     */
     public boolean isHumanWon(Enemy enemyData) {
         enemyData.resolveDeaths();
         return enemyData.getAliveCharacters() == 0;
 
     }
 
-
+    /**
+     * any operations the camera needs to do every frame
+     *
+     * @param batch the batch the camera is rendering
+     */
     public void cameraFrameOperation(Batch batch) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);

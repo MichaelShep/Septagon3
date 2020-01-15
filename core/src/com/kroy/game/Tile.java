@@ -8,7 +8,9 @@ public class Tile {
     private Character inhabitant;
 
 
-    // why are none of the constructors public?
+    /**
+     * Constructs a default Tile Object at 0,0
+     */
     public Tile() {
         //default constructor
         mapX = 0;
@@ -19,6 +21,12 @@ public class Tile {
 
     }
 
+    /**
+     * Constructs a Tile Object at newMapx, newMapY
+     *
+     * @param newMapX map position X
+     * @param newMapY map position Y
+     */
     public Tile(int newMapX, int newMapY) {
 
         mapX = newMapX;
@@ -29,6 +37,14 @@ public class Tile {
 
     }
 
+    /**
+     * Constructs a Tile Object at newMapX, newMapY, with newType type
+     *
+     * @param newMapX            map position X
+     * @param newMapY            map position Y
+     * @param newTextureLocation The sprite location
+     * @param newType            The enum type of the tile
+     */
     public Tile(int newMapX, int newMapY, String newTextureLocation, TileType newType) {
 
         mapX = newMapX;
@@ -81,8 +97,6 @@ public class Tile {
     public void setInhabitant(Character newInhabitant) {
         inhabitant = newInhabitant;
     }
-
-    //add inhabitant when implemented character.
 
 
 }
