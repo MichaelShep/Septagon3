@@ -7,14 +7,22 @@ abstract public class Player {
     protected boolean myTurn;
     protected Character[] team;
 
+    /**
+     * Constructs a Player Object
+     * @param name name of the player
+     * @param myTurn whether the player is active on instantiation
+     * @param teamSize the number of Characters the player can control
+     */
     public Player(String name, boolean myTurn, int teamSize) {
         this.name = name;
         this.myTurn = myTurn;
         team = new Character[teamSize];
     }
 
+    /**
+     * automatically deallocate characters that are disabled
+     */
     protected void resolveDeaths() {
-
         for (int i = 0; i < team.length; i++) {
             if (!(team[i] == null))
                 if (team[i].isDisabled()) {
@@ -24,6 +32,10 @@ abstract public class Player {
         }
     }
 
+    /**
+     * find the number of characters you control that are still alive
+     * @return the number of alive characters
+     */
     protected int getAliveCharacters() {
         int alive = 0;
         for (Character character : team) {
@@ -35,6 +47,10 @@ abstract public class Player {
         return alive;
     }
 
+    /**
+     * places you team in the locations supplied
+     * @param locations the locations you want to allocate, linearly across your team.
+     */
     public void distributeTeamLocation(Tile[] locations) {
         for (int locationIndex = 0; locationIndex < locations.length; locationIndex++) {
             team[locationIndex].setLocation(locations[locationIndex]);

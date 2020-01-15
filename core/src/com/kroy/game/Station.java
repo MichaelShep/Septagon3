@@ -1,5 +1,7 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.utils.Array;
+
 public class Station extends Tile {
     private int repairTime;
     private int refillTime;
@@ -13,13 +15,31 @@ public class Station extends Tile {
 
     }
 
-    private int getRepairTime() {
+
+
+
+    public int getRepairTime() {
         return repairTime;
     }
 
-    private int getRefillTime() {
+    public int getRefillTime() {
         return refillTime;
     }
+
+
+
+    public void repairSurrounding(Array<Tile> SurroundingTiles)
+    {
+
+    }
+
+
+    public void refillSurrounding(Array<Tile> SurroundingTiles)
+    {
+
+
+    }
+
 
 
 }
