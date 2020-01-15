@@ -2,7 +2,7 @@ package com.kroy.game;
 
 import java.util.HashMap;
 
-public class Tooltip extends MainClass {
+public class Tooltip {
 
     private String name;
     private int x, y;

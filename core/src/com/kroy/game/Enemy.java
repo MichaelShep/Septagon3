@@ -7,31 +7,48 @@ import java.util.Random;
 
 public class Enemy extends Player {
 
+    /**
+     * Constructs Enemy Object which is able to control a team of fire Engines
+     * Extends from Player Object
+     *
+     * @param name     the name of location that the fortress is situated
+     * @param myTurn   tells this player whether it can act
+     * @param teamSize the amount of characters it controls
+     */
     public Enemy(String name, Boolean myTurn, int teamSize) {
         super(name, myTurn, teamSize);
 
         for (int members = 0; members < teamSize; members++) {
             team[members] = createFortress(Constants.getFortressNames()[members]);
         }
-
     }
 
 
+    /**
+     * Gets a newly constructed Fortress
+     *
+     * @param name the name of the new Fortress
+     * @return returns the new Fortress object
+     */
     public Fortress createFortress(String name) {
         Random r = new Random();
 
         //encapsulates the balance
         int health = r.nextInt((9 - 2) + 1) + 2;
-        ;
         int damage = r.nextInt((4 - 2) + 1) + 2;
-        ;
         int range = r.nextInt((6 - 3) + 1) + 3;
-        ;
 
         return new Fortress(health, damage, range, null, name, "fortressTile.png");
     }
 
 
+    /**
+     * Finds all the tiles on a given map that are in range of the Fortress Team
+     * And Filters the tiles for only one that have Fire Engines
+     *
+     * @param mapData the map you want to check for targets on
+     * @return returns a hashMap with the Tiles that are accepted\n Key: The Fortress Value: The Tile that it can hit
+     */
     public HashMap<Fortress, Tile> calculateTargets(Map mapData) {
         HashMap<Fortress, Tile> targetLocations = new HashMap<>();
 
@@ -54,6 +71,11 @@ public class Enemy extends Player {
     }
 
 
+    /**
+     * algorithm for determining which of the available tiles to shoot at
+     *
+     * @param targets A hashMap with Key: The Fortress Value: The Tile that it can hit
+     */
     public void decideTarget(HashMap<Fortress, Tile> targets) {
         FireEngine target;
         Fortress source;
@@ -74,33 +96,8 @@ public class Enemy extends Player {
             source.shootTarget(target);
 
         }
-
     }
-
-
 }
 
-/*
-    public Enemy(String name, boolean myTurn, ArrayList<Fortress> team) {
-        super(name, myTurn);
-        team = new ArrayList<>();
-    }
 
-    private void contructTeam(int numberOfFortesses, Tile[] characterPositions) { // Not sure what this will look like
-        for (int fireEngine= 0; fireEngine < Constants.getFireEngineCount(); fireEngine++) {
-            this.getTeam().add(Fortress());
-        }
-    }
-
-    public void setDeath(Fortress dead) {
-        this.getTeam().remove(dead);
-    }
-
-
-
-
-
-
-
-*/
 

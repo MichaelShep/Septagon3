@@ -1,41 +1,18 @@
 package com.kroy.game;
 
 // ---------- clean up ----------
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-//import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.utils.Array;
-import org.w3c.dom.Text;
-
-import java.io.File;
 import java.util.ArrayList;
+
+//import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
 
 public class SceneManager {
@@ -48,7 +25,6 @@ public class SceneManager {
     HighlightMap highlightMap;
 
 
-
     Tile selectedTile;
 
     //assets
@@ -57,9 +33,7 @@ public class SceneManager {
     Tooltip enemyToolTip;
 
 
-
-    SceneManager(BitmapFont fontRef)
-    {
+    SceneManager(BitmapFont fontRef) {
         scene = SceneType.SCENE_TYPE_MAINMENU;
 
         font = fontRef;
@@ -81,8 +55,6 @@ public class SceneManager {
 
 
     }
-
-
 
 
     // ------------ MAIN MENU ------------------------
@@ -132,8 +104,7 @@ public class SceneManager {
         scene = SceneType.SCENE_TYPE_GAME;
 
 
-
-        map = new Map(Constants.getResourceRoot()+ Constants.getMapFileName());
+        map = new Map(Constants.getResourceRoot() + Constants.getMapFileName());
         map.setShiftX(-1024);
         map.setShiftY(-1728);
 
@@ -141,10 +112,9 @@ public class SceneManager {
         selectedTile = null;
 
 
-
-        humanToolTip = new Tooltip("",0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
+        humanToolTip = new Tooltip("", 0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
         humanToolTip.addValue("Icons/healthIcon.png", 0);
-        humanToolTip.addValue( "Icons/damageIcon.png", 0);
+        humanToolTip.addValue("Icons/damageIcon.png", 0);
         humanToolTip.addValue("Icons/rangeIcon.png", 0);
         humanToolTip.addValue("Icons/speedIcon.png", 0);
         humanToolTip.addValue("Icons/waterIcon.png", 0);
@@ -200,12 +170,10 @@ public class SceneManager {
             System.out.println("Enemy took their turn!");
 
             //Station heals and repairs its surroundings
-            for (Tile surroundingTile: map.getWithRangeOfHub(map.getStationPosition(),Constants.getStationRange()))
-            {
-                if (surroundingTile.getInhabitant() instanceof FireEngine)
-                {
-                    surroundingTile.getInhabitant().setHealth(Math.min(surroundingTile.getInhabitant().getHealth()+Constants.getStationRepairAmount(),surroundingTile.getInhabitant().getMaxHealth()));
-                    ((FireEngine) surroundingTile.getInhabitant()).setWaterAmount(Math.min(((FireEngine) surroundingTile.getInhabitant()).getWaterAmount()+Constants.getStationRefillAmount(),((FireEngine) surroundingTile.getInhabitant()).getWaterCapacity()));
+            for (Tile surroundingTile : map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange())) {
+                if (surroundingTile.getInhabitant() instanceof FireEngine) {
+                    surroundingTile.getInhabitant().setHealth(Math.min(surroundingTile.getInhabitant().getHealth() + Constants.getStationRepairAmount(), surroundingTile.getInhabitant().getMaxHealth()));
+                    ((FireEngine) surroundingTile.getInhabitant()).setWaterAmount(Math.min(((FireEngine) surroundingTile.getInhabitant()).getWaterAmount() + Constants.getStationRefillAmount(), ((FireEngine) surroundingTile.getInhabitant()).getWaterCapacity()));
                     System.out.println("Station Healed!");
                 }
             }
@@ -216,8 +184,8 @@ public class SceneManager {
         //renders the game screen
         batch.begin();
         renderMap(batch);
-        renderFortresses(batch,enemyData);
-        renderFireEngines(batch,humanData);
+        renderFortresses(batch, enemyData);
+        renderFireEngines(batch, humanData);
         if (highlightMap.isRender()) {
             renderHighLightMap(batch);
         }
@@ -233,8 +201,6 @@ public class SceneManager {
         renderUI(batch);
         batch.end();
     }
-
-
 
 
     public void initHumanWinScreen() {
@@ -266,7 +232,6 @@ public class SceneManager {
     }
 
 
-
     // ------------ LOSE SCREEN ------------------------
 
     public void initEnemyWinScreen() {
@@ -296,11 +261,7 @@ public class SceneManager {
     }
 
 
-
-
     // ------------ COMPONENTS ------------------------
-
-
 
 
     public void renderTooltip(Tooltip data, Batch batch) {
@@ -316,15 +277,15 @@ public class SceneManager {
 
 
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos, yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
-        font.draw(batch, data.getName(), -(float)Constants.getResolutionWidth()/2f, -Constants.getResolutionHeight()/2.5f);
+        font.draw(batch, data.getName(), -(float) Constants.getResolutionWidth() / 2f, -Constants.getResolutionHeight() / 2.5f);
 
         xPos += data.getIconSize() / 2;
 
         ArrayList<String> keys = new ArrayList<String>(data.getValues().keySet());
 
         for (int keyIndex = 0; keyIndex < keys.size(); keyIndex++) {
-            batch.draw(Constants.getManager().get(Constants.getResourceRoot() + keys.get(keyIndex), Texture.class), xPos + (keyIndex * (baseIconSize + textSize)), yPos + 100 * (int) (Constants.getResolutionWidth() / 1280), baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
-            font.draw(batch, " : " + (data.getValues().get(keys.get(keyIndex))).toString(), (int) (xPos + (keyIndex * (baseIconSize + textSize)) + baseIconSize), (int) yPos + baseIconSize + 100 * (int) (Constants.getResolutionWidth() / 1280));
+            batch.draw(Constants.getManager().get(Constants.getResourceRoot() + keys.get(keyIndex), Texture.class), xPos + (keyIndex * (baseIconSize + textSize)), yPos + 100 * (Constants.getResolutionWidth() / 1280), baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
+            font.draw(batch, " : " + (data.getValues().get(keys.get(keyIndex))).toString(), xPos + (keyIndex * (baseIconSize + textSize)) + baseIconSize, yPos + baseIconSize + 100 * (Constants.getResolutionWidth() / 1280));
 
         }
 
@@ -384,27 +345,18 @@ public class SceneManager {
 
     public boolean isEnemyWon(Human humanData) {
         humanData.resolveDeaths();
-        if (humanData.getAliveCharacters() == 0) {
-            return true;
-        }
-
-        return false;
+        return humanData.getAliveCharacters() == 0;
 
     }
 
     public boolean isHumanWon(Enemy enemyData) {
         enemyData.resolveDeaths();
-        if (enemyData.getAliveCharacters() == 0) {
-            return true;
-        }
-
-        return false;
+        return enemyData.getAliveCharacters() == 0;
 
     }
 
 
-    public void cameraFrameOperation(Batch batch)
-    {
+    public void cameraFrameOperation(Batch batch) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         cam.update();
