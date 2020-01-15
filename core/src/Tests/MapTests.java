@@ -11,42 +11,41 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class MapTests {
 
 
-    Map mapTest = new Map("MapForTesting");
     Class ReflectionClass = Map.class;
-    String directory = System.getProperty("user.dir") + "/core/src/Data/" + "MapForTesting";
-
-    /*
+    String directory = System.getProperty("user.dir") + "/core/assets/Data/" + "MapForTesting.csv";
+    Map mapTest = new Map(directory);
 
     @Test
     public void loadCSVTest() {
 
         int[][] expectedTileType = {{3, 1, 3, 3}, {1, 1, 1, 1}, {3, 1, 3, 3}, {3, 1, 1, 1}};
-        ArrayList<String[]> actualTyleTypes = mapTest.readMapCSV(directory);
-
-        assertEquals(expectedTileType, actualTyleTypes);
-
-        String invalidDirectory = directory + "cat";
-
+        try{
+            ArrayList<String[]> actualTyleTypes = mapTest.readMapCSV(directory);
+            assertEquals(expectedTileType, actualTyleTypes);
+        }
+        catch (IOException e){
+            fail();
+        }
     }
-    */
 
-    /*
-
+/*
     @Test(expected = IOException.class)
     public void IOExceptionLoadCSV(){
         String invalidDirectory = directory + "cat";
-        ArrayList<String[]> actualTyleTypes = mapTest.readMapCSV(invalidDirectory);
+        try{
+            ArrayList<String[]> actualTyleTypes = mapTest.readMapCSV(invalidDirectory);
+            fail();
+        }
+        catch (IOException e){
 
-        assertNotEquals(expectedTileType, actualTyleTypes);
+        }
     }
-     */
-
+*/
 
     @Test
     public void genertaeMapTest() {
@@ -76,6 +75,7 @@ public class MapTests {
         }
 
     }
+
 
     @Test
     public void mapRoadTileTest() {
