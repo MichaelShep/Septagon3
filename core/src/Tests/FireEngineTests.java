@@ -36,7 +36,7 @@ public class FireEngineTests {
     @Test
     public void testDeath() {
         testFireEngine.setHealth(0);
-        assertTrue(testFireEngine.getDisabled());
+        assertTrue(testFireEngine.isDisabled());
     }
 
     @Test

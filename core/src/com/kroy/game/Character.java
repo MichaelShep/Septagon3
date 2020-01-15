@@ -3,15 +3,27 @@ package com.kroy.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+
 abstract public class Character extends Sprite {
-    protected int maxHealth, health;
-    protected int damage;
-    protected int range;
-    protected boolean disabled;
-    protected Tile location;
+    private int maxHealth, health;
+    private int damage;
+    private int range;
+    private boolean disabled;
+    private Tile location;
 
 
-    public Character(int health, int damage, int range, Tile spawn, String spriteTex) {
+    /**
+     * Constructs a Character object which is an entity that can shoot, move and be killed.
+     * Extends from Sprite to allow rendering capability
+     * Character is abstract and must be constructed via a child
+     *
+     * @param health    the starting health of the character
+     * @param damage    the amount of damage this deals
+     * @param range     how far from its location it can shoot
+     * @param spawn     the starting location of this character
+     * @param spriteTex the image that the sprite class is loaded with
+     */
+    protected Character(int health, int damage, int range, Tile spawn, String spriteTex) {
         //super(Constants.getManager().get(spriteTex, Texture.class),Constants.getTileSize(),Constants.getTileSize());
         super(Constants.getManager().get(Constants.getResourceRoot() + spriteTex, Texture.class), 0, 0, Constants.getTileSize(), Constants.getTileSize());
         //setSize(Constants.getTileSize(), Constants.getTileSize());
@@ -24,31 +36,45 @@ abstract public class Character extends Sprite {
     }
 
 
-    protected void death() {
+    /**
+     * Checks if the character needs to be disabled
+     */
+    protected void checkDeath() {
         if (this.health == 0) {
             this.disabled = true;
         }
     }
 
+    /**
+     * Deal damage to this character
+     *
+     * @param damageTaken the amount the character needs their health reduced by
+     */
     protected void takeDamage(int damageTaken) {
         this.health = this.health - damageTaken;
         if (this.health < 0) {
             this.health = 0;
         }
 
-        if (health == 0) {
-            System.out.println("DIED");
-            disabled = true;
-        }
-
+        checkDeath();
     }
 
+    /**
+     * Moves this character to a new location
+     *
+     * @param newLocation the Tile Object that this character is moving to
+     */
     protected void transferTo(Tile newLocation) {
         location.setInhabitant(null);
         location = newLocation;
         newLocation.setInhabitant(this);
     }
 
+    /**
+     * Tell this character to shoot at another character
+     *
+     * @param target the character you want to shoot at
+     */
     public void shootTarget(Character target) {
         target.takeDamage(damage);
         System.out.println("Character at: " + this.location.getMapX() + ", " + this.location.getMapY() + " shot target at: " + target.getLocation().getMapX() + ", " + target.getLocation().getMapY());
@@ -72,6 +98,10 @@ abstract public class Character extends Sprite {
 
     }
 
+    public void setRange(int range) {
+        this.range = range;
+    }
+
     public int getDamage() {
         return this.damage;
     }
@@ -88,26 +118,23 @@ abstract public class Character extends Sprite {
         this.location = newLocation;
     }
 
-
-    public boolean getDisabled() {
-        return this.disabled;
+    public boolean isDisabled() {
+        return disabled;
     }
 
     public void setDisabled(boolean state) {
         this.disabled = state;
     }
 
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
     public int getMaxHealth() {
         return maxHealth;
     }
 
-    public boolean isDisabled() {
-        return disabled;
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
+
+
 }
 
 

@@ -8,6 +8,13 @@ public class HighlightMap {
     private int shiftX, shiftY;
 
 
+    /**
+     * Constructs a type of map to rendered on top of the game map
+     * Shows highlights and regions where players can take actions
+     *
+     * @param width  how wide the map is
+     * @param height how high the map is
+     */
     public HighlightMap(int width, int height) {
         //default Constructor
         mapWidth = width;
@@ -23,6 +30,10 @@ public class HighlightMap {
 
     }
 
+    /**
+     * Initialises the map data
+     * Fills the with default blank tiles
+     */
     public void generateMap() {
 
         mapData = new Tile[mapHeight][mapWidth];
@@ -36,6 +47,9 @@ public class HighlightMap {
 
     }
 
+    /**
+     * returns the map to its original state
+     */
     public void resetMap() {
         for (int height = 0; height < mapHeight; height++) {
             for (int width = 0; width < mapWidth; width++) {
@@ -45,12 +59,19 @@ public class HighlightMap {
 
     }
 
-
+    /**
+     * Turns a high light on to show a move the player can do
+     * Attacks get priority
+     *
+     * @param x    the x coordinate of interrogation
+     * @param y    the y coordinate of interrogation
+     * @param type the corresponding type of tile on the game map
+     */
     public void setTile(int x, int y, TileType type) {
-        if (type == TileType.TILE_TYPES_ROAD) {
-            mapData[y][x].setTexName("HighlightTexture/move.png");
-        } else if (type == TileType.TILE_TYPES_FORTRESS) {
+        if (type == TileType.TILE_TYPES_FORTRESS) {
             mapData[y][x].setTexName("HighlightTexture/attack.png");
+        } else if (type == TileType.TILE_TYPES_ROAD) {
+            mapData[y][x].setTexName("HighlightTexture/move.png");
         }
 
 

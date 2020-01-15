@@ -2,7 +2,6 @@ package com.kroy.game;
 
 import com.badlogic.gdx.assets.AssetManager;
 
-import java.awt.*;
 
 public final class Constants {
 

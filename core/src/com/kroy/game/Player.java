@@ -17,7 +17,7 @@ abstract public class Player {
 
         for (int i = 0; i < team.length; i++) {
             if (!(team[i] == null))
-                if (team[i].getDisabled()) {
+                if (team[i].isDisabled()) {
                     team[i].getLocation().setInhabitant(null);
                     team[i] = null;
                 }
