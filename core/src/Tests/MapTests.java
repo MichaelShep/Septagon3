@@ -5,6 +5,7 @@ import com.kroy.game.Tile;
 import com.kroy.game.TileType;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -17,25 +18,25 @@ public class MapTests {
 
 
     Class ReflectionClass = Map.class;
-    String directory = System.getProperty("user.dir") + "/core/assets/Data/" + "MapForTesting.csv";
+    String directory = System.getProperty("user.dir").replace("\\", "/") + "/assets/Data/" + "MapForTesting.csv";
     Map mapTest = new Map(directory);
 
     @Test
     public void loadCSVTest() {
 
-        int[][] expectedTileType = {{3, 1, 3, 3}, {1, 1, 1, 1}, {3, 1, 3, 3}, {3, 1, 1, 1}};
+        String[][] expectedTileType = {{"3", "1", "3", "5"}, {"1", "1", "1", "1"}, {"3", "1", "3", "4"}, {"3", "1", "1", "6"}};
         try{
             ArrayList<String[]> actualTyleTypes = mapTest.readMapCSV(directory);
-            assertEquals(expectedTileType, actualTyleTypes);
+            assertEquals(expectedTileType, actualTyleTypes.toArray());
         }
         catch (IOException e){
             fail();
         }
     }
 
-/*
-    @Test(expected = IOException.class)
-    public void IOExceptionLoadCSV(){
+
+    @Test(expected = FileNotFoundException.class)
+    public void testFileNotFoundExceptionLoadCSV(){
         String invalidDirectory = directory + "cat";
         try{
             ArrayList<String[]> actualTyleTypes = mapTest.readMapCSV(invalidDirectory);
@@ -45,28 +46,36 @@ public class MapTests {
 
         }
     }
-*/
+
 
     @Test
     public void genertaeMapTest() {
-        int expectedX = 1;
-        int expectedY = 0;
-        String expectedTexture = "roadTile.png";
-        TileType expectedTileType = TileType.TILE_TYPES_ROAD;
+        int[] expectedX = {1,3,3};
+        int[] expectedY = {3,3,0};
+        String[] expectedTexture = {"RoadTwoWayRightUp.png","stationTile.png","fortressTile.png"};
+        TileType[] expectedTileType = {TileType.TILE_TYPES_ROAD};
 
 
         try {
+            int numTestTiles = 3;
             Field mapDataReflection = ReflectionClass.getDeclaredField("mapData");
             mapDataReflection.setAccessible(true);
 
             Object tileData = mapDataReflection.get(mapTest);
             Tile[][] temp = (Tile[][]) tileData;
-            Tile testTile = temp[0][1];
 
-            assertEquals(expectedX, testTile.getMapX());
-            assertEquals(expectedY, testTile.getMapY());
-            assertEquals(expectedTexture, testTile.getTexName());
-            assertEquals(expectedTileType, testTile.getType());
+            Tile tile0 = temp[3][1];
+            Tile tile1 = temp[3][3];
+            Tile tile2 = temp[0][3];
+            Tile[] tiles = {tile0,tile1,tile2};
+
+            for (int i = 0; i <= numTestTiles - 1 ; i++){
+                assertEquals(expectedX[i], tiles[i].getMapX());
+                assertEquals(expectedY[i], tiles[i].getMapY());
+                assertEquals(expectedTexture[i], tiles[i].getTexName());
+                assertEquals(expectedTileType[i], tiles[i].getType());
+
+            }
 
         } catch (NoSuchFieldException e) {
 
@@ -79,7 +88,8 @@ public class MapTests {
 
     @Test
     public void mapRoadTileTest() {
-        Map mapRoadTest = new Map("MapForRoadTest.csv");
+        String directory = System.getProperty("user.dir").replace("\\", "/") + "/assets/Data/" + "MapForRoadTest.csv";
+        Map mapRoadTest = new Map(directory);
 
         try {
             Field mapDataReflection = ReflectionClass.getDeclaredField("mapData");
@@ -102,20 +112,20 @@ public class MapTests {
             Tile RoadVertical = temp[1][5];
             Tile RoadHorizontal = temp[1][9];
 
-            assertEquals("fourWayRoad.csv", fourWayRoad.getTexName());
+            assertEquals("RoadFourWay.png", fourWayRoad.getTexName());
 
-            assertEquals("RoadThreeWayNoUp.csv", RoadThreeWayNoUp.getTexName());
-            assertEquals("RoadThreeWayNoRight.csv", RoadThreeWayNoRight.getTexName());
-            assertEquals("RoadThreeWayNoDown.csv", RoadThreeWayNoDown.getTexName());
-            assertEquals("RoadThreeWayNoLeft.csv", RoadThreeWayNoLeft.getTexName());
+            assertEquals("RoadThreeWayNoUp.png", RoadThreeWayNoUp.getTexName());
+            assertEquals("RoadThreeWayNoRight.png", RoadThreeWayNoRight.getTexName());
+            assertEquals("RoadThreeWayNoDown.png", RoadThreeWayNoDown.getTexName());
+            assertEquals("RoadThreeWayNoLeft.png", RoadThreeWayNoLeft.getTexName());
 
-            assertEquals("RoadTwoWayRightUp.csv", RoadTwoWayRightUp.getTexName());
-            assertEquals("RoadTwoWayLeftUp.csv", RoadTwoWayLeftUp.getTexName());
-            assertEquals("RoadTwoWayRightDown.csv", RoadTwoWayRightDown.getTexName());
-            assertEquals("RoadTwoWayLeftDown.csv", RoadTwoWayLeftDown.getTexName());
+            assertEquals("RoadTwoWayRightUp.png", RoadTwoWayRightUp.getTexName());
+            assertEquals("RoadTwoWayLeftUp.png", RoadTwoWayLeftUp.getTexName());
+            assertEquals("RoadTwoWayRightDown.png", RoadTwoWayRightDown.getTexName());
+            assertEquals("RoadTwoWayLeftDown.png", RoadTwoWayLeftDown.getTexName());
 
-            assertEquals("RoadVertical.csv", RoadVertical.getTexName());
-            assertEquals("RoadHorizontal.csv", RoadHorizontal.getTexName());
+            assertEquals("RoadVertical.png", RoadVertical.getTexName());
+            assertEquals("RoadHorizontal.png", RoadHorizontal.getTexName());
 
         } catch (NoSuchFieldException e) {
 
@@ -149,45 +159,105 @@ public class MapTests {
         }
     }
 
-/*
+
 
     @Test
     public void testGetNClosest()
     {
-        Tile tile1 = new Tile();
-        Tile[] expectedClosest = {tile1};
 
-        Tile hub = new Tile(1,1);
-        //Tile[] actualClosest = mapTest.getNClosest(1, hub);
+        try {
+            Field mapDataReflection = ReflectionClass.getDeclaredField("mapData");
+            mapDataReflection.setAccessible(true);
 
-        //assertEquals(expectedClosest, actualClosest);
+            Object tileData = mapDataReflection.get(mapTest);
+            Tile[][] temp = (Tile[][]) tileData;
+            Tile testTile = temp[1][1];
+
+            Tile tile2 = temp[1][0];
+            Tile tile1 = temp[0][1];
+            Tile tile3 = temp[1][2];
+            Tile tile4 = temp[2][1];
+            Tile[] expectedClosest = {tile1,tile2,tile3,tile4};
+
+
+            Tile[] actualClosest = mapTest.getNClosest(4, testTile);
+
+            assertEquals(expectedClosest, actualClosest);
+
+
+        } catch (NoSuchFieldException e) {
+
+        } catch (IllegalAccessException e) {
+
+        }
     }
 
-     @Test
-    public void testGetNClosestNull()
+     @Test(expected = Exception.class)
+    public void testGetNClosestLargeNum()
     {
-        Tile tile1 = new Tile();
-        Tile[] expectedClosest = {tile1};
 
-        Tile hub = new Tile(1,1);
-        //Tile[] actualClosest = mapTest.getNClosest(1, hub);
+        try {
+            Field mapDataReflection = ReflectionClass.getDeclaredField("mapData");
+            mapDataReflection.setAccessible(true);
 
-        //assertEquals(expectedClosest, actualClosest);
+            Object tileData = mapDataReflection.get(mapTest);
+            Tile[][] temp = (Tile[][]) tileData;
+            Tile testTile = temp[1][1];
+
+            Tile tile1 = temp[1][0];
+            Tile tile2 = temp[0][1];
+            Tile tile3 = temp[2][1];
+            Tile tile4 = temp[2][1];
+            Tile[] expectedClosest = {tile1,tile2,tile3,tile4};
+
+
+            Tile[] actualClosest = mapTest.getNClosest(1000, null);
+
+            assertEquals(expectedClosest, actualClosest);
+
+
+        } catch (NoSuchFieldException e) {
+
+        } catch (IllegalAccessException e) {
+
+        }
+
     }
 
     @Test
     public void testGetNClosestTileType()
     {
-        Tile tile1 = new Tile();
-        Tile[] expectedClosest = {tile1};
+        {
+            TileType testTileType = TileType.TILE_TYPES_GRASS;
+            try {
+                Field mapDataReflection = ReflectionClass.getDeclaredField("mapData");
+                mapDataReflection.setAccessible(true);
 
-        Tile hub = new Tile(1,1);
-        //Tile[] actualClosest = mapTest.getNClosest(1, hub);
+                Object tileData = mapDataReflection.get(mapTest);
+                Tile[][] temp = (Tile[][]) tileData;
+                Tile testTile = temp[1][1];
 
-        //assertEquals(expectedClosest, actualClosest);
+                Tile tile1 = temp[0][0];
+                Tile tile2 = temp[0][2];
+                Tile tile3 = temp[2][0];
+                Tile tile4 = temp[2][2];
+                Tile[] expectedClosest = {tile1,tile2,tile3,tile4};
+
+
+                Tile[] actualClosest = mapTest.getNClosest(4, testTile,testTileType);
+
+                assertEquals(expectedClosest, actualClosest);
+
+
+            } catch (NoSuchFieldException e) {
+
+            } catch (IllegalAccessException e) {
+
+            }
+        }
     }
 
- */
+
 
 
 }
