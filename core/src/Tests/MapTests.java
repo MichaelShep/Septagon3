@@ -52,8 +52,8 @@ public class MapTests {
     public void genertaeMapTest() {
         int[] expectedX = {1,3,3};
         int[] expectedY = {3,3,0};
-        String[] expectedTexture = {"RoadTwoWayRightUp.png","stationTile.png","fortressTile.png"};
-        TileType[] expectedTileType = {TileType.TILE_TYPES_ROAD};
+        String[] expectedTexture = {"RoadTwoWayRightDown.png","stationTile.png","lavaTile.png"};
+        TileType[] expectedTileType = {TileType.TILE_TYPES_ROAD,TileType.TILE_TYPES_STATION,TileType.TILE_TYPES_FORTRESS};
 
 
         try {
@@ -114,18 +114,18 @@ public class MapTests {
 
             assertEquals("RoadFourWay.png", fourWayRoad.getTexName());
 
-            assertEquals("RoadThreeWayNoUp.png", RoadThreeWayNoUp.getTexName());
+            assertEquals("RoadThreeWayNoDown.png", RoadThreeWayNoUp.getTexName());
             assertEquals("RoadThreeWayNoRight.png", RoadThreeWayNoRight.getTexName());
-            assertEquals("RoadThreeWayNoDown.png", RoadThreeWayNoDown.getTexName());
+            assertEquals("RoadThreeWayNoUp.png", RoadThreeWayNoDown.getTexName());
             assertEquals("RoadThreeWayNoLeft.png", RoadThreeWayNoLeft.getTexName());
 
-            assertEquals("RoadTwoWayRightUp.png", RoadTwoWayRightUp.getTexName());
-            assertEquals("RoadTwoWayLeftUp.png", RoadTwoWayLeftUp.getTexName());
-            assertEquals("RoadTwoWayRightDown.png", RoadTwoWayRightDown.getTexName());
-            assertEquals("RoadTwoWayLeftDown.png", RoadTwoWayLeftDown.getTexName());
+            assertEquals("RoadTwoWayRightDown.png", RoadTwoWayRightUp.getTexName());
+            assertEquals("RoadTwoWayLeftDown.png", RoadTwoWayLeftUp.getTexName());
+            assertEquals("RoadTwoWayRightUp.png", RoadTwoWayRightDown.getTexName());
+            assertEquals("RoadTwoWayLeftUp.png", RoadTwoWayLeftDown.getTexName());
 
-            assertEquals("RoadVertical.png", RoadVertical.getTexName());
-            assertEquals("RoadHorizontal.png", RoadHorizontal.getTexName());
+            assertEquals("RoadHorizontal.png", RoadVertical.getTexName());
+            assertEquals("RoadVertical.png", RoadHorizontal.getTexName());
 
         } catch (NoSuchFieldException e) {
 
