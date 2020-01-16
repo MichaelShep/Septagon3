@@ -13,7 +13,7 @@ public class Station extends Tile {
      * @param X The x position of the tile on the map
      * @param Y The y position of the tile on the map
      */
-    Station(int X, int Y) {
+    public Station(int X, int Y) {
         super(X, Y, "stationTile.png", TileType.TILE_TYPES_STATION);
 
         repairTime = Constants.getStationRepairAmount();
