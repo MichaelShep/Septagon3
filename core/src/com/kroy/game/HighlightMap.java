@@ -1,5 +1,9 @@
 package com.kroy.game;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import java.util.ArrayList;
+
 public class HighlightMap {
 
     private Tile[][] mapData;
@@ -76,6 +80,83 @@ public class HighlightMap {
 
 
     }
+
+    public void removeUnreachable()
+    {
+        ArrayList<Tile> moveTiles = new ArrayList<>();
+        for (int height = 0; height < mapHeight; height++) {
+            for (int width = 0; width < mapWidth; width++) {
+                if(mapData[height][width].getTexName() == "HighlightTexture/move.png")
+                {
+                    moveTiles.add(mapData[height][width]);
+                }
+            }
+        }
+
+        for (Tile move: moveTiles)
+        {
+            if (!tileReachable(move))
+            {
+                move.setTexName("HighlightTexture/blank.png");
+            }
+        }
+
+
+    }
+
+    public Boolean tileReachable(Tile startTile)
+    {
+        ArrayList<Tile> tilesVisited = new ArrayList<>();
+        int[][] shiftValues = {
+                {0,1},{0,-1},{1,0},{-1,0}
+        };
+
+        Boolean addedTileFlag = true;
+
+        tilesVisited.add(startTile);
+
+        while (addedTileFlag)
+        {
+            addedTileFlag = false;
+            for (Tile queryTile: new ArrayList<Tile>(tilesVisited))
+            {
+                for (int[] shiftValue: shiftValues)
+                {
+                    Tile adjacentTile;
+                    try
+                    {
+                        adjacentTile = mapData[queryTile.getMapY()+shiftValue[0]][queryTile.getMapX()+shiftValue[1]];
+                        if (!tilesVisited.contains(adjacentTile))
+                        {
+                            if (adjacentTile.getTexName().equals("HighlightTexture/move.png"))
+                            {
+                                tilesVisited.add(adjacentTile);
+                                addedTileFlag = true;
+                            }
+                            if (adjacentTile.getTexName().equals("HighlightTexture/selected.png"))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (IndexOutOfBoundsException e)
+                    {
+                        System.out.println("queryTile was on the edge of the map");
+                    }
+
+
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+
+
+
+
 
 
     public Tile[][] getMapData() {
