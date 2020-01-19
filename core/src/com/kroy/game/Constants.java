@@ -10,15 +10,15 @@ public final class Constants {
     //private static int RESOLUTION_WIDTH = 3840;
     //private static int RESOLUTION_HEIGHT = 2160;
 
-    //private static int RESOLUTION_WIDTH = 1920;
-    //private static int RESOLUTION_HEIGHT = 1080;
+    private static int RESOLUTION_WIDTH = 1920;
+    private static int RESOLUTION_HEIGHT = 1080;
 
 
     //private static int RESOLUTION_WIDTH = 1280;
     //private static int RESOLUTION_HEIGHT = 720;
 
-    private static int RESOLUTION_WIDTH = 640;
-    private static int RESOLUTION_HEIGHT = 360;
+    //private static int RESOLUTION_WIDTH = 640;
+    //private static int RESOLUTION_HEIGHT = 360;
 
     private static boolean FULLSCREEN = true;
     //private static boolean FULLSCREEN = false;
@@ -29,8 +29,6 @@ public final class Constants {
 
     private static int FORTRESS_COUNT = 4;
     private static int FIREENGINE_COUNT = 2;
-
-
 
     private static int STATION_REFILL_AMOUNT = 2;
     private static int STATION_REPAIR_AMOUNT = 2;
@@ -45,8 +43,20 @@ public final class Constants {
 
     private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles"};
 
+    private static  int[][] fireEngineProfiles = {
+            {8,5,5,3,4}, {9,4,4,7,2}
+    };
 
-    // this is another comment
+    private static  int[][] fortressProfiles = {
+            {4,5,3}, {7,3,5},{9,4,4}, {6,6,2}
+    };
+
+
+
+
+
+
+
 
 
     private Constants() {
@@ -125,6 +135,14 @@ public final class Constants {
 
     public static void setResolutionWidth(int resolutionWidth) {
         RESOLUTION_WIDTH = resolutionWidth;
+    }
+
+    public static int[][] getFireEngineProfiles() {
+        return fireEngineProfiles;
+    }
+
+    public static int[][] getFortressProfiles() {
+        return fortressProfiles;
     }
 
 }

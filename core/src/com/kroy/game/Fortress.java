@@ -31,4 +31,7 @@ public class Fortress extends Character {
     public void setName(String name) {
         this.name = name;
     }
+
+
+
 }

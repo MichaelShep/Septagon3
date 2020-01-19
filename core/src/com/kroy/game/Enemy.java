@@ -10,16 +10,14 @@ public class Enemy extends Player {
     /**
      * Constructs Enemy Object which is able to control a team of fire Engines
      * Extends from Player Object
-     *
-     * @param name     the name of location that the fortress is situated
      * @param myTurn   tells this player whether it can act
      * @param teamSize the amount of characters it controls
      */
-    public Enemy(String name, Boolean myTurn, int teamSize) {
-        super(name, myTurn, teamSize);
+    public Enemy( Boolean myTurn, int teamSize) {
+        super(myTurn, teamSize);
 
         for (int members = 0; members < teamSize; members++) {
-            team[members] = createFortress(Constants.getFortressNames()[members]);
+            team[members] = createFortress(Constants.getFortressNames()[members], members);
         }
     }
 
@@ -30,13 +28,22 @@ public class Enemy extends Player {
      * @param name the name of the new Fortress
      * @return returns the new Fortress object
      */
-    public Fortress createFortress(String name) {
-        Random r = new Random();
+    public Fortress createFortress(String name, int createdNumber) {
+        int[] statProfile = {};
+        try
+        {
+            statProfile = Constants.getFortressProfiles()[createdNumber];
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            System.out.println("Not enough Profiles defines in constants");
+            System.exit(0);
+        }
 
         //encapsulates the balance
-        int health = r.nextInt((9 - 2) + 1) + 2;
-        int damage = r.nextInt((4 - 2) + 1) + 2;
-        int range = r.nextInt((6 - 3) + 1) + 3;
+        int health = statProfile[0];
+        int damage = statProfile[1];
+        int range = statProfile[2];
 
         return new Fortress(health, damage, range, null, name, "fortressTile.png");
     }
@@ -98,6 +105,10 @@ public class Enemy extends Player {
         }
     }
 }
+
+
+
+
 
 
 

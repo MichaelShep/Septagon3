@@ -71,8 +71,8 @@ public class MainClass extends ApplicationAdapter {
             System.out.println("TEXTURE LOADED: " + t.toString());
         }
 
-        humanData = new Human("humanName", true, Constants.getFireengineCount());
-        enemyData = new Enemy("EnemyName", false, Constants.getFortressCount());
+        humanData = new Human( true, Constants.getFireengineCount());
+        enemyData = new Enemy( false, Constants.getFortressCount());
 
         sceneHelper = new SceneManager(font);
         sceneHelper.initMainMenuScreen();
@@ -306,7 +306,7 @@ public class MainClass extends ApplicationAdapter {
                 switch (sceneHelper.getHighlightMap().getMapData()[queryTile.getMapY()][queryTile.getMapX()].getTexName()) {
                     case "HighlightTexture/move.png":
                         System.out.println("MOVE");
-                        sceneHelper.getSelectedTile().getInhabitant().transferTo(queryTile);
+                        ((FireEngine)sceneHelper.getSelectedTile().getInhabitant()).transferTo(queryTile);
 
                         sceneHelper.setSelectedTile(null);
                         sceneHelper.getHighlightMap().resetMap();

@@ -2,19 +2,15 @@ package com.kroy.game;
 
 abstract public class Player {
 
-    protected static int turnCount = 1;
-    protected String name;
     protected boolean myTurn;
     protected Character[] team;
 
     /**
      * Constructs a Player Object
-     * @param name name of the player
      * @param myTurn whether the player is active on instantiation
      * @param teamSize the number of Characters the player can control
      */
-    public Player(String name, boolean myTurn, int teamSize) {
-        this.name = name;
+    public Player(boolean myTurn, int teamSize) {
         this.myTurn = myTurn;
         team = new Character[teamSize];
     }
@@ -59,13 +55,7 @@ abstract public class Player {
     }
 
 
-    public int getTurns() {
-        return Player.turnCount;
-    }
 
-    public String getName() {
-        return this.name;
-    }
 
     public Character[] getTeam() {
         return this.team;

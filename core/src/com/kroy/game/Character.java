@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 
-abstract public class Character extends Sprite {
+abstract public class  Character extends Sprite {
     private int maxHealth, health;
     private int damage;
     private int range;
     private boolean disabled;
-    private Tile location;
+    protected Tile location;
 
 
     /**
@@ -57,17 +57,6 @@ abstract public class Character extends Sprite {
         }
 
         checkDeath();
-    }
-
-    /**
-     * Moves this character to a new location
-     *
-     * @param newLocation the Tile Object that this character is moving to
-     */
-    protected void transferTo(Tile newLocation) {
-        location.setInhabitant(null);
-        location = newLocation;
-        newLocation.setInhabitant(this);
     }
 
     /**

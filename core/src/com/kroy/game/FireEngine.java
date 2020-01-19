@@ -27,7 +27,6 @@ public class FireEngine extends Character {
         this.waterAmount = waterCapacity;
         this.disabled = false;
 
-        // this.team.add(this);
     }
 
 
@@ -36,6 +35,8 @@ public class FireEngine extends Character {
      *
      * @param newAmount the amount of water you want to add
      */
+
+
     public void refillAmount(int newAmount) {
         if ((this.waterAmount + newAmount) > this.waterCapacity) {
             this.waterAmount = this.waterCapacity;
@@ -43,6 +44,7 @@ public class FireEngine extends Character {
             this.waterAmount += newAmount;
         }
     }
+
 
 
     public int getSpeed() {
@@ -73,6 +75,16 @@ public class FireEngine extends Character {
         waterAmount = Math.max(0, waterAmount - 1);
     }
 
+    /**
+     * Moves this character to a new location
+     *
+     * @param newLocation the Tile Object that this character is moving to
+     */
+    protected void transferTo(Tile newLocation) {
+        location.setInhabitant(null);
+        location = newLocation;
+        newLocation.setInhabitant(this);
+    }
 }
 
 

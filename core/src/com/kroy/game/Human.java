@@ -8,14 +8,13 @@ public class Human extends Player {
     /**
      * Constucts a Human Player, this will be able to control a team of fire engines
      *
-     * @param name     the name of the player
      * @param myTurn   if this player is active on instantiation
      * @param teamSize the number of characters he can control
      */
-    public Human(String name, boolean myTurn, int teamSize) {
-        super(name, myTurn, teamSize);
+    public Human(boolean myTurn, int teamSize) {
+        super(myTurn, teamSize);
         for (int members = 0; members < teamSize; members++) {
-            team[members] = createFireEngine();
+            team[members] = createFireEngine(members);
         }
 
 
@@ -27,15 +26,26 @@ public class Human extends Player {
      *
      * @return a constructed fire engine object
      */
-    public FireEngine createFireEngine() {
-        Random r = new Random();
+    public FireEngine createFireEngine(int createdNumber) {
+        int[] statProfile = {};
+
+        try
+        {
+            statProfile = Constants.getFireEngineProfiles()[createdNumber];
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            System.out.println("Not enough Profiles defines in constants");
+            System.exit(0);
+        }
+
 
         //encapsulates the balance
-        int health = r.nextInt((9 - 5) + 1) + 5;
-        int damage = r.nextInt((7 - 2) + 1) + 2;
-        int range = r.nextInt((6 - 3) + 1) + 3;
-        int speed = r.nextInt((6 - 3) + 1) + 3;
-        int waterCapacity = r.nextInt((5 - 2) + 1) + 2;
+        int health = statProfile[0];
+        int damage = statProfile[1];
+        int range = statProfile[2];
+        int speed = statProfile[3];
+        int waterCapacity = statProfile[4];
 
         return new FireEngine(health, damage, range, null, speed, waterCapacity, "fireEngineSprite.png");
     }
