@@ -22,7 +22,7 @@ public class MapTests {
     Map mapTest = new Map(directory);
 
     @Test
-    public void loadCSVTest() {
+    public void testLoadCSV() {
 
         String[][] expectedTileType = {{"3", "1", "3", "5"}, {"1", "1", "1", "1"}, {"3", "1", "3", "4"}, {"3", "1", "1", "6"}};
         try{
@@ -49,7 +49,7 @@ public class MapTests {
 
 
     @Test
-    public void genertaeMapTest() {
+    public void testGenertaeMap() {
         int[] expectedX = {1,3,3};
         int[] expectedY = {3,3,0};
         String[] expectedTexture = {"RoadTwoWayRightDown.png","stationTile.png","lavaTile.png"};
@@ -73,7 +73,7 @@ public class MapTests {
 
 
     @Test
-    public void mapRoadTileTest() {
+    public void testMapRoadTile() {
         String directory = System.getProperty("user.dir").replace("\\", "/") + "/assets/Data/" + "MapForRoadTest.csv";
         Map mapRoadTest = new Map(directory);
 
@@ -110,7 +110,7 @@ public class MapTests {
     }
 
     @Test
-    public void distanceBetweenTest() {
+    public void testDistanceBetween() {
         Tile testTile1 = new Tile(1, 1);
         Tile testTile2 = new Tile(4, 5);
 
@@ -217,7 +217,7 @@ public class MapTests {
         assertEquals(expectedWithRange, actualWithRange.toArray());
     }
 
-
+/*
      @Test(expected = Exception.class)
     public void testGetNClosestLargeNum()
     {
@@ -237,5 +237,5 @@ public class MapTests {
             Tile[] actualClosest = mapTest.getNClosest(100000, testTile,testTileType);
         }
     }
-
+*/
 }
