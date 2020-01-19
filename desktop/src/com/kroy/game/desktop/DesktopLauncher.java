@@ -5,6 +5,11 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.kroy.game.Constants;
 import com.kroy.game.MainClass;
 
+import java.awt.*;
+import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -19,16 +24,72 @@ public class DesktopLauncher {
         config.resizable = false;
 
         //this is a temporary fix. Don't look at it
-        if (Constants.getResourceRoot().contains("Release")) {
-            Constants.setResourceRoot(Constants.getResourceRoot() + "/assets/");
+        try{
+            String assetRoot = findAssetRoot();
+            Constants.setResourceRoot(assetRoot);
+        } catch (Exception e){
+            System.exit(0);
         }
-        else
+
+
+        //set resolution if fullscreen on
+        if (Constants.isFULLSCREEN())
         {
-            Constants.setResourceRoot(Constants.getResourceRoot() + "core/assets/");
+            Dimension deviceDimensions = Toolkit.getDefaultToolkit().getScreenSize();
+            Constants.setResolutionWidth(deviceDimensions.width);
+            Constants.setResolutionHeight(deviceDimensions.height);
         }
+
+
+
 
         new LwjglApplication(new MainClass(), config);
 
 
     }
+
+    public static String findAssetRoot() throws Exception
+    {
+        ArrayList<String> listOfDir = new ArrayList<>();
+        listOfDir = findAllDir(Constants.getResourceRoot());
+        for (String dir: listOfDir)
+        {
+            if (dir.endsWith("\\assets"))
+            {
+                return (dir.replace("\\","/") + "/");
+            }
+        }
+        throw new Exception("asset folder does not exist");
+    }
+
+
+    public static ArrayList<String> findAllDir(String currentPath)
+    {
+        ArrayList<String> newPathList = new ArrayList<>();
+        File dir = new File(currentPath);
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                if (child.isDirectory()) {
+                    for (String queryDir: findAllDir(currentPath+"\\"+child.getName()))
+                    {
+                        if (!newPathList.contains(queryDir))
+                        {
+                            newPathList.add(queryDir);
+                        }
+                    }
+                }
+                else
+                {
+                    newPathList.add(currentPath);
+                }
+            }
+        }
+        return newPathList;
+    }
+
+
+
+
+
 }

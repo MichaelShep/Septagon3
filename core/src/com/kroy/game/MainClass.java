@@ -296,7 +296,7 @@ public class MainClass extends ApplicationAdapter {
 
 
                     sceneHelper.getHighlightMap().setRender(true);
-
+                    sceneHelper.getHighlightMap().removeUnreachable();
                 }
 
             }

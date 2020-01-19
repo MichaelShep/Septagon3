@@ -2,27 +2,26 @@ package com.kroy.game;
 
 import com.badlogic.gdx.assets.AssetManager;
 
+import java.awt.*;
+
 
 public final class Constants {
 
 
-    private static int RESOLUTION_WIDTH = 1920;
-    private static int RESOLUTION_HEIGHT = 1080;
 
-    //private static int RESOLUTION_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
-    //private static int RESOLUTION_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
+    //private static int RESOLUTION_WIDTH = 1920;
+    //private static int RESOLUTION_HEIGHT = 1080;
 
-    //private static int RESOLUTION_WIDTH = 1280;
-    //private static int RESOLUTION_HEIGHT = 720;
+
+    private static int RESOLUTION_WIDTH = 1280;
+    private static int RESOLUTION_HEIGHT = 720;
 
     //private static int RESOLUTION_WIDTH = 640;
     //private static int RESOLUTION_HEIGHT = 360;
 
-    //private static boolean FULLSCREEN = true;
-    private static boolean FULLSCREEN = false;
+    private static boolean FULLSCREEN = true;
+    //private static boolean FULLSCREEN = false;
 
-
-    private static int ROAD_DENSITY = 7;
 
     //private static int TILE_SIZE = (int)Math.sqrt((RESOLUTION_WIDTH*RESOLUTION_HEIGHT)/(MAP_WIDTH*MAP_HEIGHT));
     private static int TILE_SIZE = 64;
@@ -38,7 +37,7 @@ public final class Constants {
     private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png", "GreeneryTexture/BushTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/TreeTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/GrassTile1.png",};
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
 
-    private static String RESOURCE_ROOT = System.getProperty("user.dir").replace("\\", "/") + "/";
+    private static String RESOURCE_ROOT = System.getProperty("user.dir");
     private static String MAP_FILE_NAME = "Data/yorkMap.csv";
 
     private static int STATION_RANGE = 3;
@@ -68,11 +67,6 @@ public final class Constants {
 
     public static int getTileSize() {
         return TILE_SIZE;
-    }
-
-
-    public static int getRoadDensity() {
-        return ROAD_DENSITY;
     }
 
     public static int getFortressCount() {
@@ -123,7 +117,17 @@ public final class Constants {
     public static String[] getFortressNames() {
         return fortressNames;
     }
+
+    public static void setResolutionHeight(int resolutionHeight) {
+        RESOLUTION_HEIGHT = resolutionHeight;
+    }
+
+    public static void setResolutionWidth(int resolutionWidth) {
+        RESOLUTION_WIDTH = resolutionWidth;
+    }
+
 }
+
 
 
 
