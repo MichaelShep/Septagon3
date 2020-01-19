@@ -20,8 +20,8 @@ public final class Constants {
     //private static int RESOLUTION_WIDTH = 640;
     //private static int RESOLUTION_HEIGHT = 360;
 
-    private static boolean FULLSCREEN = true;
-    //private static boolean FULLSCREEN = false;
+    //private static boolean FULLSCREEN = true;
+    private static boolean FULLSCREEN = false;
 
 
     private static int TILE_SIZE = 64;
@@ -48,7 +48,7 @@ public final class Constants {
     };
 
     private static  int[][] fortressProfiles = {
-            {4,5,3}, {7,3,5},{9,4,4}, {6,6,2}
+            {4,5,7}, {7,3,5},{9,4,4}, {6,6,3}
     };
 
 
