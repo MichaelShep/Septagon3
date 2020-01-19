@@ -71,8 +71,7 @@ public class MainClass extends ApplicationAdapter {
             System.out.println("TEXTURE LOADED: " + t.toString());
         }
 
-        humanData = new Human( true, Constants.getFireengineCount());
-        enemyData = new Enemy( false, Constants.getFortressCount());
+
 
         sceneHelper = new SceneManager(font);
         sceneHelper.initMainMenuScreen();
@@ -166,6 +165,8 @@ public class MainClass extends ApplicationAdapter {
     private void handleInput() {
         if (sceneHelper.getScene() == SceneType.SCENE_TYPE_MAINMENU) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                humanData = new Human( true, Constants.getFireengineCount());
+                enemyData = new Enemy( false, Constants.getFortressCount());
                 sceneHelper.initGameScreen(humanData, enemyData);
             }
 
