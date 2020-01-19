@@ -10,8 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import javafx.scene.media.AudioSpectrumListener;
-
 import java.io.File;
 import java.util.ArrayList;
 

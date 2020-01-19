@@ -31,6 +31,7 @@ public final class Constants {
     private static int FIREENGINE_COUNT = 2;
 
 
+
     private static int STATION_REFILL_AMOUNT = 2;
     private static int STATION_REPAIR_AMOUNT = 2;
 
