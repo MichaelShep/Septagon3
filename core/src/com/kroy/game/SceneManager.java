@@ -107,8 +107,9 @@ public class SceneManager {
 
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
         titleSprite.draw(batch);
-        font.draw(batch, "Press -SPACE- To Start", -(Constants.getResolutionWidth() / 2.8f), 0);
-        font.draw(batch, "Press -ESC- To Exit", -(Constants.getResolutionWidth() / 3.3f), -150);
+        font.getData().setScale((Constants.getResolutionWidth()/1280f));
+        font.draw(batch, "Press -SPACE- To Start", -Constants.getResolutionWidth() / 3f, 0);
+        font.draw(batch, "Press -ESC- To Exit", -Constants.getResolutionWidth() / 3.2f, -150);
 
 
         batch.end();
@@ -134,23 +135,23 @@ public class SceneManager {
         selectedTile = null;
 
 
-        humanToolTip = new Tooltip("", 0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
+        humanToolTip = new Tooltip("", -900, 400, 75, 200);
         humanToolTip.addValue("Icons/healthIcon.png", 0);
         humanToolTip.addValue("Icons/damageIcon.png", 0);
         humanToolTip.addValue("Icons/rangeIcon.png", 0);
         humanToolTip.addValue("Icons/speedIcon.png", 0);
         humanToolTip.addValue("Icons/waterIcon.png", 0);
-        humanToolTip.setX((int) (-((humanToolTip.getIconSize() + humanToolTip.getFontSpacing()) * humanToolTip.getValues().size()) / 2f));
+        //humanToolTip.setX((int) (-((humanToolTip.getIconSize() + humanToolTip.getFontSpacing()) * humanToolTip.getValues().size()) / 2f));
         //humanToolTip.setY(100*(int)(Constants.getResolutionWidth()/1280f));
-        humanToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
+        //humanToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
 
 
-        enemyToolTip = new Tooltip("", 0, 0, (int) (Constants.getTileSize() * (Constants.getResolutionWidth() / 1280f)), 312 * (int) (Constants.getResolutionWidth() / 1280f));
+        enemyToolTip = new Tooltip("", -900, 400, 75, 200);
         enemyToolTip.addValue("Icons/healthIcon.png", 0);
         enemyToolTip.addValue("Icons/damageIcon.png", 0);
         enemyToolTip.addValue("Icons/rangeIcon.png", 0);
-        enemyToolTip.setX((int) (-((enemyToolTip.getIconSize() + enemyToolTip.getFontSpacing()) * enemyToolTip.getValues().size()) / 2f));
-        enemyToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
+        //enemyToolTip.setX((int) (-((enemyToolTip.getIconSize() + enemyToolTip.getFontSpacing()) * enemyToolTip.getValues().size()) / 2f));
+        //enemyToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
 
 
         humanData.distributeTeamLocation(map.getNClosest(Constants.getFireengineCount(), map.getStationPosition(), TileType.TILE_TYPES_ROAD));
@@ -315,37 +316,60 @@ public class SceneManager {
     // ------------ COMPONENTS ------------------------
 
     /**
-     * render a tool tip
+     * render a tool tip object on a given Batch
      *
      * @param data  the tooltip data
      * @param batch the batch to render it through
      */
     public void renderTooltip(Tooltip data, Batch batch) {
+
+
         int baseIconSize = data.getIconSize();
+        font.getData().setScale(1);
         int textSize = data.getFontSpacing();
 
         //int baseWidth = (int)(data.getValues().size() * (baseIconSize + textSize) / ((float) Constants.getResolutionWidth() / 1280f));
-        int baseWidth = data.getValues().size() * (baseIconSize + textSize);
-        int baseHeight = (int) (200 * (Constants.getResolutionWidth() / 1280f));
-
         int xPos = data.getX();
         int yPos = data.getY();
 
+        int baseWidth = xPos*-2;
+        int baseHeight = yPos;
 
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos, yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
-        font.draw(batch, data.getName(), -(float) Constants.getResolutionWidth() / 2f, -Constants.getResolutionHeight() / 2.5f);
 
-        xPos += data.getIconSize() / 2;
 
+        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos , yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
+        font.draw(batch, data.getName(), -920, -450);
+
+        xPos += baseIconSize / 2;
+        yPos += baseIconSize / 2;
         ArrayList<String> keys = new ArrayList<String>(data.getValues().keySet());
 
         for (int keyIndex = 0; keyIndex < keys.size(); keyIndex++) {
-            batch.draw(Constants.getManager().get(Constants.getResourceRoot() + keys.get(keyIndex), Texture.class), xPos + (keyIndex * (baseIconSize + textSize)), yPos + 100 * (Constants.getResolutionWidth() / 1280), baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
-            font.draw(batch, " : " + (data.getValues().get(keys.get(keyIndex))).toString(), xPos + (keyIndex * (baseIconSize + textSize)) + baseIconSize, yPos + baseIconSize + 100 * (Constants.getResolutionWidth() / 1280));
+            batch.draw(Constants.getManager().get(Constants.getResourceRoot() + keys.get(keyIndex), Texture.class), xPos + (keyIndex * (baseIconSize + textSize)), yPos, baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
+            font.draw(batch, " : " + (data.getValues().get(keys.get(keyIndex))).toString(), xPos + (keyIndex * (baseIconSize + textSize)) + baseIconSize, yPos + baseIconSize);
 
         }
 
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "controlInfo.png", Texture.class), Constants.getResolutionWidth() / 3f, -Constants.getResolutionHeight() / 2f, 272, 720, 0, 0, 272, 720, false, false);
+        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "controlInfo.png", Texture.class), 700, -400, 272, 720, 0, 0, 272, 720, false, false);
+
+        /*
+        int step = 200;
+        font.getData().setScale(0.3f);
+        for (int i = -Constants.getResolutionWidth(); i < Constants.getResolutionWidth(); i+=step )
+        {
+            for (int j = -Constants.getResolutionHeight(); j < Constants.getResolutionHeight(); j+=step )
+            {
+                font.draw(batch,(i+","+j).toString(),i,j);
+            }
+        }
+        */
+
+
+
+
+
+
+
 
     }
 

@@ -81,6 +81,9 @@ public class HighlightMap {
 
     }
 
+    /**
+     * Iterates all move tiles and removes any on the highlightmap that are not reachable
+     */
     public void removeUnreachable()
     {
         ArrayList<Tile> moveTiles = new ArrayList<>();
@@ -104,6 +107,11 @@ public class HighlightMap {
 
     }
 
+    /**
+     * States whether a given tile on the highlight Map can reach the selected character
+     * @param startTile the tile you want to query
+     * @return true if tile is reachable to selected via other move tiles. False otherwise.
+     */
     public Boolean tileReachable(Tile startTile)
     {
         ArrayList<Tile> tilesVisited = new ArrayList<>();
