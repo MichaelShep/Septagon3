@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -119,6 +118,7 @@ public class MainClass extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+        
     }
 
     /**
@@ -208,13 +208,12 @@ public class MainClass extends ApplicationAdapter {
                 double remapedShiftY = Remap(sceneHelper.getMap().getShiftY(), -1728, -576, 0, sceneHelper.getMap().getMapHeight() * Constants.getTileSize() * sceneHelper.getCam().zoom);
 
 
-                System.out.println("MOUSE PRESSED!");
 
                 int tileX = (int) Math.floor(((Gdx.input.getX()) / (float) Constants.getResolutionWidth()) * sceneHelper.getMap().getMapWidth() * sceneHelper.getCam().zoom) + (int) (sceneHelper.getMap().getMapWidth() * sceneHelper.getCam().zoom - (remapedShiftX / Constants.getTileSize()));
                 int tileY = sceneHelper.getMap().getMapHeight() - ((int) Math.floor(((Gdx.input.getY()) / (float) Constants.getResolutionHeight()) * sceneHelper.getMap().getMapHeight() * sceneHelper.getCam().zoom) + (int) ((remapedShiftY / Constants.getTileSize()))) - 1;
 
-                System.out.println("[" + Gdx.input.getX() + "]X tile: " + tileX + " [" + Gdx.input.getY() + "] Y tile: " + tileY);
-                System.out.println("X shift: " + remapedShiftX + " Y shift: " + remapedShiftY);
+                //System.out.println("[" + Gdx.input.getX() + "]X tile: " + tileX + " [" + Gdx.input.getY() + "] Y tile: " + tileY);
+                //System.out.println("X shift: " + remapedShiftX + " Y shift: " + remapedShiftY);
 
                 tileClicked(tileX, tileY);
 
@@ -384,7 +383,7 @@ public class MainClass extends ApplicationAdapter {
         //FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("desktop/build/resources/main/Fonts/RedHatDisplay.ttf"));
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/RedHatDisplay.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = (int) (64 * (Constants.getResolutionWidth() / 1280f));
+        parameter.size = 64;
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = 3;
         parameter.color = Color.ORANGE;

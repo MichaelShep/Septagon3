@@ -23,7 +23,6 @@ public class DesktopLauncher {
         config.title = "WARKROY";
         config.resizable = false;
 
-        //this is a temporary fix. Don't look at it
         try{
             String assetRoot = findAssetRoot();
             Constants.setResourceRoot(assetRoot);
@@ -39,6 +38,15 @@ public class DesktopLauncher {
             Constants.setResolutionWidth(deviceDimensions.width);
             Constants.setResolutionHeight(deviceDimensions.height);
         }
+
+        System.out.println("----------------------------------------------");
+        System.out.println("Width: " + Constants.getResolutionWidth());
+        System.out.println("Height: " + Constants.getResolutionHeight());
+        System.out.println("Asset Root: " + Constants.getResourceRoot());
+        System.out.println("----------------------------------------------");
+
+
+
 
 
 

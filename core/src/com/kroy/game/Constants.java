@@ -7,28 +7,29 @@ import java.awt.*;
 
 public final class Constants {
 
-
+    //private static int RESOLUTION_WIDTH = 3840;
+    //private static int RESOLUTION_HEIGHT = 2160;
 
     //private static int RESOLUTION_WIDTH = 1920;
     //private static int RESOLUTION_HEIGHT = 1080;
 
 
-    private static int RESOLUTION_WIDTH = 1280;
-    private static int RESOLUTION_HEIGHT = 720;
+    //private static int RESOLUTION_WIDTH = 1280;
+    //private static int RESOLUTION_HEIGHT = 720;
 
-    //private static int RESOLUTION_WIDTH = 640;
-    //private static int RESOLUTION_HEIGHT = 360;
+    private static int RESOLUTION_WIDTH = 640;
+    private static int RESOLUTION_HEIGHT = 360;
 
     private static boolean FULLSCREEN = true;
     //private static boolean FULLSCREEN = false;
 
 
-    //private static int TILE_SIZE = (int)Math.sqrt((RESOLUTION_WIDTH*RESOLUTION_HEIGHT)/(MAP_WIDTH*MAP_HEIGHT));
     private static int TILE_SIZE = 64;
     private static AssetManager MANAGER = new AssetManager();
 
     private static int FORTRESS_COUNT = 4;
     private static int FIREENGINE_COUNT = 2;
+
 
 
     private static int STATION_REFILL_AMOUNT = 2;

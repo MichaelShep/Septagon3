@@ -71,6 +71,12 @@ project(":core") {
     }
     apply plugin: 'java'
 
+    jar {
+        manifest {
+            attributes 'Main-Class': 'com.kroy.game.desktop.DesktopLauncher'
+        }
+    }
+
     repositories { jcenter() }
     dependencies {
         testCompile 'junit:junit:4.12'
