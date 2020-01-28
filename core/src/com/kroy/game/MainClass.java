@@ -21,8 +21,6 @@ public class MainClass extends ApplicationAdapter {
 
 
     private SpriteBatch batch;
-    private Human humanData;
-    private Enemy enemyData;
     private SceneManager sceneHelper;
     private BitmapFont font;
     private OrthographicCamera cam;
@@ -252,7 +250,7 @@ public class MainClass extends ApplicationAdapter {
         //clicking tiles can only be done on your turn
         Tile queryTile = sceneHelper.getMap().getMapData()[y][x];
 
-        if (humanData.isMyTurn()) {
+        if (sceneHelper.getHumanData().isMyTurn()) {
             if (sceneHelper.getSelectedTile() == null) {
                 if (queryTile.getInhabitant() instanceof FireEngine) {
 
@@ -293,8 +291,8 @@ public class MainClass extends ApplicationAdapter {
                         sceneHelper.setSelectedTile(null);
                         sceneHelper.getHighlightMap().resetMap();
                         sceneHelper.getHighlightMap().setRender(false);
-                        humanData.setMyTurn(false);
-                        enemyData.setMyTurn(true);
+                        sceneHelper.getHumanData().setMyTurn(false);
+                        sceneHelper.getEnemyData().setMyTurn(true);
                         break;
                     case "HighlightTexture/attack.png":
                         System.out.println("ATTACK");
@@ -303,8 +301,8 @@ public class MainClass extends ApplicationAdapter {
                             sceneHelper.setSelectedTile(null);
                             sceneHelper.getHighlightMap().resetMap();
                             sceneHelper.getHighlightMap().setRender(false);
-                            humanData.setMyTurn(false);
-                            enemyData.setMyTurn(true);
+                            sceneHelper.getHumanData().setMyTurn(false);
+                            sceneHelper.getEnemyData().setMyTurn(true);
                         }
 
 

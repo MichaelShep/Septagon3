@@ -316,6 +316,16 @@ public class GameScene extends Scene
         return selectedTile;
     }
 
+    public Human getHumanData()
+    {
+        return humanData;
+    }
+
+    public Enemy getEnemyData()
+    {
+        return enemyData;
+    }
+
     public void setSelectedTile(Tile selectedTile)
     {
         this.selectedTile = selectedTile;

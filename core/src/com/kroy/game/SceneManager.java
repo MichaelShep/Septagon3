@@ -193,4 +193,22 @@ public class SceneManager {
 
         return null;
     }
+
+    public Human getHumanData(){
+        if(getScene() == SceneType.SCENE_TYPE_GAME){
+            GameScene gameScene = (GameScene) currentScene;
+            return gameScene.getHumanData();
+        }
+
+        return null;
+    }
+
+    public Enemy getEnemyData(){
+        if(getScene() == SceneType.SCENE_TYPE_GAME){
+            GameScene gameScene = (GameScene) currentScene;
+            return gameScene.getEnemyData();
+        }
+
+        return null;
+    }
 }
