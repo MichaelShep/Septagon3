@@ -37,7 +37,7 @@ public final class Constants {
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
 
     private static String RESOURCE_ROOT = System.getProperty("user.dir");
-    private static String MAP_FILE_NAME = "Data/yorkMap.csv";
+    private static String MAP_FILE_NAME = "Data/yorkMapFlipped.csv";
 
     private static int STATION_RANGE = 3;
 
