@@ -27,7 +27,7 @@ public final class Constants {
     private static int TILE_SIZE = 64;
     private static AssetManager MANAGER = new AssetManager();
 
-    private static int FORTRESS_COUNT = 4;
+    private static int FORTRESS_COUNT = 6;
     private static int FIREENGINE_COUNT = 5;
 
     private static int STATION_REFILL_AMOUNT = 2;
@@ -41,14 +41,14 @@ public final class Constants {
 
     private static int STATION_RANGE = 3;
 
-    private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles"};
+    private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles", "fuck", "shit"};
 
     private static  int[][] fireEngineProfiles = {
-            {8,5,5,3,4}, {9,4,4,7,2}, {5,5,5,5,5}, {5,5,5,5,5}, {5,5,5,5,5}, {5,5,5,5,5}
+            {8,5,5,3,4}, {9,4,4,7,2}, {5,5,5,5,5}, {5,5,5,5,5}, {5,5,5,5,5}
     };
 
     private static  int[][] fortressProfiles = {
-            {4,5,7}, {7,3,5},{9,4,4}, {6,6,3}
+            {4,5,7}, {7,3,5},{9,4,4}, {6,6,3}, {5,5,5}, {5,5,5}
     };
 
     private Constants() {
