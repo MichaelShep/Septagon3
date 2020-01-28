@@ -29,6 +29,7 @@ public final class Constants {
 
     private static int FORTRESS_COUNT = 6;
     private static int FIREENGINE_COUNT = 5;
+    private static int PATROL_COUNT = 2;
 
     private static int STATION_REFILL_AMOUNT = 2;
     private static int STATION_REPAIR_AMOUNT = 2;
@@ -49,6 +50,11 @@ public final class Constants {
 
     private static  int[][] fortressProfiles = {
             {4,5,7}, {7,3,5}, {9,4,4}, {6,6,3}, {5,6,7}, {3,7,8}
+    };
+
+
+    private static int [][] patrolProfiles = {
+            {5,5,5}, {6,4,8}
     };
 
     private Constants() {
@@ -79,6 +85,8 @@ public final class Constants {
     public static int getFireengineCount() {
         return FIREENGINE_COUNT;
     }
+
+    public  static  int getPatrolCount() { return PATROL_COUNT; }
 
     public static String getMapFileName() {
         return MAP_FILE_NAME;
@@ -136,6 +144,8 @@ public final class Constants {
     public static int[][] getFortressProfiles() {
         return fortressProfiles;
     }
+
+    public static int[][] getPatrolProfiles(){ return patrolProfiles;}
 
 }
 

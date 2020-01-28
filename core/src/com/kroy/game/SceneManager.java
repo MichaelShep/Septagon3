@@ -155,6 +155,7 @@ public class SceneManager {
 
 
         humanData.distributeTeamLocation(map.getNClosest(Constants.getFireengineCount(), map.getStationPosition(), TileType.TILE_TYPES_ROAD));
+        enemyData.distributePatrols(map.getNClosest(Constants.getPatrolCount(), map.getFortressTiles()[0], TileType.TILE_TYPES_ROAD));
         enemyData.distributeTeamLocation(map.getFortressTiles());
 
         font.setColor(1f, 1f, 1f, 1f);
@@ -216,7 +217,7 @@ public class SceneManager {
         //renders the game screen
         batch.begin();
         renderMap(batch);
-        renderFortresses(batch, enemyData);
+        renderEnemies(batch, enemyData);
         renderFireEngines(batch, humanData);
         if (highlightMap.isRender()) {
             renderHighLightMap(batch);
@@ -379,8 +380,15 @@ public class SceneManager {
      * @param batch     the batch to render it through
      * @param enemyData the data of the enemy player
      */
-    public void renderFortresses(Batch batch, Enemy enemyData) {
+    public void renderEnemies(Batch batch, Enemy enemyData) {
         Character[] enemyCharacters = enemyData.getTeam();
+
+        for (Character patrol : enemyData.getPatrols()){
+            if (!(patrol == null)){
+                map.placeOnMap(patrol);
+                patrol.draw(batch);
+            }
+        }
 
         for (Character fort : enemyCharacters) {
             if (!(fort == null)) {

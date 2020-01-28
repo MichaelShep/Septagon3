@@ -166,7 +166,7 @@ public class MainClass extends ApplicationAdapter {
         if (sceneHelper.getScene() == SceneType.SCENE_TYPE_MAINMENU) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 humanData = new Human( true, Constants.getFireengineCount());
-                enemyData = new Enemy( false, Constants.getFortressCount());
+                enemyData = new Enemy( false, Constants.getFortressCount(), Constants.getPatrolCount());
                 sceneHelper.initGameScreen(humanData, enemyData);
             }
 

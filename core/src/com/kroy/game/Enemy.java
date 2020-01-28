@@ -7,17 +7,24 @@ import java.util.Random;
 
 public class Enemy extends Player {
 
+    private Character[] patrols;
+
     /**
      * Constructs Enemy Object which is able to control a team of fire Engines
      * Extends from Player Object
      * @param myTurn   tells this player whether it can act
      * @param teamSize the amount of characters it controls
      */
-    public Enemy( Boolean myTurn, int teamSize) {
+    public Enemy( Boolean myTurn, int teamSize, int patrolSize) {
         super(myTurn, teamSize);
 
         for (int members = 0; members < teamSize; members++) {
             team[members] = createFortress(Constants.getFortressNames()[members], members);
+        }
+
+        patrols = new Character[patrolSize];
+        for (int members = 0; members < patrolSize; members++ ){
+            patrols[members] = createPatrol(members);
         }
     }
 
@@ -50,6 +57,32 @@ public class Enemy extends Player {
 
 
     /**
+     * Gets a newly constructed Patrol
+     *
+     * @return returns the new Fortress object
+     */
+    public Patrol createPatrol(int createdNumber) {
+        int[] statProfile = {};
+        try
+        {
+            statProfile = Constants.getPatrolProfiles()[createdNumber];
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            System.out.println("Not enough Profiles defines in constants");
+            System.exit(0);
+        }
+
+        //encapsulates the balance
+        int health = statProfile[0];
+        int damage = statProfile[1];
+        int range = statProfile[2];
+
+        return new Patrol(health, damage, range, null, "fortressTile.png");
+    }
+
+
+    /**
      * Finds all the tiles on a given map that are in range of the Fortress Team
      * And Filters the tiles for only one that have Fire Engines
      *
@@ -77,6 +110,12 @@ public class Enemy extends Player {
 
     }
 
+    public void distributePatrols(Tile[] locations) {
+        for (int locationIndex = 0; locationIndex < locations.length; locationIndex++) {
+            patrols[locationIndex].setLocation(locations[locationIndex]);
+            locations[locationIndex].setInhabitant(patrols[locationIndex]);
+        }
+    }
 
     /**
      * algorithm for determining which of the available tiles to shoot at
@@ -103,6 +142,10 @@ public class Enemy extends Player {
             source.shootTarget(target);
 
         }
+    }
+
+    public Character[] getPatrols(){
+        return patrols;
     }
 }
 
