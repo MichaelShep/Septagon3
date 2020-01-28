@@ -17,6 +17,12 @@ public class Patrol extends Character {
         super(health, damage, range, spawn, spriteTex);
     }
 
+    public void transferTo(Tile newLocation){
+        location.setInhabitant(null);
+        location = newLocation;
+        location.setInhabitant(this);
+    }
+
 
 
 

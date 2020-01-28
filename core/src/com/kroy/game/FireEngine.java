@@ -1,6 +1,6 @@
 package com.kroy.game;
 
-public class FireEngine extends Character {
+public class FireEngine extends Patrol {
 
     private int speed;
     private int waterAmount;
@@ -73,17 +73,6 @@ public class FireEngine extends Character {
 
     public void decrementWaterAmount() {
         waterAmount = Math.max(0, waterAmount - 1);
-    }
-
-    /**
-     * Moves this character to a new location
-     *
-     * @param newLocation the Tile Object that this character is moving to
-     */
-    protected void transferTo(Tile newLocation) {
-        location.setInhabitant(null);
-        location = newLocation;
-        newLocation.setInhabitant(this);
     }
 }
 
