@@ -28,7 +28,7 @@ public final class Constants {
     private static AssetManager MANAGER = new AssetManager();
 
     private static int FORTRESS_COUNT = 4;
-    private static int FIREENGINE_COUNT = 2;
+    private static int FIREENGINE_COUNT = 5;
 
     private static int STATION_REFILL_AMOUNT = 2;
     private static int STATION_REPAIR_AMOUNT = 2;
@@ -44,20 +44,12 @@ public final class Constants {
     private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles"};
 
     private static  int[][] fireEngineProfiles = {
-            {8,5,5,3,4}, {9,4,4,7,2}
+            {8,5,5,3,4}, {9,4,4,7,2}, {5,5,5,5,5}, {5,5,5,5,5}, {5,5,5,5,5}, {5,5,5,5,5}
     };
 
     private static  int[][] fortressProfiles = {
             {4,5,7}, {7,3,5},{9,4,4}, {6,6,3}
     };
-
-
-
-
-
-
-
-
 
     private Constants() {
 
@@ -146,11 +138,6 @@ public final class Constants {
     }
 
 }
-
-
-
-
-
 
 /*
   private final static int RESOLUTION_WIDTH = 1280;
