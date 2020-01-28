@@ -18,7 +18,7 @@ abstract public class Player {
     /**
      * automatically deallocate characters that are disabled
      */
-    protected void resolveDeaths() {
+    public void resolveDeaths() {
         for (int i = 0; i < team.length; i++) {
             if (!(team[i] == null))
                 if (team[i].isDisabled()) {
@@ -32,7 +32,7 @@ abstract public class Player {
      * find the number of characters you control that are still alive
      * @return the number of alive characters
      */
-    protected int getAliveCharacters() {
+    public int getAliveCharacters() {
         int alive = 0;
         for (Character character : team) {
             if (!(character == null)) {

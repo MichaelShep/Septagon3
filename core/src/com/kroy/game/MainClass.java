@@ -4,12 +4,15 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.kroy.game.scenes.GameScene;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -20,9 +23,9 @@ public class MainClass extends ApplicationAdapter {
     private SpriteBatch batch;
     private Human humanData;
     private Enemy enemyData;
-    private float runTime;
     private SceneManager sceneHelper;
     private BitmapFont font;
+    private OrthographicCamera cam;
 
     /**
      * Remap a value from one range to another range
@@ -58,28 +61,22 @@ public class MainClass extends ApplicationAdapter {
         }
 
         while (!Constants.getManager().update()) {
-            //DO SOMETHING WHILE LOADING
-
+            //LOOP WAITS UNTIL ALL ASSETS ARE LOADED
         }
 
-        runTime = 0;
         batch = new SpriteBatch();
 
         Array<Texture> allAssetsLoaded = new Array<Texture>();
         Constants.getManager().getAll(Texture.class, allAssetsLoaded);
-        for (Texture t : allAssetsLoaded) {
-            System.out.println("TEXTURE LOADED: " + t.toString());
-        }
 
+        //define camera
+        cam = new OrthographicCamera();
+        cam.position.set(0, 0, 0);
+        cam.zoom = 0.5f;
+        cam.update();
 
-
-        sceneHelper = new SceneManager(font);
-        sceneHelper.initMainMenuScreen();
-        //initGameScreen();
-        //initHumanWinScreen();
-        //initEnemyWinScreen();
-
-
+        sceneHelper = new SceneManager(font, cam);
+        sceneHelper.initCurrentScene();
     }
 
     /**
@@ -89,17 +86,11 @@ public class MainClass extends ApplicationAdapter {
     public void render() {
         //every frame actions
         sceneHelper.cameraFrameOperation(batch);
-        runTime += Gdx.graphics.getDeltaTime();
         handleInput();
 
-        if (sceneHelper.getScene() == SceneType.SCENE_TYPE_MAINMENU) {
-            //main menu actions
-            sceneHelper.resolveMainMenuScreen(runTime);
-            sceneHelper.renderMainMenuScreen(batch);
-        } else if (sceneHelper.getScene() == SceneType.SCENE_TYPE_GAME) {
-            //game actions
-            sceneHelper.resolveGameScreen(humanData, enemyData);
-            sceneHelper.renderGameScreen(batch, humanData, enemyData);
+        if (sceneHelper.getScene() == SceneType.SCENE_TYPE_MAINMENU || sceneHelper.getScene() == SceneType.SCENE_TYPE_GAME) {
+            sceneHelper.resolveCurrentScene();
+            sceneHelper.renderCurrentScene(batch);
         } else if (sceneHelper.getScene() == SceneType.SCENE_TYPE_HUMANWIN) {
             //humanWinScreen actions
             sceneHelper.resolveHumanWinScreen();
@@ -165,13 +156,10 @@ public class MainClass extends ApplicationAdapter {
     private void handleInput() {
         if (sceneHelper.getScene() == SceneType.SCENE_TYPE_MAINMENU) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                humanData = new Human( true, Constants.getFireengineCount());
-                enemyData = new Enemy( false, Constants.getFortressCount(), Constants.getPatrolCount());
-                sceneHelper.initGameScreen(humanData, enemyData);
+                sceneHelper.changeScene(new GameScene(font, cam, sceneHelper));
             }
 
         } else if (sceneHelper.getScene() == SceneType.SCENE_TYPE_GAME) {
-
 
             int moveSpeed = Constants.getTileSize();
 
@@ -213,9 +201,6 @@ public class MainClass extends ApplicationAdapter {
                 int tileX = (int) Math.floor(((Gdx.input.getX()) / (float) Constants.getResolutionWidth()) * sceneHelper.getMap().getMapWidth() * sceneHelper.getCam().zoom) + (int) (sceneHelper.getMap().getMapWidth() * sceneHelper.getCam().zoom - (remapedShiftX / Constants.getTileSize()));
                 int tileY = sceneHelper.getMap().getMapHeight() - ((int) Math.floor(((Gdx.input.getY()) / (float) Constants.getResolutionHeight()) * sceneHelper.getMap().getMapHeight() * sceneHelper.getCam().zoom) + (int) ((remapedShiftY / Constants.getTileSize()))) - 1;
 
-                //System.out.println("[" + Gdx.input.getX() + "]X tile: " + tileX + " [" + Gdx.input.getY() + "] Y tile: " + tileY);
-                //System.out.println("X shift: " + remapedShiftX + " Y shift: " + remapedShiftY);
-
                 tileClicked(tileX, tileY);
 
             }
@@ -248,7 +233,7 @@ public class MainClass extends ApplicationAdapter {
 
         } else if (sceneHelper.getScene() == SceneType.SCENE_TYPE_HUMANWIN || sceneHelper.getScene() == SceneType.SCENE_TYPE_ENEMYWIN) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                sceneHelper.initMainMenuScreen();
+                sceneHelper.initCurrentScene();
             }
 
         }
