@@ -310,4 +310,14 @@ public class GameScene extends Scene
     public Tooltip getEnemyToolTip(){
         return enemyToolTip;
     }
+
+    public Tile getSelectedTile()
+    {
+        return selectedTile;
+    }
+
+    public void setSelectedTile(Tile selectedTile)
+    {
+        this.selectedTile = selectedTile;
+    }
 }

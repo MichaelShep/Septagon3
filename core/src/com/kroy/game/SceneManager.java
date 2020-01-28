@@ -23,17 +23,9 @@ public class SceneManager {
     private SceneType scene;
     private BitmapFont font;
 
-    private Map map;
-    private HighlightMap highlightMap;
-
-    private Tile selectedTile;
-
     private OrthographicCamera cam;
 
     //assets
-    private Sprite titleSprite;
-    private Tooltip humanToolTip;
-    private Tooltip enemyToolTip;
 
     private Scene currentScene;
 
@@ -47,15 +39,6 @@ public class SceneManager {
 
         this.font = font;
         this.cam = cam;
-
-        humanToolTip = null;
-        enemyToolTip = null;
-
-        selectedTile = null;
-        titleSprite = null;
-
-        map = null;
-        highlightMap = null;
 
         currentScene = new MainMenuScene(font, cam);
         currentScene.initScene();
@@ -90,44 +73,6 @@ public class SceneManager {
     {
         currentScene = newScene;
         currentScene.initScene();
-    }
-
-
-    /**
-     * Initialise the human win screen
-     */
-    public void initHumanWinScreen() {
-        //set humanWinScreen Components;
-        scene = SceneType.SCENE_TYPE_HUMANWIN;
-        font.setColor(1f, 1f, 1f, 1f);
-        cam.zoom = 2f;
-        cam.viewportWidth = Constants.getResolutionWidth();
-        cam.viewportHeight = Constants.getResolutionHeight();
-
-
-    }
-
-    /**
-     * Calculates actions during human win scene
-     */
-    public void resolveHumanWinScreen() {
-        //resolve actions during this scene
-    }
-
-    /**
-     * Render human win screen
-     *
-     * @param batch the batch to render the scene through
-     */
-    public void renderHumanWinScreen(Batch batch) {
-        batch.begin();
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
-
-        font.draw(batch, "YOU WIN", -(Constants.getResolutionWidth() / 6f), 100);
-        font.draw(batch, "THE KROY ARE NO MORE!", -(Constants.getResolutionWidth() / 2.8f), 0);
-        font.draw(batch, "Press -SPACE- To RETURN", -(Constants.getResolutionWidth() / 2.75f), -100);
-        batch.end();
-
     }
 
 
@@ -200,11 +145,18 @@ public class SceneManager {
     }
 
     public Tile getSelectedTile() {
-        return selectedTile;
+        if(getScene() == SceneType.SCENE_TYPE_GAME){
+            GameScene gameScene = (GameScene) currentScene;
+            return gameScene.getSelectedTile();
+        }
+        return null;
     }
 
     public void setSelectedTile(Tile selectedTile) {
-        this.selectedTile = selectedTile;
+        if(getScene() == SceneType.SCENE_TYPE_GAME){
+            GameScene gameScene = (GameScene) currentScene;
+            gameScene.setSelectedTile(selectedTile);
+        }
     }
 
     public HighlightMap getHighlightMap() {
