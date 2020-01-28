@@ -23,6 +23,11 @@ public class Fortress extends Character {
         name = charName;
     }
 
+    public void improve() {
+        setMaxHealth(getMaxHealth() + 2);
+        setHealth(getHealth() + 2);
+        setDamage(getDamage() + 1);
+    }
 
     public String getName() {
         return name;

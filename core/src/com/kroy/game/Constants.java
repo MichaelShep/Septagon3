@@ -41,14 +41,14 @@ public final class Constants {
 
     private static int STATION_RANGE = 3;
 
-    private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles", "fuck", "shit"};
+    private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles", "Clifford's Tower", "York's Chocolate Story"};
 
     private static  int[][] fireEngineProfiles = {
-            {8,5,5,3,4}, {9,4,4,7,2}, {5,5,5,5,5}, {5,5,5,5,5}, {5,5,5,5,5}
+            {8,5,5,4,4}, {9,4,4,7,2}, {7,6,6,2,5}, {6,7,6,3,4}, {8,5,4,3,6}
     };
 
     private static  int[][] fortressProfiles = {
-            {4,5,7}, {7,3,5},{9,4,4}, {6,6,3}, {5,5,5}, {5,5,5}
+            {4,5,7}, {7,3,5}, {9,4,4}, {6,6,3}, {5,6,7}, {3,7,8}
     };
 
     private Constants() {
