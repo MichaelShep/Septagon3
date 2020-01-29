@@ -86,14 +86,8 @@ public class MainClass extends ApplicationAdapter {
         sceneHelper.cameraFrameOperation(batch);
         handleInput();
 
-        if (sceneHelper.getScene() == SceneType.SCENE_TYPE_MAINMENU || sceneHelper.getScene() == SceneType.SCENE_TYPE_GAME || sceneHelper.getScene() == SceneType.SCENE_TYPE_HUMANWIN) {
-            sceneHelper.resolveCurrentScene();
-            sceneHelper.renderCurrentScene(batch);
-        } else if (sceneHelper.getScene() == SceneType.SCENE_TYPE_ENEMYWIN) {
-            //humanWinScreen actions
-            sceneHelper.resolveEnemyWinScreen();
-            sceneHelper.renderEnemyWinScreen(batch);
-        }
+        sceneHelper.resolveCurrentScene();
+        sceneHelper.renderCurrentScene(batch);
     }
 
     /**

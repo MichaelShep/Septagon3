@@ -76,46 +76,6 @@ public class SceneManager {
     }
 
 
-    // ------------ LOSE SCREEN ------------------------
-
-    /**
-     * Initialise the enemy win screen
-     */
-    public void initEnemyWinScreen() {
-        //set humanWinScreen Components;
-        scene = SceneType.SCENE_TYPE_ENEMYWIN;
-        font.setColor(1f, 1f, 1f, 1f);
-        cam.zoom = 2f;
-        cam.viewportWidth = Constants.getResolutionWidth();
-        cam.viewportHeight = Constants.getResolutionHeight();
-
-
-    }
-
-    /**
-     * Calculates actions during enemy win scene
-     */
-    public void resolveEnemyWinScreen() {
-        //resolve actions during this scene
-    }
-
-    /**
-     * render the enemy the win screen
-     *
-     * @param batch the batch to render the scene through
-     */
-    public void renderEnemyWinScreen(Batch batch) {
-        batch.begin();
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
-
-        font.draw(batch, "YOU LOSE", -(Constants.getResolutionWidth() / 6f), 100);
-        font.draw(batch, "OUR HEROES HAVE FALLEN!", -(Constants.getResolutionWidth() / 2.65f), 0);
-        font.draw(batch, "Press -SPACE- To RETURN", -(Constants.getResolutionWidth() / 2.9f), -100);
-        batch.end();
-
-    }
-
-
     // ------------ COMPONENTS ------------------------
 
 
