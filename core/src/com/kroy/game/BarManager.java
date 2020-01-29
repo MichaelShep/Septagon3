@@ -1,38 +1,43 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class BarManager
 {
-    private FireEngine[] team;
+    private Character[] team;
     private ShapeRenderer shapeRenderer;
 
-    public BarManager(FireEngine[] team)
+    public BarManager(Character[] team)
     {
         this.team = team;
         shapeRenderer = new ShapeRenderer();
     }
 
-    public void renderBars()
+    public void renderBars(OrthographicCamera cam)
     {
+        shapeRenderer.setProjectionMatrix(cam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for(FireEngine fireEngine: team)
+        for(Character character: team)
         {
-            renderHealthBarForEngine(fireEngine);
-            renderWaterMeterForEngine(fireEngine);
+            renderHealthBarForEngine(character);
+            renderWaterMeterForEngine(character);
         }
         shapeRenderer.end();
     }
 
-    private void renderHealthBarForEngine(FireEngine engine)
+    private void renderHealthBarForEngine(Character character)
     {
-        int xPosition = engine.getLocation().getMapX();
-        int yPosition = engine.getLocation().getMapY();
+        int xPosition = character.getLocation().getMapX() * Constants.getTileSize() - (Gdx.graphics.getWidth() / 2);
+        int yPosition = character.getLocation().getMapY() * Constants.getTileSize() - (Gdx.graphics.getHeight() / 2) + Constants.getTileSize();
 
-        System.out.println("X: " + xPosition + ", Y: " + yPosition);
+        shapeRenderer.setColor(Color.PINK);
+        shapeRenderer.rect(xPosition, yPosition, Constants.getTileSize(), 10);
     }
 
-    private void renderWaterMeterForEngine(FireEngine engine)
+    private void renderWaterMeterForEngine(Character character)
     {
 
     }

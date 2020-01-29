@@ -22,6 +22,7 @@ public class GameScene extends Scene
 
     private Human humanData;
     private Enemy enemyData;
+    private BarManager barManager;
 
     public GameScene(BitmapFont font, OrthographicCamera cam, SceneManager sceneManager)
     {
@@ -48,7 +49,6 @@ public class GameScene extends Scene
 
         highlightMap = new HighlightMap(map.getMapWidth(), map.getMapHeight());
         selectedTile = null;
-
 
         humanToolTip = new Tooltip("", -900, 400, 75, 200);
         humanToolTip.addValue("Icons/healthIcon.png", 0);
@@ -112,8 +112,6 @@ public class GameScene extends Scene
             enemyData.setMyTurn(false);
             humanData.setMyTurn(true);
 
-            System.out.println("Enemy took their turn!");
-
             //Station heals and repairs its surroundings
             ((Station) map.getStationPosition()).refillTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
             ((Station) map.getStationPosition()).repairTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
@@ -145,7 +143,6 @@ public class GameScene extends Scene
         if (enemyToolTip.isRender()) {
             renderTooltip(enemyToolTip, batch);
         }
-
 
         renderUI(batch);
         batch.end();
@@ -190,7 +187,6 @@ public class GameScene extends Scene
                 fe.draw(batch);
             }
         }
-
     }
 
     /**
