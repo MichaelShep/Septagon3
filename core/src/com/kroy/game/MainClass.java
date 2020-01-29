@@ -15,6 +15,7 @@ import com.kroy.game.scenes.GameScene;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class MainClass extends ApplicationAdapter {
@@ -281,6 +282,12 @@ public class MainClass extends ApplicationAdapter {
                     case "HighlightTexture/move.png":
                         System.out.println("MOVE");
                         ((FireEngine)sceneHelper.getSelectedTile().getInhabitant()).transferTo(queryTile);
+                        //Move all patrols randomly
+                        for (Patrol patrols : sceneHelper.getEnemyData().getPatrols()){
+                            Tile[] movable = sceneHelper.getMap().getNClosest(patrols.getRange(), patrols.getLocation(), TileType.TILE_TYPES_ROAD);
+                            Random random = new Random();
+                            patrols.transferTo(movable[random.nextInt(movable.length)]);
+                        }
 
                         sceneHelper.setSelectedTile(null);
                         sceneHelper.getHighlightMap().resetMap();
