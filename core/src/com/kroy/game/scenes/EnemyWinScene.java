@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.kroy.game.Constants;
 import com.kroy.game.SceneType;
 
-public class EnemyWinScreen extends Scene {
+public class EnemyWinScene extends Scene {
 
-    protected EnemyWinScreen(BitmapFont font, OrthographicCamera cam) {
+    protected EnemyWinScene(BitmapFont font, OrthographicCamera cam) {
         super(font, cam);
     }
 

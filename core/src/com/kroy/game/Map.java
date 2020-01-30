@@ -39,8 +39,6 @@ public class Map {
 
         shiftX = (Constants.getResolutionWidth() - (mapWidth * Constants.getTileSize())) / 2;
         shiftY = (Constants.getResolutionHeight() - (mapHeight * Constants.getTileSize())) / 2;
-
-
     }
 
     /**
@@ -88,7 +86,6 @@ public class Map {
         int tileCode;
         for (int height = 0; height < mapHeight; height++) {
             for (int width = 0; width < mapWidth; width++) {
-                //System.out.println("WIDTH: " + width + " HEIGHT: " + height);
                 tileCode = (Integer.parseInt(mapTileData.get(height)[width]) - 1);
 
                 if (tileCode == 0) {
@@ -103,9 +100,6 @@ public class Map {
 
             }
         }
-
-        System.out.println("Map Generated");
-
     }
 
     /**

@@ -50,6 +50,8 @@ public class GameScene extends Scene
         highlightMap = new HighlightMap(map.getMapWidth(), map.getMapHeight());
         selectedTile = null;
 
+        barManager = new BarManager(humanData.getTeam(), map);
+
         humanToolTip = new Tooltip("", -900, 400, 75, 200);
         humanToolTip.addValue("Icons/healthIcon.png", 0);
         humanToolTip.addValue("Icons/damageIcon.png", 0);
@@ -91,16 +93,18 @@ public class GameScene extends Scene
         //in gameplay actions
         map.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
         map.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));
+        barManager.setShiftX(map.getShiftX());
+        barManager.setShiftY(map.getShiftY());
 
         highlightMap.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
         highlightMap.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));
 
         if (isEnemyWon()) {
-            //sceneManager.changeScene(new EnemyWinScene());
+            sceneManager.changeScene(new EnemyWinScene(font, cam));
         }
 
         if (isHumanWon()) {
-            //sceneManager.changeScene(new HumanWinScene());
+            sceneManager.changeScene(new HumanWinScene(font, cam));
         }
 
         //enemy turn
@@ -117,6 +121,7 @@ public class GameScene extends Scene
             ((Station) map.getStationPosition()).repairTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
 
         }
+        barManager.setTeam(humanData.getTeam());
     }
 
     @Override
@@ -146,6 +151,7 @@ public class GameScene extends Scene
 
         renderUI(batch);
         batch.end();
+        barManager.renderBars(cam);
     }
 
     /**

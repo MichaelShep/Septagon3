@@ -13,6 +13,10 @@ import com.kroy.game.scenes.GameScene;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Code refactored into this class by Septagon
+ */
+
 public class InputManager extends ApplicationAdapter
 {
     private SceneManager sceneHelper;
