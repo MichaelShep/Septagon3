@@ -16,6 +16,7 @@ import com.kroy.game.scenes.GameScene;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class MainClass extends ApplicationAdapter {
@@ -26,6 +27,20 @@ public class MainClass extends ApplicationAdapter {
     private BitmapFont font;
     private OrthographicCamera cam;
     private InputManager inputManager;
+
+    /**
+     * Remap a value from one range to another range
+     *
+     * @param value the value to scale
+     * @param from1 range1 start
+     * @param to1   range1 end
+     * @param from2 range2 start
+     * @param to2   range2 end
+     * @return returns scaled value
+     */
+    private static float Remap(float value, float from1, float to1, float from2, float to2) {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
 
     /**
      * Instantiates all objects needed to run the game

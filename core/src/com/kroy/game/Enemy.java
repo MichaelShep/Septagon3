@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Enemy extends Player {
 
-    private Character[] patrols;
+    private Patrol[] patrols;
 
     /**
      * Constructs Enemy Object which is able to control a team of fire Engines
@@ -22,7 +22,7 @@ public class Enemy extends Player {
             team[members] = createFortress(Constants.getFortressNames()[members], members);
         }
 
-        patrols = new Character[patrolSize];
+        patrols = new Patrol[patrolSize];
         for (int members = 0; members < patrolSize; members++ ){
             patrols[members] = createPatrol(members);
         }
@@ -144,7 +144,7 @@ public class Enemy extends Player {
         }
     }
 
-    public Character[] getPatrols(){
+    public Patrol[] getPatrols(){
         return patrols;
     }
 }
