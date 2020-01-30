@@ -121,7 +121,6 @@ public class GameScene extends Scene
             ((Station) map.getStationPosition()).repairTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
 
         }
-        barManager.setTeam(humanData.getTeam());
     }
 
     @Override
