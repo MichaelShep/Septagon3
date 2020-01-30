@@ -45,11 +45,11 @@ public final class Constants {
     private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles", "Clifford's Tower", "York's Chocolate Story"};
 
     private static  int[][] fireEngineProfiles = {
-            {8,5,5,4,4}, {9,4,4,7,2}, {7,6,6,2,5}, {6,7,6,3,4}, {8,5,4,3,6}
+            {16,5,5,4,4}, {18,4,4,7,2}, {14,6,6,2,5}, {12,7,6,3,4}, {16,5,4,3,6}
     };
 
     private static  int[][] fortressProfiles = {
-            {4,5,7}, {7,3,5}, {9,4,4}, {6,6,3}, {5,6,7}, {3,7,8}
+            {4,5,2}, {7,3,3}, {9,4,3}, {6,6,4}, {5,6,2}, {3,7,4}
     };
 
 
