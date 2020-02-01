@@ -144,6 +144,14 @@ public class Enemy extends Player {
         }
     }
 
+    public void improveFortresses () { //Added by Septagon
+        for (int i = 0; i < team.length; i++) {
+            if (!(team[i] == null)) {
+                team[i].improve();
+            }
+        }
+    }
+
     public Patrol[] getPatrols(){
         return patrols;
     }

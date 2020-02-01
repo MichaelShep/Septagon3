@@ -73,6 +73,12 @@ abstract public class  Character extends Sprite {
 
     }
 
+    public void improve() { //Added by Septagon
+        setMaxHealth(getMaxHealth() + 2);
+        setHealth(getHealth() + 2);
+        setDamage(getDamage() + 1);
+    }
+
 
     public int getHealth() {
         return this.health;

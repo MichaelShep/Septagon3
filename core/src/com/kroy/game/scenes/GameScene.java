@@ -24,6 +24,8 @@ public class GameScene extends Scene
     private Enemy enemyData;
     private BarManager barManager;
 
+    private Integer turnCounter = 0;
+
     public GameScene(BitmapFont font, OrthographicCamera cam, SceneManager sceneManager)
     {
         super(font, cam);
@@ -115,11 +117,15 @@ public class GameScene extends Scene
 
             enemyData.setMyTurn(false);
             humanData.setMyTurn(true);
+            turnCounter++;
 
             //Station heals and repairs its surroundings
             ((Station) map.getStationPosition()).refillTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
             ((Station) map.getStationPosition()).repairTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
 
+            if (turnCounter % 15 == 0) { //Added by Septagon
+                enemyData.improveFortresses();
+            }
         }
     }
 

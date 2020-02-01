@@ -23,15 +23,6 @@ public class Fortress extends Character {
         name = charName;
     }
 
-    /**
-     * Added by Septagon - Improves fortresses by 1 stage
-     */
-    public void improve() {
-        setMaxHealth(getMaxHealth() + 2);
-        setHealth(getHealth() + 2);
-        setDamage(getDamage() + 1);
-    }
-
     public String getName() {
         return name;
     }
