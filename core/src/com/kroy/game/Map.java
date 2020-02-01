@@ -121,6 +121,8 @@ public class Map {
                 return "lavaTile.png";
             case 5:
                 return "stationTile.png";
+            case 6:
+                return "lavaTile.png";
             default:
                 throw new IllegalArgumentException(textureCode + " is not implemented in mapTextures()");
         }

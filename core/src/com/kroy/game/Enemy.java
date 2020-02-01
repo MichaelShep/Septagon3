@@ -52,7 +52,7 @@ public class Enemy extends Player {
         int damage = statProfile[1];
         int range = statProfile[2];
 
-        return new Fortress(health, damage, range, null, name, "fortressTile.png");
+        return new Fortress(health, damage, range, null, name, "fortressSprite.png");
     }
 
 
@@ -78,7 +78,7 @@ public class Enemy extends Player {
         int damage = statProfile[1];
         int range = statProfile[2];
 
-        return new Patrol(health, damage, range, null, "fortressTile.png");
+        return new Patrol(health, damage, range, null, "patrolSprite.png");
     }
 
 

@@ -49,7 +49,7 @@ public final class Constants {
     };
 
     private static  int[][] fortressProfiles = {
-            {4,5,2}, {7,3,3}, {9,4,3}, {6,6,4}, {5,6,2}, {3,7,4}
+            {2,3,2}, {5,1,3}, {7,2,3}, {4,4,4}, {3,4,2}, {1,5,4}
     };
 
 
