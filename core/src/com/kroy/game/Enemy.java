@@ -78,7 +78,7 @@ public class Enemy extends Player {
         int damage = statProfile[1];
         int range = statProfile[2];
 
-        return new Patrol(health, damage, range, null, "patrolSprite.png");
+        return new Patrol(health, damage, range, null, "PatrolSprite.png");
     }
 
 
