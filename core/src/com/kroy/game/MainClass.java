@@ -93,6 +93,7 @@ public class MainClass extends ApplicationAdapter {
 
         sceneHelper.resolveCurrentScene();
         sceneHelper.renderCurrentScene(batch);
+
     }
 
     /**
