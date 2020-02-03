@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.kroy.game.*;
 import com.kroy.game.Character;
+import com.kroy.game.rendering.Renderer;
 
 import javax.swing.text.Highlighter;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class GameScene extends Scene
     private Human humanData;
     private Enemy enemyData;
     private BarManager barManager;
+    private Renderer renderer;
 
     private Integer turnCounter = 0;
 
@@ -53,6 +55,7 @@ public class GameScene extends Scene
         selectedTile = null;
 
         barManager = new BarManager(humanData.getTeam(), map);
+        renderer = new Renderer(map, highlightMap);
 
         humanToolTip = new Tooltip("", -900, 400, 75, 200);
         humanToolTip.addValue("Icons/healthIcon.png", 0);
@@ -140,102 +143,24 @@ public class GameScene extends Scene
     public void renderScene(Batch batch) {
         //renders the game screen
         batch.begin();
-        renderMap(batch);
-        renderEnemies(batch, enemyData);
-        renderFireEngines(batch, humanData);
+        renderer.renderMap(batch);
+        renderer.renderEnemies(batch, enemyData);
+        renderer.renderFireEngines(batch, humanData);
         if (highlightMap.isRender()) {
-            renderHighLightMap(batch);
+            renderer.renderHighLightMap(batch);
         }
 
         if (humanToolTip.isRender()) {
-            renderTooltip(humanToolTip, batch);
+            renderer.renderTooltip(humanToolTip, batch, font);
         }
         if (enemyToolTip.isRender()) {
-            renderTooltip(enemyToolTip, batch);
+            renderer.renderTooltip(enemyToolTip, batch, font);
         }
 
-        renderUI(batch);
+        renderer.renderUI(batch);
         batch.end();
         barManager.renderBars(cam);
     }
-
-    /**
-     * render the fortresses
-     *
-     * @param batch     the batch to render it through
-     * @param enemyData the data of the enemy player
-     */
-    public void renderEnemies(Batch batch, Enemy enemyData) {
-        Character[] enemyCharacters = enemyData.getTeam();
-
-        for (Character patrol : enemyData.getPatrols()){
-            if (!(patrol == null)){
-                map.placeOnMap(patrol);
-                patrol.draw(batch);
-            }
-        }
-
-        for (Character fort : enemyCharacters) {
-            if (!(fort == null)) {
-                map.placeOnMap(fort);
-                fort.draw(batch);
-            }
-        }
-
-    }
-
-    /**
-     * render the fire engines
-     *
-     * @param batch     the batch to render it through
-     * @param humanData the data of the human player
-     */
-    public void renderFireEngines(Batch batch, Human humanData) {
-        Character[] humanCharacters = humanData.getTeam();
-        for (Character fe : humanCharacters) {
-            if (!(fe == null)) {
-                map.placeOnMap(fe);
-                fe.draw(batch);
-            }
-        }
-    }
-
-    /**
-     * render any UI components
-     *
-     * @param batch the batch to render it through
-     */
-    public void renderUI(Batch batch) {
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "borderArt.png", Texture.class), -1024, -576, 2048, 1152, 0, 0, 1280, 720, false, false);
-
-    }
-
-    /**
-     * render a Map
-     *
-     * @param batch the batch to render it through
-     */
-    public void renderMap(Batch batch) {
-        for (int height = 0; height < map.getMapHeight(); height++) {
-            for (int width = 0; width < map.getMapWidth(); width++) {
-                batch.draw(Constants.getManager().get(Constants.getResourceRoot() + map.getMapData()[height][width].getTexName(), Texture.class), (width * Constants.getTileSize()) + map.getShiftX(), (height * Constants.getTileSize()) + map.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
-            }
-        }
-    }
-
-    /**
-     * render a highlight map
-     *
-     * @param batch the batch to render it through
-     */
-    public void renderHighLightMap(Batch batch) {
-        for (int height = 0; height < highlightMap.getMapHeight(); height++) {
-            for (int width = 0; width < highlightMap.getMapWidth(); width++) {
-                batch.draw(Constants.getManager().get(Constants.getResourceRoot() + highlightMap.getMapData()[height][width].getTexName(), Texture.class), (width * Constants.getTileSize()) + highlightMap.getShiftX(), (height * Constants.getTileSize()) + highlightMap.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
-            }
-        }
-    }
-
 
     // ------------ Scene Utility ------------------------
 
@@ -259,45 +184,6 @@ public class GameScene extends Scene
         enemyData.resolveDeaths();
         return enemyData.getAliveCharacters() == 0;
 
-    }
-
-
-    /**
-     * render a tool tip object on a given Batch
-     *
-     * @param data  the tooltip data
-     * @param batch the batch to render it through
-     */
-    public void renderTooltip(Tooltip data, Batch batch) {
-
-
-        int baseIconSize = data.getIconSize();
-        font.getData().setScale(1);
-        int textSize = data.getFontSpacing();
-
-        //int baseWidth = (int)(data.getValues().size() * (baseIconSize + textSize) / ((float) Constants.getResolutionWidth() / 1280f));
-        int xPos = data.getX();
-        int yPos = data.getY();
-
-        int baseWidth = xPos*-2;
-        int baseHeight = yPos;
-
-
-
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos , yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
-        font.draw(batch, data.getName(), -920, -450);
-
-        xPos += baseIconSize / 2;
-        yPos += baseIconSize / 2;
-        ArrayList<String> keys = new ArrayList<String>(data.getValues().keySet());
-
-        for (int keyIndex = 0; keyIndex < keys.size(); keyIndex++) {
-            batch.draw(Constants.getManager().get(Constants.getResourceRoot() + keys.get(keyIndex), Texture.class), xPos + (keyIndex * (baseIconSize + textSize)), yPos, baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
-            font.draw(batch, " : " + (data.getValues().get(keys.get(keyIndex))).toString(), xPos + (keyIndex * (baseIconSize + textSize)) + baseIconSize, yPos + baseIconSize);
-
-        }
-
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "controlInfo.png", Texture.class), 700, -400, 272, 720, 0, 0, 272, 720, false, false);
     }
 
     public HighlightMap getHighlightMap()
