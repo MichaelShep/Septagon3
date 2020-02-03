@@ -8,6 +8,11 @@ import com.kroy.game.Character;
 
 import java.util.ArrayList;
 
+/**
+ * Class added as a result of refractoring by Septagon
+ * Used to handle all the rendering code for the GameScene so that the GameScene class is not too overcrowded
+ */
+
 public class Renderer {
 
     private Map map;

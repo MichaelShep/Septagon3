@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 
 abstract public class  Character extends Sprite {
+    public enum Type {ENGINE, FORTRESS, PATROL};
+
     private int maxHealth, health;
     private int damage;
     private int range;
     private boolean disabled;
     protected Tile location;
-
+    protected Type type;
 
     /**
      * Constructs a Character object which is an entity that can shoot, move and be killed.
@@ -129,7 +131,7 @@ abstract public class  Character extends Sprite {
         this.maxHealth = maxHealth;
     }
 
-
+    public Type getType() { return type; }
 }
 
 

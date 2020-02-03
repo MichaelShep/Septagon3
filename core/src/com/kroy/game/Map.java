@@ -136,7 +136,7 @@ public class Map {
      * @param mapTileData the tile data of the maps
      * @return a list of adjacent tile codes
      */
-    private int[] getAdjacentTileCodes(int xPos, int yPos, ArrayList<String[]> mapTileData) {
+     public int[] getAdjacentTileCodes(int xPos, int yPos, ArrayList<String[]> mapTileData) {
         int[] adjacentTileCodes = new int[4];
         int tempValue;
 

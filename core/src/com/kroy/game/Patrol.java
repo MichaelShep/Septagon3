@@ -15,6 +15,7 @@ public class Patrol extends Character {
      */
     protected Patrol(int health, int damage, int range, Tile spawn, String spriteTex) {
         super(health, damage, range, spawn, spriteTex);
+        this.type = Type.PATROL;
     }
 
     public void transferTo(Tile newLocation){

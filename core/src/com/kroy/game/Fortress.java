@@ -21,6 +21,7 @@ public class Fortress extends Character {
         super(health, damage, range, location, charTex);
 
         name = charName;
+        this.type = Type.FORTRESS;
     }
 
     public String getName() {

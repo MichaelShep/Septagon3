@@ -7,7 +7,6 @@ public class FireEngine extends Patrol {
     private int waterCapacity;
     private boolean disabled;
 
-
     /**
      * Constructs a FireEngine which is the character that a human can control
      * Extends Character
@@ -26,7 +25,7 @@ public class FireEngine extends Patrol {
         this.waterCapacity = waterCapacity;
         this.waterAmount = waterCapacity;
         this.disabled = false;
-
+        this.type = Type.ENGINE;
     }
 
 

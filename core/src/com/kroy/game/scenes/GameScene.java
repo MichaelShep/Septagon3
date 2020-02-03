@@ -130,6 +130,8 @@ public class GameScene extends Scene
                 enemyData.improveFortresses();
             }
         }
+
+        this.minigameTrigger();
     }
 
     @Override
@@ -184,6 +186,28 @@ public class GameScene extends Scene
         enemyData.resolveDeaths();
         return enemyData.getAliveCharacters() == 0;
 
+    }
+
+    /**
+     * Added by Septagon
+     * Checks whether the minigame should be triggered
+     * If the minigame should be triggered, will switch to the minigame state
+     */
+    public void minigameTrigger(){
+        for(Character c: humanData.getTeam()){
+            int xPos = c.getLocation().getMapX();
+            int yPos = c.getLocation().getMapY();
+
+            Tile[] adjTiles = map.getNClosest(4, c.getLocation());
+
+            for(Tile t: adjTiles){
+                if(t.getInhabitant() != null){
+                    if(t.getInhabitant().getType() == Character.Type.PATROL){
+                        sceneManager.changeScene(new MinigameScene(font, cam));
+                    }
+                }
+            }
+        }
     }
 
     public HighlightMap getHighlightMap()
