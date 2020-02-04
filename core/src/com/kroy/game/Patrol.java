@@ -13,7 +13,7 @@ public class Patrol extends Character {
      * @param spawn     the starting location of this character
      * @param spriteTex the image that the sprite class is loaded with
      */
-    protected Patrol(int health, int damage, int range, Tile spawn, String spriteTex) {
+    public Patrol(int health, int damage, int range, Tile spawn, String spriteTex) {
         super(health, damage, range, spawn, spriteTex);
         this.type = Type.PATROL;
     }

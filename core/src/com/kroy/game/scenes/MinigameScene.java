@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -15,6 +16,9 @@ import com.kroy.game.Constants;
 import com.kroy.game.FireEngine;
 import com.kroy.game.Patrol;
 import com.kroy.game.SceneType;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class created by Team Septagon
@@ -30,6 +34,10 @@ public class MinigameScene extends Scene {
     private Rectangle playableArea;
 
     private ShapeRenderer boundsRenderer;
+    private Texture[] aliensTextures;
+    private ArrayList<Sprite> aliens;
+
+    private Random random;
 
     protected MinigameScene(BitmapFont font, OrthographicCamera cam, FireEngine passedEngine, Patrol passedPatrol) {
         super(font, cam);
@@ -42,6 +50,7 @@ public class MinigameScene extends Scene {
         sceneType = SceneType.SCENE_TYPE_MINIGAME;
 
         boundsRenderer = new ShapeRenderer();
+        random = new Random();
 
         minigameEngine = new Sprite(passedEngine.getTexture());
         minigameEngine.setSize(Constants.getTileSize(), Constants.getTileSize());
@@ -50,6 +59,22 @@ public class MinigameScene extends Scene {
         playableArea = new Rectangle();
         playableArea.setSize(Constants.getResolutionHeight(), Constants.getResolutionHeight());
         playableArea.setPosition( -playableArea.getWidth() / 2, -playableArea.getHeight() / 2);
+
+        aliensTextures = new Texture[Constants.getMinigameTextures().length];
+        for(int i = 0; i < Constants.getMinigameTextures().length; i++){
+            aliensTextures[i] = Constants.getManager().get(Constants.getResourceRoot() + Constants.getMinigameTextures()[i], Texture.class);
+        }
+
+        aliens = new ArrayList<Sprite>();
+
+        float startX = -playableArea.width / 2;
+        float startY = playableArea.height / 2 - Constants.getTileSize();
+        for(int i = 0; i < 5; i++){
+            Sprite newAlien = new Sprite();
+            newAlien.setBounds(startX + (i * Constants.getTileSize()), startY, Constants.getTileSize(), Constants.getTileSize());
+            newAlien.setTexture(aliensTextures[random.nextInt(aliensTextures.length)]);
+            aliens.add(newAlien);
+        }
     }
 
     @Override
@@ -78,6 +103,9 @@ public class MinigameScene extends Scene {
 
         batch.begin();
         minigameEngine.draw(batch);
+        for(Sprite alien: aliens){
+            alien.draw(batch);
+        }
         batch.end();
     }
 

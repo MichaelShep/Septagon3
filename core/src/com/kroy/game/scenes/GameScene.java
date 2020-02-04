@@ -44,6 +44,10 @@ public class GameScene extends Scene
     public void initScene() {
         sceneType = SceneType.SCENE_TYPE_GAME;
 
+        for(int i = 0; i < Constants.getMinigameTextures().length; i++) {
+            Constants.getManager().load(Constants.getResourceRoot() + Constants.getMinigameTextures()[i], Texture.class);
+        }
+
         humanData = new Human( true, Constants.getFireengineCount());
         enemyData = new Enemy( false, Constants.getFortressCount(), Constants.getPatrolCount());
 

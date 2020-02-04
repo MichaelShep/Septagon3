@@ -1,6 +1,7 @@
 package com.kroy.game;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 
 import java.awt.*;
 
@@ -25,6 +26,7 @@ public final class Constants {
 
     private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png", "GreeneryTexture/BushTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/TreeTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/GrassTile1.png",};
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
+    private static String[] MINIGAME_TEXTURES = {"MiniGameTexture/ethan.png", "MiniGameTexture/michael.png", "MiniGameTexture/thanh.png"};
 
     private static String RESOURCE_ROOT = System.getProperty("user.dir");
     private static String MAP_FILE_NAME = "Data/yorkMapFlipped.csv";
@@ -47,7 +49,6 @@ public final class Constants {
     };
 
     private Constants() {
-
     }
 
 
@@ -96,6 +97,8 @@ public final class Constants {
     public static String[] getBuildingTexture() {
         return BUILDING_TEXTURE;
     }
+
+    public static String[] getMinigameTextures() { return MINIGAME_TEXTURES; }
 
     public static String getResourceRoot() {
         return RESOURCE_ROOT;
