@@ -49,7 +49,7 @@ public class MinigameScene extends Scene {
 
         playableArea = new Rectangle();
         playableArea.setSize(Constants.getResolutionHeight(), Constants.getResolutionHeight());
-        playableArea.setPosition(Gdx.graphics.getWidth() / 2 - playableArea.getWidth() / 2, 0);
+        playableArea.setPosition( -playableArea.getWidth() / 2, -playableArea.getHeight() / 2);
     }
 
     @Override
@@ -61,19 +61,40 @@ public class MinigameScene extends Scene {
         Gdx.gl.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
-        minigameEngine.draw(batch);
-        batch.end();
-
+        boundsRenderer.setProjectionMatrix(cam.combined);
         boundsRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        //Draw background for the playableArea
+        boundsRenderer.setColor(Color.DARK_GRAY);
+        boundsRenderer.rect(playableArea.x, playableArea.y, playableArea.width, playableArea.height);
+
         boundsRenderer.setColor(Color.BLACK);
         //Draw the 2 boundary lines of the playableArea
         boundsRenderer.rectLine(new Vector2(playableArea.x, playableArea.y), new Vector2(playableArea.x, playableArea.y + playableArea.height), 5);
         boundsRenderer.rectLine(new Vector2(playableArea.x + playableArea.width, playableArea.y), new Vector2(playableArea.x + playableArea.width, playableArea.y + playableArea.height), 5);
+        boundsRenderer.rectLine(new Vector2(playableArea.x, playableArea.y), new Vector2(playableArea.x + playableArea.width, playableArea.y),5);
+        boundsRenderer.rectLine(new Vector2(playableArea.x, playableArea.y + playableArea.height), new Vector2(playableArea.x + playableArea.width, playableArea.y + playableArea.height),5);
         boundsRenderer.end();
+
+        batch.begin();
+        minigameEngine.draw(batch);
+        batch.end();
     }
 
+    /**
+     * Moves the engine sprite by changing the x position of the sprite
+     * @param increment The amount the position should be changed by
+     */
     public void moveEngine(float increment){
         minigameEngine.setX(minigameEngine.getX() + increment);
+
+        //Checks that the engine stays within the bounds of the playable area
+        if(minigameEngine.getX() <= playableArea.getX()){
+            minigameEngine.setX(playableArea.getX());
+        }
+
+        if(minigameEngine.getX() >= playableArea.getX() + playableArea.getWidth() - minigameEngine.getWidth()){
+            minigameEngine.setX(playableArea.getX() + playableArea.getWidth() - minigameEngine.getWidth());
+        }
     }
 }
