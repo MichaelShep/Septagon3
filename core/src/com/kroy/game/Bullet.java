@@ -1,18 +1,17 @@
 
 package com.kroy.game;
 
-    /**
-     * Class that is used to create animations when the engines and fortresses are attacking each other
-     */
-
     import com.badlogic.gdx.Gdx;
     import com.badlogic.gdx.graphics.Texture;
     import com.badlogic.gdx.graphics.g2d.Batch;
     import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Class that is used to create animations when the engines and fortresses are attacking each other
+ */
     public class Bullet {
 
-        private double ySPEED = 500, xSPEED = 500;
+        private double ySPEED, xSPEED;
         public Texture texture;
         private double deltaY, deltaX;
         float x, y, targetX, targetY;
@@ -32,8 +31,12 @@ package com.kroy.game;
             xSPEED = deltaX / (deltaX*deltaX + deltaY*deltaY);
 
             if (texture == null) {
-                if (water == true) texture = new Texture("water.png");
-                else texture = new Texture("gunge.png");
+                if (water) {
+                    texture = new Texture("water.png");
+                }
+                else {
+                    texture = new Texture("gunge.png");
+                }
             }
         }
 
