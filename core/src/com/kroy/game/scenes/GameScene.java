@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kroy.game.*;
 import com.kroy.game.Character;
 
@@ -25,6 +26,11 @@ public class GameScene extends Scene
     private BarManager barManager;
 
     private Integer turnCounter = 0;
+
+    //Creates an array of bullets
+    public static ArrayList<Bullet> bullets;
+
+
 
     public GameScene(BitmapFont font, OrthographicCamera cam, SceneManager sceneManager)
     {
@@ -129,6 +135,23 @@ public class GameScene extends Scene
         }
     }
 
+
+    /**
+     * update bullets of fortresses and engines
+     */
+    /*
+    public void update() {
+        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
+        for (Bullet bullet : bullets)
+        {
+            float deltaTime = 1 / 60f;
+            bullet.update(deltaTime);
+            if (bullet.remove)
+                bulletToRemove.add(bullet);
+        }
+        bullets.removeAll(bulletToRemove);
+    }*/
+
     @Override
     /**
      * render the game screen
@@ -138,15 +161,29 @@ public class GameScene extends Scene
      * @param enemyData the data of the enemy player
      */
     public void renderScene(Batch batch) {
+
+        //empty bullet array
+        bullets = new ArrayList<Bullet>();
+        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
+        for (Bullet bullet : bullets)
+        {
+            float deltaTime = 1 / 60f;
+            bullet.update(deltaTime);
+            if (bullet.remove)
+                bulletToRemove.add(bullet);
+        }
+        bullets.removeAll(bulletToRemove);
         //renders the game screen
         batch.begin();
         renderMap(batch);
         renderEnemies(batch, enemyData);
         renderFireEngines(batch, humanData);
+        renderBullet(batch);
+
+
         if (highlightMap.isRender()) {
             renderHighLightMap(batch);
         }
-
         if (humanToolTip.isRender()) {
             renderTooltip(humanToolTip, batch);
         }
@@ -157,6 +194,16 @@ public class GameScene extends Scene
         renderUI(batch);
         batch.end();
         barManager.renderBars(cam);
+    }
+
+    /**
+     * Render bullets
+     * @param batch
+     */
+    private void renderBullet(Batch batch){
+        for (Bullet bullet : bullets) {
+            bullet.render(batch);
+        }
     }
 
     /**

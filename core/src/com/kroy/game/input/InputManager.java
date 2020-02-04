@@ -53,6 +53,7 @@ public class InputManager extends ApplicationAdapter
 
             }
             if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                GameScene.bullets.add(new Bullet( 1,  1,  20,  10, true));
                 sceneHelper.getMap().setShiftY(sceneHelper.getMap().getShiftY() + moveSpeed);
                 sceneHelper.getHighlightMap().setShiftY(sceneHelper.getHighlightMap().getShiftY() + moveSpeed);
             }
