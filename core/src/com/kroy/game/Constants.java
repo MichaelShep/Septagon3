@@ -22,7 +22,9 @@ public final class Constants {
     private static int STATION_REFILL_AMOUNT = 2;
     private static int STATION_REPAIR_AMOUNT = 2;
 
-    private static float MINIGAME_MOVEMENT_SPEED = 6.0f;
+    private static float MINIGAME_BASE_PLAYER_MOVEMENT_SPEED = 6.0f;
+    private static float MINIGAME_BASE_ALIEN_MOVEMENT_SPEED = 3.0f;
+    private static int MINIGAME_EDGE_BUFFER = 5;
 
     private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png", "GreeneryTexture/BushTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/TreeTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/GrassTile1.png",};
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
@@ -104,7 +106,11 @@ public final class Constants {
         return RESOURCE_ROOT;
     }
 
-    public static float getMinigameMovementSpeed() { return MINIGAME_MOVEMENT_SPEED; }
+    public static float getMinigameBasePlayerMovementSpeed() { return MINIGAME_BASE_PLAYER_MOVEMENT_SPEED; }
+
+    public static float getMinigameBaseAlienMovementSpeed() { return MINIGAME_BASE_ALIEN_MOVEMENT_SPEED; }
+
+    public static int getMinigameEdgeBuffer() { return MINIGAME_EDGE_BUFFER; }
 
     public static void setResourceRoot(String newResourceRoot) {
         RESOURCE_ROOT = newResourceRoot;

@@ -16,6 +16,8 @@ import com.kroy.game.Constants;
 import com.kroy.game.FireEngine;
 import com.kroy.game.Patrol;
 import com.kroy.game.SceneType;
+import com.kroy.game.minigameHelpers.Alien;
+import com.sun.org.apache.bcel.internal.Const;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,13 +33,20 @@ public class MinigameScene extends Scene {
     private Patrol passedPatrol;
 
     private Sprite minigameEngine;
-    private Rectangle playableArea;
 
+    private Rectangle playableArea;
     private ShapeRenderer boundsRenderer;
+
     private Texture[] aliensTextures;
-    private ArrayList<Sprite> aliens;
+    private ArrayList<Alien> aliens;
 
     private Random random;
+
+    //Variables to handle the countdown before the minigame actually starts when it first loads up
+    private int countdownTimer = 180;
+    private boolean started = false;
+    private int secondsValue = 3;
+    private GlyphLayout countdownText;
 
     protected MinigameScene(BitmapFont font, OrthographicCamera cam, FireEngine passedEngine, Patrol passedPatrol) {
         super(font, cam);
@@ -62,23 +71,47 @@ public class MinigameScene extends Scene {
 
         aliensTextures = new Texture[Constants.getMinigameTextures().length];
         for(int i = 0; i < Constants.getMinigameTextures().length; i++){
-            aliensTextures[i] = Constants.getManager().get(Constants.getResourceRoot() + Constants.getMinigameTextures()[i], Texture.class);
+            aliensTextures[i] = new Texture(Gdx.files.internal(Constants.getMinigameTextures()[i]));
         }
 
-        aliens = new ArrayList<Sprite>();
+        aliens = new ArrayList<Alien>();
 
-        float startX = -playableArea.width / 2;
-        float startY = playableArea.height / 2 - Constants.getTileSize();
+        float startX = -playableArea.width / 2 + Constants.getMinigameEdgeBuffer();
+        float startY = playableArea.height / 2 - Constants.getTileSize() - Constants.getMinigameEdgeBuffer();
+        float bufferBetweenAliens = 3;
         for(int i = 0; i < 5; i++){
-            Sprite newAlien = new Sprite();
-            newAlien.setBounds(startX + (i * Constants.getTileSize()), startY, Constants.getTileSize(), Constants.getTileSize());
+            Alien newAlien = new Alien(0, passedPatrol.getHealth(), playableArea);
+            newAlien.setBounds(startX + (i * Constants.getTileSize()) + bufferBetweenAliens, startY, Constants.getTileSize(), Constants.getTileSize());
             newAlien.setTexture(aliensTextures[random.nextInt(aliensTextures.length)]);
             aliens.add(newAlien);
         }
+
+        font.setColor(Color.RED);
+        countdownText = new GlyphLayout();
+        countdownText.setText(font, "Starting in " + secondsValue);
     }
 
     @Override
     public void resolveScene() {
+        if(started) {
+            for (Alien alien : aliens) {
+                alien.move();
+            }
+        }else{
+            countdownTimer -= 1;
+
+            if(countdownTimer <= 0){
+                started = true;
+            }else if(countdownTimer <= 120 && secondsValue == 3){
+                secondsValue = 2;
+                font.setColor(Color.RED);
+                countdownText.setText(font, "Starting in " + secondsValue);
+            }else if(countdownTimer <= 60 && secondsValue == 2){
+                secondsValue = 1;
+                font.setColor(Color.RED);
+                countdownText.setText(font, "Starting in " + secondsValue);
+            }
+        }
     }
 
     @Override
@@ -106,6 +139,11 @@ public class MinigameScene extends Scene {
         for(Sprite alien: aliens){
             alien.draw(batch);
         }
+
+        if(!started){
+            font.draw(batch, countdownText, -countdownText.width / 2, countdownText.height / 2);
+        }
+
         batch.end();
     }
 
@@ -113,16 +151,18 @@ public class MinigameScene extends Scene {
      * Moves the engine sprite by changing the x position of the sprite
      * @param increment The amount the position should be changed by
      */
-    public void moveEngine(float increment){
+    public void moveEngine(float increment) {
         minigameEngine.setX(minigameEngine.getX() + increment);
 
         //Checks that the engine stays within the bounds of the playable area
-        if(minigameEngine.getX() <= playableArea.getX()){
+        if (minigameEngine.getX() <= playableArea.getX()) {
             minigameEngine.setX(playableArea.getX());
         }
 
-        if(minigameEngine.getX() >= playableArea.getX() + playableArea.getWidth() - minigameEngine.getWidth()){
+        if (minigameEngine.getX() >= playableArea.getX() + playableArea.getWidth() - minigameEngine.getWidth()) {
             minigameEngine.setX(playableArea.getX() + playableArea.getWidth() - minigameEngine.getWidth());
         }
     }
+
+    public boolean isStarted() { return started; }
 }
