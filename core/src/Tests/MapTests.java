@@ -35,7 +35,7 @@ public class MapTests {
     }
 
 
-    @Test(expected = FileNotFoundException.class)
+    @Test()
     public void testFileNotFoundExceptionLoadCSV(){
         String invalidDirectory = directory + "cat";
         try{
