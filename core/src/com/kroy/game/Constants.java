@@ -6,23 +6,10 @@ import java.awt.*;
 
 
 public final class Constants {
-
-    //private static int RESOLUTION_WIDTH = 3840;
-    //private static int RESOLUTION_HEIGHT = 2160;
-
     private static int RESOLUTION_WIDTH = 1920;
     private static int RESOLUTION_HEIGHT = 1080;
 
-
-    //private static int RESOLUTION_WIDTH = 1280;
-    //private static int RESOLUTION_HEIGHT = 720;
-
-    //private static int RESOLUTION_WIDTH = 640;
-    //private static int RESOLUTION_HEIGHT = 360;
-
-    //private static boolean FULLSCREEN = true;
     private static boolean FULLSCREEN = false;
-
 
     private static int TILE_SIZE = 64;
     private static AssetManager MANAGER = new AssetManager();
@@ -33,6 +20,8 @@ public final class Constants {
 
     private static int STATION_REFILL_AMOUNT = 2;
     private static int STATION_REPAIR_AMOUNT = 2;
+
+    private static float MINIGAME_MOVEMENT_SPEED = 6.0f;
 
     private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png", "GreeneryTexture/BushTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/TreeTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/GrassTile1.png",};
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
@@ -111,6 +100,8 @@ public final class Constants {
     public static String getResourceRoot() {
         return RESOURCE_ROOT;
     }
+
+    public static float getMinigameMovementSpeed() { return MINIGAME_MOVEMENT_SPEED; }
 
     public static void setResourceRoot(String newResourceRoot) {
         RESOURCE_ROOT = newResourceRoot;

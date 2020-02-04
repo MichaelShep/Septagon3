@@ -203,7 +203,7 @@ public class GameScene extends Scene
             for(Tile t: adjTiles){
                 if(t.getInhabitant() != null){
                     if(t.getInhabitant().getType() == Character.Type.PATROL){
-                        sceneManager.changeScene(new MinigameScene(font, cam));
+                        sceneManager.changeScene(new MinigameScene(font, cam, (FireEngine)c, (Patrol)t.getInhabitant()));
                     }
                 }
             }
