@@ -171,4 +171,6 @@ public class SceneManager {
 
         return null;
     }
+
+    public Scene getCurrentScene() { return currentScene; }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.kroy.game.*;
 import com.kroy.game.Character;
 import com.kroy.game.scenes.GameScene;
+import com.kroy.game.scenes.MinigameScene;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -113,6 +114,19 @@ public class InputManager extends ApplicationAdapter
                 sceneHelper.initCurrentScene();
             }
 
+        }
+        //Minigame input handling - Added by Septagon
+        else if(sceneHelper.getScene() == SceneType.SCENE_TYPE_MINIGAME)
+        {
+            MinigameScene currentScene = (MinigameScene) sceneHelper.getCurrentScene();
+
+            if(Gdx.input.isKeyPressed(Input.Keys.A)){
+                currentScene.moveEngine(-Constants.getMinigameMovementSpeed());
+            }
+
+            if(Gdx.input.isKeyPressed(Input.Keys.D)){
+                currentScene.moveEngine(Constants.getMinigameMovementSpeed());
+            }
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
