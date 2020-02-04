@@ -29,17 +29,22 @@ import java.util.Random;
 
 public class MinigameScene extends Scene {
 
+    //Stores the engine and patrol that triggered the minigame
     private FireEngine passedEngine;
     private Patrol passedPatrol;
 
+    //Holds the engine that is used for the minigame
     private Sprite minigameEngine;
 
+    //Stores the area of the screen which the minigame can be played in
     private Rectangle playableArea;
     private ShapeRenderer boundsRenderer;
 
+    //Stores all the aliens and their textures
     private Texture[] aliensTextures;
     private ArrayList<Alien> aliens;
 
+    //Used to generate random values
     private Random random;
 
     //Variables to handle the countdown before the minigame actually starts when it first loads up
@@ -61,14 +66,17 @@ public class MinigameScene extends Scene {
         boundsRenderer = new ShapeRenderer();
         random = new Random();
 
+        //Sets up the engine to be the correct size and position
         minigameEngine = new Sprite(passedEngine.getTexture());
         minigameEngine.setSize(Constants.getTileSize(), Constants.getTileSize());
         minigameEngine.setPosition(-minigameEngine.getWidth() / 2, -(Gdx.graphics.getHeight() / 2) + 20);
 
+        //Sets up the area of the screen that the minigame can take place in
         playableArea = new Rectangle();
         playableArea.setSize(Constants.getResolutionHeight(), Constants.getResolutionHeight());
         playableArea.setPosition( -playableArea.getWidth() / 2, -playableArea.getHeight() / 2);
 
+        //Loads in all the different alien textures for the game
         aliensTextures = new Texture[Constants.getMinigameTextures().length];
         for(int i = 0; i < Constants.getMinigameTextures().length; i++){
             aliensTextures[i] = new Texture(Gdx.files.internal(Constants.getMinigameTextures()[i]));
@@ -86,6 +94,7 @@ public class MinigameScene extends Scene {
             aliens.add(newAlien);
         }
 
+        //Sets up the countdown text to start
         font.setColor(Color.RED);
         countdownText = new GlyphLayout();
         countdownText.setText(font, "Starting in " + secondsValue);
@@ -94,12 +103,14 @@ public class MinigameScene extends Scene {
     @Override
     public void resolveScene() {
         if(started) {
+            //Moves all the aliens
             for (Alien alien : aliens) {
                 alien.move();
             }
         }else{
             countdownTimer -= 1;
 
+            //Works out whether the minigame should be started or if the amount of seconds left should decrease
             if(countdownTimer <= 0){
                 started = true;
             }else if(countdownTimer <= 120 && secondsValue == 3){
@@ -135,11 +146,13 @@ public class MinigameScene extends Scene {
         boundsRenderer.end();
 
         batch.begin();
+        //Renders the engine and all aliens
         minigameEngine.draw(batch);
         for(Sprite alien: aliens){
             alien.draw(batch);
         }
 
+        //Draws the countdown text if the game has not yet started
         if(!started){
             font.draw(batch, countdownText, -countdownText.width / 2, countdownText.height / 2);
         }
