@@ -54,7 +54,7 @@ public class GameScene extends Scene
         highlightMap = new HighlightMap(map.getMapWidth(), map.getMapHeight());
         selectedTile = null;
 
-        barManager = new BarManager(humanData.getTeam(), map);
+        barManager = new BarManager(humanData, enemyData, map);
         renderer = new Renderer(map, highlightMap);
 
         humanToolTip = new Tooltip("", -900, 400, 75, 200);
@@ -198,7 +198,7 @@ public class GameScene extends Scene
             int xPos = c.getLocation().getMapX();
             int yPos = c.getLocation().getMapY();
 
-            Tile[] adjTiles = map.getNClosest(4, c.getLocation());
+            Tile[] adjTiles = map.getNClosest(10, c.getLocation());
 
             for(Tile t: adjTiles){
                 if(t.getInhabitant() != null){

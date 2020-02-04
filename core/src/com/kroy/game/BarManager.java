@@ -14,14 +14,16 @@ import java.nio.charset.CharsetEncoder;
 
 public class BarManager
 {
-    private Character[] team;
+    private Human humanData;
+    private Enemy enemyData;
     private ShapeRenderer shapeRenderer;
 
     private int shiftX, shiftY;
 
-    public BarManager(Character[] team, Map map)
+    public BarManager(Human humanData, Enemy enemyData, Map map)
     {
-        this.team = team;
+        this.humanData = humanData;
+        this.enemyData = enemyData;
         shapeRenderer = new ShapeRenderer();
     }
 
@@ -33,10 +35,18 @@ public class BarManager
     {
         shapeRenderer.setProjectionMatrix(cam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for(Character character: team)
+        for(Character character: humanData.getTeam())
         {
-            renderHealthBarForEngine(character);
+            renderHealthBar(character);
             renderWaterMeterForEngine(character);
+        }
+        for(Character character: enemyData.getTeam())
+        {
+            renderHealthBar(character);
+        }
+        for(Character character: enemyData.getPatrols())
+        {
+            renderHealthBar(character);
         }
         shapeRenderer.end();
     }
@@ -45,7 +55,7 @@ public class BarManager
      * Method to draw the health bar for a specific engine
      * @param character The engine the health bar should be drawn for
      */
-    private void renderHealthBarForEngine(Character character)
+    private void renderHealthBar(Character character)
     {
         if(character != null) {
             int xPosition = character.getLocation().getMapX() * Constants.getTileSize() + shiftX;
@@ -99,5 +109,4 @@ public class BarManager
     //Setter Method
     public void setShiftX(int shiftX) { this.shiftX = shiftX; }
     public void setShiftY(int shiftY) { this.shiftY = shiftY; }
-    public void setTeam(Character[] team) { this.team = team; }
 }
