@@ -127,6 +127,10 @@ public class InputManager extends ApplicationAdapter
             if(Gdx.input.isKeyPressed(Input.Keys.D) && currentScene.isStarted()){
                 currentScene.moveEngine(Constants.getMinigameBasePlayerMovementSpeed());
             }
+
+            if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+                currentScene.getMinigameEngine().fireBullet();
+            }
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {

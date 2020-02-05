@@ -25,6 +25,10 @@ public final class Constants {
     private static float MINIGAME_BASE_PLAYER_MOVEMENT_SPEED = 6.0f;
     private static float MINIGAME_BASE_ALIEN_MOVEMENT_SPEED = 3.0f;
     private static int MINIGAME_EDGE_BUFFER = 5;
+    private static float MINIGAME_BULLET_SPEED = 5.0f;
+    private static int MINIGAME_BULLET_WIDTH = 10;
+    private static int MINIGAME_BULLET_HEIGHT = 20;
+    private static int NUM_ENGINE_BULLETS = 5;
 
     private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png", "GreeneryTexture/BushTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/TreeTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/GrassTile1.png",};
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
@@ -111,6 +115,14 @@ public final class Constants {
     public static float getMinigameBaseAlienMovementSpeed() { return MINIGAME_BASE_ALIEN_MOVEMENT_SPEED; }
 
     public static int getMinigameEdgeBuffer() { return MINIGAME_EDGE_BUFFER; }
+
+    public static float getMinigameBulletSpeed() { return MINIGAME_BULLET_SPEED; }
+
+    public static int getMinigameBulletWidth() { return MINIGAME_BULLET_WIDTH; }
+
+    public static int getMinigameBulletHeight() { return MINIGAME_BULLET_HEIGHT; }
+
+    public static int getNumEngineBullets() { return NUM_ENGINE_BULLETS; }
 
     public static void setResourceRoot(String newResourceRoot) {
         RESOURCE_ROOT = newResourceRoot;

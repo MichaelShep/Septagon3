@@ -17,6 +17,8 @@ import com.kroy.game.FireEngine;
 import com.kroy.game.Patrol;
 import com.kroy.game.SceneType;
 import com.kroy.game.minigameHelpers.Alien;
+import com.kroy.game.minigameHelpers.MinigameBullet;
+import com.kroy.game.minigameHelpers.MinigameEngine;
 import com.sun.org.apache.bcel.internal.Const;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class MinigameScene extends Scene {
     private Patrol passedPatrol;
 
     //Holds the engine that is used for the minigame
-    private Sprite minigameEngine;
+    private MinigameEngine minigameEngine;
 
     //Stores the area of the screen which the minigame can be played in
     private Rectangle playableArea;
@@ -66,11 +68,6 @@ public class MinigameScene extends Scene {
         boundsRenderer = new ShapeRenderer();
         random = new Random();
 
-        //Sets up the engine to be the correct size and position
-        minigameEngine = new Sprite(passedEngine.getTexture());
-        minigameEngine.setSize(Constants.getTileSize(), Constants.getTileSize());
-        minigameEngine.setPosition(-minigameEngine.getWidth() / 2, -(Gdx.graphics.getHeight() / 2) + 20);
-
         //Sets up the area of the screen that the minigame can take place in
         playableArea = new Rectangle();
         playableArea.setSize(Constants.getResolutionHeight(), Constants.getResolutionHeight());
@@ -82,7 +79,10 @@ public class MinigameScene extends Scene {
             aliensTextures[i] = new Texture(Gdx.files.internal(Constants.getMinigameTextures()[i]));
         }
 
+        minigameEngine = new MinigameEngine(passedEngine);
         aliens = new ArrayList<Alien>();
+
+        minigameEngine.init();
 
         float startX = -playableArea.width / 2 + Constants.getMinigameEdgeBuffer();
         float startY = playableArea.height / 2 - Constants.getTileSize() - Constants.getMinigameEdgeBuffer();
@@ -107,6 +107,7 @@ public class MinigameScene extends Scene {
             for (Alien alien : aliens) {
                 alien.move();
             }
+            minigameEngine.update();
         }else{
             countdownTimer -= 1;
 
@@ -134,7 +135,7 @@ public class MinigameScene extends Scene {
         boundsRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         //Draw background for the playableArea
-        boundsRenderer.setColor(Color.DARK_GRAY);
+        boundsRenderer.setColor(Color.LIGHT_GRAY);
         boundsRenderer.rect(playableArea.x, playableArea.y, playableArea.width, playableArea.height);
 
         boundsRenderer.setColor(Color.BLACK);
@@ -158,6 +159,7 @@ public class MinigameScene extends Scene {
         }
 
         batch.end();
+        minigameEngine.renderBullets(cam);
     }
 
     /**
@@ -178,4 +180,6 @@ public class MinigameScene extends Scene {
     }
 
     public boolean isStarted() { return started; }
+
+    public MinigameEngine getMinigameEngine() { return minigameEngine; }
 }
