@@ -51,7 +51,7 @@ public final class Constants {
 
 
     private static int [][] patrolProfiles = {
-            {5,5,5}, {6,4,8}
+            {5,5,3}, {6,4,2}
     };
 
     private Constants() {

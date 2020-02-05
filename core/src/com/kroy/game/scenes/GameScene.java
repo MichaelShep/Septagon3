@@ -135,7 +135,7 @@ public class GameScene extends Scene
         this.minigameTrigger();
 
         //Test code - should be removed when minigame implementation is done
-        sceneManager.changeScene(new MinigameScene(font, cam, (FireEngine)humanData.getTeam()[0], (Patrol)enemyData.getPatrols()[0]));
+        //sceneManager.changeScene(new MinigameScene(font, cam, (FireEngine)humanData.getTeam()[0], (Patrol)enemyData.getPatrols()[0]));
     }
 
     @Override

@@ -189,10 +189,16 @@ public class InputManager extends ApplicationAdapter
                         System.out.println("MOVE");
                         ((FireEngine)sceneHelper.getSelectedTile().getInhabitant()).transferTo(queryTile);
                         //Move all patrols randomly
+                        Random random = new Random();
                         for (Patrol patrols : sceneHelper.getEnemyData().getPatrols()){
-                            Tile[] movable = sceneHelper.getMap().getNClosest(patrols.getRange(), patrols.getLocation(), TileType.TILE_TYPES_ROAD);
-                            Random random = new Random();
-                            patrols.transferTo(movable[random.nextInt(movable.length)]);
+                            ArrayList<Tile> movable = sceneHelper.getMap().getWithRangeOfHub(patrols.getLocation(), patrols.getRange(), TileType.TILE_TYPES_ROAD);
+                            if (movable.size() > 0) {
+                                int moveIndex = random.nextInt(movable.size());
+                                if (movable.get(moveIndex).getInhabitant() == null && sceneHelper.getHighlightMap().tileReachable(movable.get(moveIndex))){
+                                    patrols.transferTo(movable.get(moveIndex));
+                                }
+
+                            }
                         }
 
                         sceneHelper.setSelectedTile(null);

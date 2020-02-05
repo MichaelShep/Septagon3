@@ -1,5 +1,9 @@
 package com.kroy.game;
 
+/*
+Added by Sam Harrison
+This class creates an object which extends character but also gives the
+ */
 public class Patrol extends Character {
 
     /**
