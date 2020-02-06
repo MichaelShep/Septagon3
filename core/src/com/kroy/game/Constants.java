@@ -110,14 +110,8 @@ public final class Constants {
     public static String[] getMinigameTextures() { return MINIGAME_TEXTURES; }
 
     public static String getResourceRoot() {
-        String os = System.getProperty("os.name");
         String WORKING_DIRECTORY = Gdx.files.getLocalStoragePath();
-        String resources_root;
-        if(!os.toLowerCase().contains("windows")) {
-            resources_root = Gdx.files.absolute(WORKING_DIRECTORY).parent().toString() + "/core/assets/";
-        }else{
-            resources_root = Gdx.files.absolute(WORKING_DIRECTORY).toString() + "/core/assets/";
-        }
+        String resources_root = Gdx.files.absolute(WORKING_DIRECTORY).toString() + "/core/assets/";
         return resources_root;
     }
 
