@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.kroy.game.Constants;
 import com.kroy.game.Player;
-import com.sun.org.apache.bcel.internal.Const;
 
 /**
  * Created by Septagon

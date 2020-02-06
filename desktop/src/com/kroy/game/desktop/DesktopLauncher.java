@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        System.setProperty("org.lwjgl.opengl.Display.allowSoftwareOpenGL", "true");
 
         config.width = Constants.getResolutionWidth();
         config.height = Constants.getResolutionHeight();

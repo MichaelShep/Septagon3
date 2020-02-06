@@ -19,7 +19,6 @@ import com.kroy.game.SceneType;
 import com.kroy.game.minigameHelpers.Alien;
 import com.kroy.game.minigameHelpers.MinigameBullet;
 import com.kroy.game.minigameHelpers.MinigameEngine;
-import com.sun.org.apache.bcel.internal.Const;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -48,6 +47,7 @@ public class MinigameScene extends Scene {
 
     //Used to generate random values
     private Random random;
+    private Texture backgroundImage;
 
     //Variables to handle the countdown before the minigame actually starts when it first loads up
     private int countdownTimer = 180;
@@ -98,6 +98,7 @@ public class MinigameScene extends Scene {
         font.setColor(Color.RED);
         countdownText = new GlyphLayout();
         countdownText.setText(font, "Starting in " + secondsValue);
+        backgroundImage = new Texture(Gdx.files.internal("MinigameBackground.png"));
     }
 
     @Override
@@ -130,6 +131,10 @@ public class MinigameScene extends Scene {
     public void renderScene(Batch batch) {
         Gdx.gl.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        batch.draw(backgroundImage, -Gdx.graphics.getWidth() / 2, -Gdx.graphics.getHeight() / 2, Constants.getResolutionWidth(), Constants.getResolutionHeight());
+        batch.end();
 
         boundsRenderer.setProjectionMatrix(cam.combined);
         boundsRenderer.begin(ShapeRenderer.ShapeType.Filled);
