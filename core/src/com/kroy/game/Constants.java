@@ -1,5 +1,6 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 
 
@@ -33,7 +34,6 @@ public final class Constants {
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
     private static String[] MINIGAME_TEXTURES = {"MiniGameTexture/ethan.png", "MiniGameTexture/michael.png", "MiniGameTexture/thanh.png"};
 
-    private static String RESOURCE_ROOT = "../core/assets/";
     private static String MAP_FILE_NAME = "Data/yorkMapFlipped.csv";
 
     private static int STATION_RANGE = 3;
@@ -110,6 +110,8 @@ public final class Constants {
     public static String[] getMinigameTextures() { return MINIGAME_TEXTURES; }
 
     public static String getResourceRoot() {
+        String WORKING_DIRECTORY = Gdx.files.getLocalStoragePath();
+        String RESOURCE_ROOT = Gdx.files.absolute(WORKING_DIRECTORY).parent().toString() + "/core/assets/";
         return RESOURCE_ROOT;
     }
 
@@ -127,9 +129,9 @@ public final class Constants {
 
     public static int getNumEngineBullets() { return NUM_ENGINE_BULLETS; }
 
-    public static void setResourceRoot(String newResourceRoot) {
+    /*public static void setResourceRoot(String newResourceRoot) {
         RESOURCE_ROOT = newResourceRoot;
-    }
+    }*/
 
     public static boolean isFULLSCREEN() {
         return FULLSCREEN;
