@@ -1,16 +1,13 @@
 package com.kroy.game;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
-
-import java.awt.*;
 
 
 public final class Constants {
-    private static int RESOLUTION_WIDTH = 1920;
-    private static int RESOLUTION_HEIGHT = 1080;
-    private static int ACTUAL_SCREEN_WIDTH = 2048;
-    private static int ACTUAL_SCREEN_HEIGHT = 1152;
+    private static int RESOLUTION_WIDTH = 1024;
+    private static int RESOLUTION_HEIGHT = 576;
+    private static int ACTUAL_SCREEN_WIDTH = 1024;
+    private static int ACTUAL_SCREEN_HEIGHT = 576;
 
     private static boolean FULLSCREEN = false;
 
@@ -36,7 +33,7 @@ public final class Constants {
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
     private static String[] MINIGAME_TEXTURES = {"MiniGameTexture/ethan.png", "MiniGameTexture/michael.png", "MiniGameTexture/thanh.png"};
 
-    private static String RESOURCE_ROOT = System.getProperty("user.dir");
+    private static String RESOURCE_ROOT = "../core/assets/";
     private static String MAP_FILE_NAME = "Data/yorkMapFlipped.csv";
 
     private static int STATION_RANGE = 3;
