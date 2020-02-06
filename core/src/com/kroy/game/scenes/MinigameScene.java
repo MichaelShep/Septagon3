@@ -88,11 +88,16 @@ public class MinigameScene extends Scene {
         float startX = -playableArea.width / 2 + Constants.getMinigameEdgeBuffer();
         float startY = playableArea.height / 2 - Constants.getTileSize() - Constants.getMinigameEdgeBuffer();
         float bufferBetweenAliens = 3;
-        for(int i = 0; i < 5; i++){
-            Alien newAlien = new Alien(0, passedPatrol.getHealth(), playableArea);
-            newAlien.setBounds(startX + (i * Constants.getTileSize()) + bufferBetweenAliens, startY, Constants.getTileSize(), Constants.getTileSize());
-            newAlien.setTexture(aliensTextures[random.nextInt(aliensTextures.length)]);
+        for(int i = 0; i < 10; i++){
+            Alien newAlien = new Alien(0, passedPatrol.getHealth(), playableArea, passedPatrol, aliensTextures[random.nextInt(aliensTextures.length)]);
+            newAlien.setPosition(startX + (i * Constants.getTileSize()) + bufferBetweenAliens, startY);
             aliens.add(newAlien);
+        }
+
+        System.out.println(passedEngine.getTexture().toString());
+
+        for(Alien a: aliens){
+            a.init();
         }
 
         //Sets up the countdown text to start
@@ -154,10 +159,10 @@ public class MinigameScene extends Scene {
 
         batch.begin();
         //Renders the engine and all aliens
-        minigameEngine.draw(batch);
-        for(Sprite alien: aliens){
+        for(Alien alien: aliens){
             alien.draw(batch);
         }
+        minigameEngine.draw(batch);
 
         //Draws the countdown text if the game has not yet started
         if(!started){

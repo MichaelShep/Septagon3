@@ -1,8 +1,11 @@
 package com.kroy.game.minigameHelpers;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.kroy.game.Constants;
+import com.kroy.game.Patrol;
 import com.kroy.game.Player;
 
 /**
@@ -16,11 +19,18 @@ public class Alien extends Sprite {
     private float health;
     private boolean left = true;
     private Rectangle playableArea;
+    private Patrol passedPatrol;
 
-    public Alien(float movementSpeed, float health, Rectangle playableArea){
+    public Alien(float movementSpeed, float health, Rectangle playableArea, Patrol passedPatrol, Texture texture){
         this.movementSpeed = movementSpeed;
         this.health = health;
         this.playableArea = playableArea;
+        this.passedPatrol = passedPatrol;
+        this.setTexture(texture);
+    }
+
+    public void init(){
+        this.setSize(Constants.getTileSize(), Constants.getTileSize());
     }
 
     public void move(){
@@ -42,6 +52,11 @@ public class Alien extends Sprite {
             this.setY(this.getY() - Constants.getTileSize());
             left = false;
         }
+    }
+
+    @Override
+    public void draw(Batch batch){
+        batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
     public float getMovementSpeed() { return movementSpeed; }
