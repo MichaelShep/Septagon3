@@ -5,10 +5,10 @@ import com.badlogic.gdx.assets.AssetManager;
 
 
 public final class Constants {
-    private static int RESOLUTION_WIDTH = 1024;
-    private static int RESOLUTION_HEIGHT = 576;
-    private static int ACTUAL_SCREEN_WIDTH = 1024;
-    private static int ACTUAL_SCREEN_HEIGHT = 576;
+    private static int RESOLUTION_WIDTH = 1920;
+    private static int RESOLUTION_HEIGHT = 1080;
+    private static int ACTUAL_SCREEN_WIDTH = 2048;
+    private static int ACTUAL_SCREEN_HEIGHT = 1196;
 
     private static boolean FULLSCREEN = false;
 
@@ -110,9 +110,15 @@ public final class Constants {
     public static String[] getMinigameTextures() { return MINIGAME_TEXTURES; }
 
     public static String getResourceRoot() {
+        String os = System.getProperty("os.name");
         String WORKING_DIRECTORY = Gdx.files.getLocalStoragePath();
-        String RESOURCE_ROOT = Gdx.files.absolute(WORKING_DIRECTORY).parent().toString() + "/core/assets/";
-        return RESOURCE_ROOT;
+        String resources_root;
+        if(!os.toLowerCase().contains("windows")) {
+            resources_root = Gdx.files.absolute(WORKING_DIRECTORY).parent().toString() + "/core/assets/";
+        }else{
+            resources_root = Gdx.files.absolute(WORKING_DIRECTORY).toString() + "/core/assets/";
+        }
+        return resources_root;
     }
 
     public static float getMinigameBasePlayerMovementSpeed() { return MINIGAME_BASE_PLAYER_MOVEMENT_SPEED; }
