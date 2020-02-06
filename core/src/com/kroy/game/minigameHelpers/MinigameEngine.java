@@ -61,4 +61,5 @@ public class MinigameEngine extends Sprite {
         }
     }
 
+    public MinigameBullet[] getBullets() { return bullets; }
 }

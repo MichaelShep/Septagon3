@@ -56,6 +56,14 @@ public class MinigameScene extends Scene {
     private int secondsValue = 3;
     private GlyphLayout countdownText;
 
+    //Variables for handling when the player has lost
+    private boolean lost = false;
+    private GlyphLayout lostText;
+
+    //Variables for handling when the player has won
+    private boolean won = false;
+    private GlyphLayout wonText;
+
     private int alienFireTimer = 30;
 
     protected MinigameScene(BitmapFont font, OrthographicCamera cam, FireEngine passedEngine, Patrol passedPatrol) {
@@ -96,8 +104,6 @@ public class MinigameScene extends Scene {
             aliens.add(newAlien);
         }
 
-        System.out.println(passedEngine.getTexture().toString());
-
         for(Alien a: aliens){
             a.init();
         }
@@ -107,11 +113,17 @@ public class MinigameScene extends Scene {
         countdownText = new GlyphLayout();
         countdownText.setText(font, "Starting in " + secondsValue);
         backgroundImage = new Texture(Gdx.files.internal("MinigameBackground.png"));
+
+        lostText = new GlyphLayout();
+        lostText.setText(font, "You have lost!!!");
+
+        wonText = new GlyphLayout();
+        wonText.setText(font, "You have Won!!!");
     }
 
     @Override
     public void resolveScene() {
-        if(started) {
+        if(started && !lost && !won) {
             alienFireTimer++;
             //Moves all the aliens
             for (Alien alien : aliens) {
@@ -127,7 +139,11 @@ public class MinigameScene extends Scene {
                 alienFireTimer = 0;
             }
             minigameEngine.update();
-        }else{
+            checkHittingAlien();
+            checkHittingPlayer();
+            if(aliens.size() >= 1 && aliens.get(aliens.size() - 1).isHasLost()) lost = true;
+
+        }else if(!started && !lost && !won){
             countdownTimer -= 1;
 
             //Works out whether the minigame should be started or if the amount of seconds left should decrease
@@ -183,6 +199,12 @@ public class MinigameScene extends Scene {
         if(!started){
             font.draw(batch, countdownText, -countdownText.width / 2, countdownText.height / 2);
         }
+        else if(lost){
+            font.draw(batch, lostText, -lostText.width / 2, lostText.height / 2);
+        }
+        else if(won){
+            font.draw(batch, wonText, -wonText.width / 2, wonText.height / 2);
+        }
 
         batch.end();
         minigameEngine.renderBullets(cam);
@@ -205,6 +227,37 @@ public class MinigameScene extends Scene {
 
         if (minigameEngine.getX() >= playableArea.getX() + playableArea.getWidth() - minigameEngine.getWidth()) {
             minigameEngine.setX(playableArea.getX() + playableArea.getWidth() - minigameEngine.getWidth());
+        }
+    }
+
+    private void checkHittingAlien(){
+        for(int i = 0; i < minigameEngine.getBullets().length; i++){
+            if(minigameEngine.getBullets()[i].isHasFired()){
+                for(int j = 0; j < aliens.size(); j++){
+                    float x = minigameEngine.getBullets()[i].getX();
+                    float y = minigameEngine.getBullets()[i].getY();
+                    if(aliens.get(j).getBoundingRectangle().contains(new Vector2(x, y))){
+                        aliens.remove(aliens.get(j));
+                        minigameEngine.getBullets()[i].setHasFired(false);
+
+                        if(aliens.size() == 0){
+                            won = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void checkHittingPlayer(){
+        for(int i = 0; i < aliens.size(); i++){
+            if(aliens.get(i).getBullet().isHasFired()){
+                float x = aliens.get(i).getBullet().getX();
+                float y = aliens.get(i).getBullet().getY();
+                if(minigameEngine.getBoundingRectangle().contains(new Vector2(x, y))){
+                    lost = true;
+                }
+            }
         }
     }
 

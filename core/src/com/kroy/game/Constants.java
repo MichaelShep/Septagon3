@@ -32,7 +32,7 @@ public final class Constants {
     private static int STATION_REPAIR_AMOUNT = 2;
 
     private static float MINIGAME_BASE_PLAYER_MOVEMENT_SPEED = 6.0f;
-    private static float MINIGAME_BASE_ALIEN_MOVEMENT_SPEED = 7.0f;
+    private static float MINIGAME_BASE_ALIEN_MOVEMENT_SPEED = 5.0f;
     private static int MINIGAME_EDGE_BUFFER = 5;
     private static float MINIGAME_BULLET_SPEED = 8.0f;
     private static int MINIGAME_BULLET_WIDTH = 10;

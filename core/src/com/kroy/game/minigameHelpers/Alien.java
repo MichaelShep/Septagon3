@@ -62,7 +62,7 @@ public class Alien extends Sprite {
             left = false;
         }
 
-        if(this.getY() <= playableArea.y){
+        if(this.getY() <= playableArea.y + Constants.getTileSize()){
             hasLost = true;
         }
     }

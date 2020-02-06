@@ -67,4 +67,8 @@ public class MinigameBullet {
     }
 
     public boolean isHasFired() { return hasFired; }
+    public float getX() { return x; }
+    public float getY() { return y; }
+
+    public void setHasFired(boolean hasFired) { this.hasFired = hasFired; }
 }
