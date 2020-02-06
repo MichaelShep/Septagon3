@@ -9,6 +9,8 @@ import java.awt.*;
 public final class Constants {
     private static int RESOLUTION_WIDTH = 1920;
     private static int RESOLUTION_HEIGHT = 1080;
+    private static int ACTUAL_SCREEN_WIDTH = 2048;
+    private static int ACTUAL_SCREEN_HEIGHT = 1152;
 
     private static boolean FULLSCREEN = false;
 
@@ -65,6 +67,10 @@ public final class Constants {
     public static int getResolutionHeight() {
         return RESOLUTION_HEIGHT;
     }
+
+    public static int getActualScreenWidth() { return ACTUAL_SCREEN_WIDTH; }
+
+    public static int getActualScreenHeight() { return ACTUAL_SCREEN_HEIGHT; }
 
     public static AssetManager getManager() {
         return MANAGER;

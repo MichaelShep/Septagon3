@@ -22,6 +22,7 @@ import com.kroy.game.minigameHelpers.MinigameEngine;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.ConsoleHandler;
 
 /**
  * Class created by Team Septagon
@@ -133,7 +134,7 @@ public class MinigameScene extends Scene {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        batch.draw(backgroundImage, -Gdx.graphics.getWidth() / 2, -Gdx.graphics.getHeight() / 2, Constants.getResolutionWidth(), Constants.getResolutionHeight());
+        batch.draw(backgroundImage, -Constants.getActualScreenWidth() / 2, -Constants.getActualScreenHeight() /2, Constants.getActualScreenWidth(), Constants.getActualScreenHeight());
         batch.end();
 
         boundsRenderer.setProjectionMatrix(cam.combined);

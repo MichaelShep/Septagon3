@@ -95,7 +95,7 @@ public class Renderer {
      * @param batch the batch to render it through
      */
     public void renderUI(Batch batch) {
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "borderArt.png", Texture.class), -1024, -576, 2048, 1152, 0, 0, 1280, 720, false, false);
+        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "borderArt.png", Texture.class), -Constants.getActualScreenWidth() / 2, -Constants.getActualScreenHeight() / 2, Constants.getActualScreenWidth(), Constants.getActualScreenHeight(), 0, 0, 1280, 720, false, false);
 
     }
 
