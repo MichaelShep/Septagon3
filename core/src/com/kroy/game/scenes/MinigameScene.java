@@ -12,10 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.kroy.game.Constants;
-import com.kroy.game.FireEngine;
-import com.kroy.game.Patrol;
-import com.kroy.game.SceneType;
+import com.kroy.game.*;
 import com.kroy.game.minigameHelpers.Alien;
 import com.kroy.game.minigameHelpers.MinigameBullet;
 import com.kroy.game.minigameHelpers.MinigameEngine;
@@ -66,10 +63,13 @@ public class MinigameScene extends Scene {
 
     private int alienFireTimer = 30;
 
-    protected MinigameScene(BitmapFont font, OrthographicCamera cam, FireEngine passedEngine, Patrol passedPatrol) {
+    private SceneManager sceneManager;
+
+    protected MinigameScene(BitmapFont font, OrthographicCamera cam, FireEngine passedEngine, Patrol passedPatrol, SceneManager sceneManager) {
         super(font, cam);
         this.passedEngine = passedEngine;
         this.passedPatrol = passedPatrol;
+        this.sceneManager = sceneManager;
     }
 
     @Override
@@ -149,6 +149,7 @@ public class MinigameScene extends Scene {
             //Works out whether the minigame should be started or if the amount of seconds left should decrease
             if(countdownTimer <= 0){
                 started = true;
+                countdownTimer = 120;
             }else if(countdownTimer <= 120 && secondsValue == 3){
                 secondsValue = 2;
                 font.setColor(Color.RED);
@@ -157,6 +158,11 @@ public class MinigameScene extends Scene {
                 secondsValue = 1;
                 font.setColor(Color.RED);
                 countdownText.setText(font, "Starting in " + secondsValue);
+            }
+        }else if(lost || won){
+            countdownTimer--;
+            if(countdownTimer <= 0){
+                sceneManager.returnToPreviousScene(won);
             }
         }
     }
@@ -262,6 +268,10 @@ public class MinigameScene extends Scene {
     }
 
     public boolean isStarted() { return started; }
+    public boolean isFinished() { return (won || lost); }
+    public boolean isWon() { return won; }
+    public Patrol getPassedPatrol() { return passedPatrol; }
+    public FireEngine getPassedEngine() { return passedEngine; }
 
     public MinigameEngine getMinigameEngine() { return minigameEngine; }
 }

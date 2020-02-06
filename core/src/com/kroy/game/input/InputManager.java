@@ -120,11 +120,11 @@ public class InputManager extends ApplicationAdapter
         {
             MinigameScene currentScene = (MinigameScene) sceneHelper.getCurrentScene();
 
-            if(Gdx.input.isKeyPressed(Input.Keys.A) && currentScene.isStarted()){
+            if(Gdx.input.isKeyPressed(Input.Keys.A) && currentScene.isStarted() && !currentScene.isFinished()){
                 currentScene.moveEngine(-Constants.getMinigameBasePlayerMovementSpeed());
             }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.D) && currentScene.isStarted()){
+            if(Gdx.input.isKeyPressed(Input.Keys.D) && currentScene.isStarted() && !currentScene.isFinished()){
                 currentScene.moveEngine(Constants.getMinigameBasePlayerMovementSpeed());
             }
 

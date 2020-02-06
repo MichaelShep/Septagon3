@@ -14,7 +14,7 @@ public class Human extends Player {
     public Human(boolean myTurn, int teamSize) {
         super(myTurn, teamSize);
         for (int members = 0; members < teamSize; members++) {
-            team[members] = createFireEngine(members);
+            team.add(createFireEngine(members));
         }
 
 

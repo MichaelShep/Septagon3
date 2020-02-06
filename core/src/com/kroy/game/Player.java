@@ -1,9 +1,11 @@
 package com.kroy.game;
 
+import java.util.ArrayList;
+
 abstract public class Player {
 
     protected boolean myTurn;
-    protected Character[] team;
+    protected ArrayList<Character> team;
 
     /**
      * Constructs a Player Object
@@ -12,18 +14,18 @@ abstract public class Player {
      */
     public Player(boolean myTurn, int teamSize) {
         this.myTurn = myTurn;
-        team = new Character[teamSize];
+        team = new ArrayList<Character>();
     }
 
     /**
      * automatically deallocate characters that are disabled
      */
     public void resolveDeaths() {
-        for (int i = 0; i < team.length; i++) {
-            if (!(team[i] == null))
-                if (team[i].isDisabled()) {
-                    team[i].getLocation().setInhabitant(null);
-                    team[i] = null;
+        for (int i = 0; i < team.size(); i++) {
+            if (!(team.get(i) == null))
+                if (team.get(i).isDisabled()) {
+                    team.get(i).getLocation().setInhabitant(null);
+                    team.remove(i);
                 }
         }
     }
@@ -49,15 +51,15 @@ abstract public class Player {
      */
     public void distributeTeamLocation(Tile[] locations) {
         for (int locationIndex = 0; locationIndex < locations.length; locationIndex++) {
-            team[locationIndex].setLocation(locations[locationIndex]);
-            locations[locationIndex].setInhabitant(team[locationIndex]);
+            team.get(locationIndex).setLocation(locations[locationIndex]);
+            locations[locationIndex].setInhabitant(team.get(locationIndex));
         }
     }
 
 
 
 
-    public Character[] getTeam() {
+    public ArrayList<Character> getTeam() {
         return this.team;
     }
 

@@ -207,10 +207,20 @@ public class GameScene extends Scene
             for(Tile t: adjTiles){
                 if(t.getInhabitant() != null){
                     if(t.getInhabitant().getType() == Character.Type.PATROL){
-                        sceneManager.changeScene(new MinigameScene(font, cam, (FireEngine)c, (Patrol)t.getInhabitant()));
+                        sceneManager.changeScene(new MinigameScene(font, cam, (FireEngine)c, (Patrol)t.getInhabitant(), sceneManager));
                     }
                 }
             }
+        }
+    }
+
+    public void returnFromMinigame(boolean didWin, Patrol patrol, FireEngine engine){
+        if(didWin){
+            enemyData.getPatrols().remove(patrol);
+            engine.setWaterAmount(engine.getWaterCapacity());
+            engine.setHealth(engine.getMaxHealth());
+        }else{
+            humanData.getTeam().remove(engine);
         }
     }
 

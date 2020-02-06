@@ -30,7 +30,7 @@ public class Renderer {
      * @param enemyData the data of the enemy player
      */
     public void renderEnemies(Batch batch, Enemy enemyData) {
-        Character[] enemyCharacters = enemyData.getTeam();
+        ArrayList<Character> enemyCharacters = enemyData.getTeam();
 
         for (Character patrol : enemyData.getPatrols()){
             if (!(patrol == null)){
@@ -54,7 +54,7 @@ public class Renderer {
      * @param humanData the data of the human player
      */
     public void renderFireEngines(Batch batch, Human humanData) {
-        Character[] humanCharacters = humanData.getTeam();
+        ArrayList<Character> humanCharacters = humanData.getTeam();
         for (Character fe : humanCharacters) {
             if (!(fe == null)) {
                 map.placeOnMap(fe);

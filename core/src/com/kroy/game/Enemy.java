@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Enemy extends Player {
 
-    private Patrol[] patrols;
+    private ArrayList<Patrol> patrols;
 
     /**
      * Constructs Enemy Object which is able to control a team of fire Engines
@@ -19,12 +19,12 @@ public class Enemy extends Player {
         super(myTurn, teamSize);
 
         for (int members = 0; members < teamSize; members++) {
-            team[members] = createFortress(Constants.getFortressNames()[members], members);
+            team.add(createFortress(Constants.getFortressNames()[members], members));
         }
 
-        patrols = new Patrol[patrolSize];
+        patrols = new ArrayList<Patrol>();
         for (int members = 0; members < patrolSize; members++ ){
-            patrols[members] = createPatrol(members);
+            patrols.add(createPatrol(members));
         }
     }
 
@@ -112,8 +112,8 @@ public class Enemy extends Player {
 
     public void distributePatrols(Tile[] locations) {
         for (int locationIndex = 0; locationIndex < locations.length; locationIndex++) {
-            patrols[locationIndex].setLocation(locations[locationIndex]);
-            locations[locationIndex].setInhabitant(patrols[locationIndex]);
+            patrols.get(locationIndex).setLocation(locations[locationIndex]);
+            locations[locationIndex].setInhabitant(patrols.get(locationIndex));
         }
     }
 
@@ -145,14 +145,14 @@ public class Enemy extends Player {
     }
 
     public void improveFortresses () { //Added by Septagon
-        for (int i = 0; i < team.length; i++) {
-            if (!(team[i] == null)) {
-                team[i].improve();
+        for (int i = 0; i < team.size(); i++) {
+            if (!(team.get(i) == null)) {
+                team.get(i).improve();
             }
         }
     }
 
-    public Patrol[] getPatrols(){
+    public ArrayList<Patrol> getPatrols(){
         return patrols;
     }
 }

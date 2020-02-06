@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.kroy.game.minigameHelpers.MinigameBullet;
 import com.kroy.game.scenes.GameScene;
 import com.kroy.game.scenes.MainMenuScene;
+import com.kroy.game.scenes.MinigameScene;
 import com.kroy.game.scenes.Scene;
 
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class SceneManager {
     //assets
 
     private Scene currentScene;
+    //Variable that will allow you to get back to the GameScene from the MinigameScene
+    private Scene previousScene;
 
     /**
      * Constructs a Class to manage and render scenes
@@ -71,6 +75,9 @@ public class SceneManager {
 
     public void changeScene(Scene newScene)
     {
+        if(currentScene != null){
+            previousScene = currentScene;
+        }
         currentScene = newScene;
         currentScene.initScene();
     }
@@ -89,6 +96,17 @@ public class SceneManager {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         cam.update();
         batch.setProjectionMatrix(cam.combined);
+    }
+
+    /***
+     * Method used to return to the GameScene after finishing the minigame
+     * @param didWin Whether the player won the minigame or not
+     */
+    public void returnToPreviousScene(boolean didWin){
+        GameScene gameScene = (GameScene) previousScene;
+        MinigameScene minigameScene = (MinigameScene) currentScene;
+        gameScene.returnFromMinigame(didWin, minigameScene.getPassedPatrol(), minigameScene.getPassedEngine());
+        currentScene = gameScene;
     }
 
 
