@@ -38,21 +38,29 @@ public class MinigameBullet {
     public void update(){
         if(hasFired){
             y += velY;
+        }else{
+            x = sprite.getX();
+            y = sprite.getY();
         }
 
         if(y >= Constants.getResolutionHeight() / 2 + 30){
+            hasFired = false;
+        }else if(y <= -Constants.getResolutionWidth() / 2 - 30){
             hasFired = false;
         }
     }
 
     public void render(OrthographicCamera cam){
-        bulletRenderer.setProjectionMatrix(cam.combined);
-        bulletRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        if(hasFired)
+        {
+            bulletRenderer.setProjectionMatrix(cam.combined);
+            bulletRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        bulletRenderer.setColor(Color.BLUE);
-        bulletRenderer.rect(x, y, Constants.getMinigameBulletWidth(), Constants.getMinigameBulletHeight());
+            bulletRenderer.setColor(Color.BLUE);
+            bulletRenderer.rect(x, y, Constants.getMinigameBulletWidth(), Constants.getMinigameBulletHeight());
 
-        bulletRenderer.end();
+            bulletRenderer.end();
+        }
     }
 
     public boolean isHasFired() { return hasFired; }

@@ -5,10 +5,19 @@ import com.badlogic.gdx.assets.AssetManager;
 
 
 public final class Constants {
+    //Full size values
+    /*
     private static int RESOLUTION_WIDTH = 1920;
     private static int RESOLUTION_HEIGHT = 1080;
     private static int ACTUAL_SCREEN_WIDTH = 2048;
-    private static int ACTUAL_SCREEN_HEIGHT = 1196;
+    private static int ACTUAL_SCREEN_HEIGHT = 1196;*/
+
+    //Half size values
+    private static int RESOLUTION_WIDTH = 1920/2;
+    private static int RESOLUTION_HEIGHT = 1080/2;
+    private static int ACTUAL_SCREEN_WIDTH = 2048/2;
+    private static int ACTUAL_SCREEN_HEIGHT = 1196/2;
+
 
     private static boolean FULLSCREEN = false;
 
@@ -55,7 +64,6 @@ public final class Constants {
 
     private Constants() {
     }
-
 
     public static int getResolutionWidth() {
         return RESOLUTION_WIDTH;
@@ -129,10 +137,6 @@ public final class Constants {
 
     public static int getNumEngineBullets() { return NUM_ENGINE_BULLETS; }
 
-    /*public static void setResourceRoot(String newResourceRoot) {
-        RESOURCE_ROOT = newResourceRoot;
-    }*/
-
     public static boolean isFULLSCREEN() {
         return FULLSCREEN;
     }
@@ -146,14 +150,6 @@ public final class Constants {
         return fortressNames;
     }
 
-    public static void setResolutionHeight(int resolutionHeight) {
-        RESOLUTION_HEIGHT = resolutionHeight;
-    }
-
-    public static void setResolutionWidth(int resolutionWidth) {
-        RESOLUTION_WIDTH = resolutionWidth;
-    }
-
     public static int[][] getFireEngineProfiles() {
         return fireEngineProfiles;
     }
@@ -165,20 +161,3 @@ public final class Constants {
     public static int[][] getPatrolProfiles(){ return patrolProfiles;}
 
 }
-
-/*
-  private final static int RESOLUTION_WIDTH = 1280;
-    private final static int RESOLUTION_HEIGHT = 720;
-
-    private final static int TILE_SIZE = 32;
-
-    private final static int MAP_WIDTH = ((RESOLUTION_WIDTH/4)*3)/TILE_SIZE;
-    private final static int MAP_HEIGHT = (RESOLUTION_HEIGHT/TILE_SIZE)-1;
-
-
-    private final static int MAPSHIFT_X = RESOLUTION_WIDTH/4;
-    private final static int MAPSHIFT_Y = RESOLUTION_HEIGHT-(MAP_HEIGHT*TILE_SIZE)-(TILE_SIZE/2);
-
-    private  static AssetManager manager = new AssetManager();
-
- */

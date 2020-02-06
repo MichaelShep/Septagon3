@@ -1,5 +1,6 @@
 package com.kroy.game.minigameHelpers;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -20,6 +21,8 @@ public class Alien extends Sprite {
     private boolean left = true;
     private Rectangle playableArea;
     private Patrol passedPatrol;
+    private MinigameBullet bullet;
+    private boolean hasLost = false;
 
     public Alien(float movementSpeed, float health, Rectangle playableArea, Patrol passedPatrol, Texture texture){
         this.movementSpeed = movementSpeed;
@@ -31,15 +34,21 @@ public class Alien extends Sprite {
 
     public void init(){
         this.setSize(Constants.getTileSize(), Constants.getTileSize());
+        bullet = new MinigameBullet(this, false);
     }
 
     public void move(){
+        bullet.update();
         if(left) {
             this.setX(this.getX() + Constants.getMinigameBaseAlienMovementSpeed());
         }else{
             this.setX(this.getX() - Constants.getMinigameBaseAlienMovementSpeed());
         }
         checkBounds();
+    }
+
+    public void fire(){
+        bullet.fire();
     }
 
     private void checkBounds(){
@@ -52,6 +61,10 @@ public class Alien extends Sprite {
             this.setY(this.getY() - Constants.getTileSize());
             left = false;
         }
+
+        if(this.getY() <= playableArea.y){
+            hasLost = true;
+        }
     }
 
     @Override
@@ -62,6 +75,8 @@ public class Alien extends Sprite {
     public float getMovementSpeed() { return movementSpeed; }
     public float getHealth() { return health; }
     public boolean isLeft() { return left; }
+    public MinigameBullet getBullet() { return bullet; }
+    public boolean isHasLost() { return hasLost; }
 
     public void setLeft(boolean left) { this.left = left; }
 }

@@ -56,6 +56,8 @@ public class MinigameScene extends Scene {
     private int secondsValue = 3;
     private GlyphLayout countdownText;
 
+    private int alienFireTimer = 30;
+
     protected MinigameScene(BitmapFont font, OrthographicCamera cam, FireEngine passedEngine, Patrol passedPatrol) {
         super(font, cam);
         this.passedEngine = passedEngine;
@@ -88,7 +90,7 @@ public class MinigameScene extends Scene {
         float startX = -playableArea.width / 2 + Constants.getMinigameEdgeBuffer();
         float startY = playableArea.height / 2 - Constants.getTileSize() - Constants.getMinigameEdgeBuffer();
         float bufferBetweenAliens = 3;
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 5; i++){
             Alien newAlien = new Alien(0, passedPatrol.getHealth(), playableArea, passedPatrol, aliensTextures[random.nextInt(aliensTextures.length)]);
             newAlien.setPosition(startX + (i * Constants.getTileSize()) + bufferBetweenAliens, startY);
             aliens.add(newAlien);
@@ -110,9 +112,19 @@ public class MinigameScene extends Scene {
     @Override
     public void resolveScene() {
         if(started) {
+            alienFireTimer++;
             //Moves all the aliens
             for (Alien alien : aliens) {
                 alien.move();
+            }
+            if(alienFireTimer >= 60){
+                for(Alien alien: aliens){
+                    if(!alien.getBullet().isHasFired()){
+                        alien.fire();
+                        break;
+                    }
+                }
+                alienFireTimer = 0;
             }
             minigameEngine.update();
         }else{
@@ -137,6 +149,9 @@ public class MinigameScene extends Scene {
     public void renderScene(Batch batch) {
         Gdx.gl.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //Only needed when renderering at half size
+        cam.zoom = 0.25f;
 
         batch.begin();
         batch.draw(backgroundImage, -Constants.getActualScreenWidth() / 2, -Constants.getActualScreenHeight() /2, Constants.getActualScreenWidth(), Constants.getActualScreenHeight());
@@ -171,6 +186,9 @@ public class MinigameScene extends Scene {
 
         batch.end();
         minigameEngine.renderBullets(cam);
+        for(Alien a: aliens){
+            a.getBullet().render(cam);
+        }
     }
 
     /**

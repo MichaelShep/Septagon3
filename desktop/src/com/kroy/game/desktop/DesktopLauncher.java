@@ -13,7 +13,6 @@ public class DesktopLauncher {
 		config.width = Constants.getResolutionWidth();
 		config.height = Constants.getResolutionHeight();
 
-		config.fullscreen = true;
 		config.vSyncEnabled = true;
 		config.title = "WARKROY";
 		config.resizable = false;
