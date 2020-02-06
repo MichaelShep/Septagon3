@@ -56,7 +56,10 @@ public class MinigameBullet {
             bulletRenderer.setProjectionMatrix(cam.combined);
             bulletRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-            bulletRenderer.setColor(Color.BLUE);
+            if(up)
+                bulletRenderer.setColor(Color.BLUE);
+            else
+                bulletRenderer.setColor(Color.RED);
             bulletRenderer.rect(x, y, Constants.getMinigameBulletWidth(), Constants.getMinigameBulletHeight());
 
             bulletRenderer.end();
