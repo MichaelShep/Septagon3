@@ -43,10 +43,15 @@ public class MinigameBullet {
             y = sprite.getY();
         }
 
-        if(y >= Constants.getResolutionHeight() / 2 + 30){
+        if(y + Constants.getMinigameBulletHeight() >= Constants.getResolutionHeight() / 2){
             hasFired = false;
-        }else if(y <= -Constants.getResolutionWidth() / 2 - 30){
+            this.x = sprite.getX() + sprite.getWidth() / 2;
+            this.y = sprite.getY() + sprite.getHeight() / 2;
+        }else if(y <= -Constants.getResolutionHeight() / 2){
             hasFired = false;
+            System.out.println("Should remove bullet");
+            this.x = sprite.getX() + sprite.getWidth() / 2;
+            this.y = sprite.getY() + sprite.getHeight() / 2;
         }
     }
 

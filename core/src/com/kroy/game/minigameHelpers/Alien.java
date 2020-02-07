@@ -24,8 +24,7 @@ public class Alien extends Sprite {
     private MinigameBullet bullet;
     private boolean hasLost = false;
 
-    public Alien(float movementSpeed, float health, Rectangle playableArea, Patrol passedPatrol, Texture texture){
-        this.movementSpeed = movementSpeed;
+    public Alien(float health, Rectangle playableArea, Patrol passedPatrol, Texture texture){
         this.health = health;
         this.playableArea = playableArea;
         this.passedPatrol = passedPatrol;
@@ -33,6 +32,7 @@ public class Alien extends Sprite {
     }
 
     public void init(){
+        movementSpeed = Constants.getMinigameBaseAlienMovementSpeed() * passedPatrol.getRange() * 2;
         this.setSize(Constants.getTileSize(), Constants.getTileSize());
         bullet = new MinigameBullet(this, false);
     }
