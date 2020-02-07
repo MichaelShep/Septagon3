@@ -217,6 +217,7 @@ public class GameScene extends Scene
     public void returnFromMinigame(boolean didWin, Patrol patrol, FireEngine engine){
         if(didWin){
             enemyData.getPatrols().remove(patrol);
+            patrol.getLocation().setInhabitant(null);
             engine.setWaterAmount(engine.getWaterCapacity());
             engine.setHealth(engine.getMaxHealth());
         }else{
