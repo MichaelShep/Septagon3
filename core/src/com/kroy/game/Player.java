@@ -2,6 +2,10 @@ package com.kroy.game;
 
 import java.util.ArrayList;
 
+/**
+ * Base class used for handling info about a player
+ */
+
 abstract public class Player {
 
     protected boolean myTurn;
@@ -57,8 +61,7 @@ abstract public class Player {
     }
 
 
-
-
+    //Getters and Setters
     public ArrayList<Character> getTeam() {
         return this.team;
     }

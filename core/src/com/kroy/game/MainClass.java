@@ -18,6 +18,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Class to bring all elements of the game together
+ */
 
 public class MainClass extends ApplicationAdapter {
 

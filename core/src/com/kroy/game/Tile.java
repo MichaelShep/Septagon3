@@ -1,5 +1,9 @@
 package com.kroy.game;
 
+/**
+ * Used to handle info about each of the tiles in the game
+ */
+
 public class Tile {
     private int mapX;
     private int mapY;

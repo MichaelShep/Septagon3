@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/***
+ * Used to handle all info about patrols and fortresses
+ */
+
 public class Enemy extends Player {
 
     private ArrayList<Patrol> patrols;
@@ -110,6 +114,10 @@ public class Enemy extends Player {
 
     }
 
+    /**
+     * Used to setup the locations for the patrols
+     * @param locations The tiles where the patrols will be placed at
+     */
     public void distributePatrols(Tile[] locations) {
         for (int locationIndex = 0; locationIndex < locations.length; locationIndex++) {
             patrols.get(locationIndex).setLocation(locations[locationIndex]);
@@ -144,6 +152,9 @@ public class Enemy extends Player {
         }
     }
 
+    /***
+     * Method used to improve the fortress as time increases in the game
+     */
     public void improveFortresses () { //Added by Septagon
         for (int i = 0; i < team.size(); i++) {
             if (!(team.get(i) == null)) {
@@ -152,6 +163,7 @@ public class Enemy extends Player {
         }
     }
 
+    //Getters and Setters
     public ArrayList<Patrol> getPatrols(){
         return patrols;
     }

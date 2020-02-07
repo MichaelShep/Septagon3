@@ -1,6 +1,8 @@
 package com.kroy.game;
 
-import java.util.Random;
+/***
+ * Class used to manage the fireEngines and all the users info
+ */
 
 public class Human extends Player {
 

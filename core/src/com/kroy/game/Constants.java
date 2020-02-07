@@ -3,6 +3,9 @@ package com.kroy.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 
+/**
+ * File used to store all the constants in the game
+ */
 
 public final class Constants {
     //Full size values

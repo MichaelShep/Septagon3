@@ -25,6 +25,13 @@ public class Alien extends Sprite {
     private boolean hasLost = false;
     private boolean shouldMoveDown = false;
 
+    /***
+     * Used to pass values from the minigame to each Alien
+     * @param health CHECK WHAT THIS PARAMETER IS BEING USED FOR
+     * @param playableArea The area of the screen that is used for the minigame
+     * @param passedPatrol The Patrol that triggered the minigame
+     * @param texture The texture of the alien
+     */
     public Alien(float health, Rectangle playableArea, Patrol passedPatrol, Texture texture){
         this.health = health;
         this.playableArea = playableArea;

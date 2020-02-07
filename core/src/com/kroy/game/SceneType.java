@@ -1,5 +1,9 @@
 package com.kroy.game;
 
+/**
+ * Enum that stores the different possible scenes the game could be in
+ */
+
 public enum SceneType {
     SCENE_TYPE_MAINMENU,
     SCENE_TYPE_GAME,

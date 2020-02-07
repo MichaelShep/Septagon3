@@ -20,10 +20,17 @@ import java.util.Random;
 
 public class InputManager extends ApplicationAdapter
 {
+    //member variables that are used to change states
     private SceneManager sceneHelper;
     private BitmapFont font;
     private OrthographicCamera cam;
 
+    /***
+     * Constructor to pass values to the InputManager
+     * @param sceneHelper SceneManager to swap the current state of the game
+     * @param font The games font
+     * @param cam The games camera
+     */
     public InputManager(SceneManager sceneHelper, BitmapFont font, OrthographicCamera cam){
         this.sceneHelper = sceneHelper;
         this.font = font;
@@ -31,7 +38,7 @@ public class InputManager extends ApplicationAdapter
     }
 
     /**
-     * Calls any functions that are bound to keys
+     * Handles all key and mouse input for each scene
      */
     public void handleInput() {
         if (sceneHelper.getScene() == SceneType.SCENE_TYPE_MAINMENU) {

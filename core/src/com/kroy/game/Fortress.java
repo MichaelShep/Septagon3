@@ -1,5 +1,8 @@
 package com.kroy.game;
 
+/***
+ * Used to handle all the info about the Fortresses in the game
+ */
 
 public class Fortress extends Character {
 
@@ -24,6 +27,7 @@ public class Fortress extends Character {
         this.type = Type.FORTRESS;
     }
 
+    //Getters and Setters
     public String getName() {
         return name;
     }
@@ -31,7 +35,4 @@ public class Fortress extends Character {
     public void setName(String name) {
         this.name = name;
     }
-
-
-
 }

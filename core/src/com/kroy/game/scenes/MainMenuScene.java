@@ -9,6 +9,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.kroy.game.Constants;
 import com.kroy.game.SceneType;
 
+/***
+ * Class added as a result of Refractoring by team Septagon
+ * Used to handle the game when it is in the menu
+ */
+
 public class MainMenuScene extends Scene
 {
     private float runTime;

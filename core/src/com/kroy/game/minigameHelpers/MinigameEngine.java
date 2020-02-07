@@ -19,6 +19,10 @@ public class MinigameEngine extends Sprite {
     private FireEngine passedEngine;
     private int fireCooldown = 10;
 
+    /**
+     * Constructor used for passed values to MinigameEngine
+     * @param passedEngine the engine that triggered the minigame
+     */
     public MinigameEngine(FireEngine passedEngine){
         super(passedEngine.getTexture());
         this.passedEngine = passedEngine;

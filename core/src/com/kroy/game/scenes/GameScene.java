@@ -12,6 +12,11 @@ import com.kroy.game.rendering.Renderer;
 import javax.swing.text.Highlighter;
 import java.util.ArrayList;
 
+/**
+ * Class made as a result of refractoring by Septagon
+ * Used to handle the program when it is in the main game section
+ */
+
 public class GameScene extends Scene
 {
     private Tooltip humanToolTip;
@@ -29,6 +34,12 @@ public class GameScene extends Scene
 
     private Integer turnCounter = 0;
 
+    /***
+     * Constructor to pass values to the GameScene
+     * @param font The games font
+     * @param cam The camera for the game
+     * @param sceneManager SceneManager used to change states of the game
+     */
     public GameScene(BitmapFont font, OrthographicCamera cam, SceneManager sceneManager)
     {
         super(font, cam);
@@ -64,18 +75,12 @@ public class GameScene extends Scene
         humanToolTip.addValue("Icons/rangeIcon.png", 0);
         humanToolTip.addValue("Icons/speedIcon.png", 0);
         humanToolTip.addValue("Icons/waterIcon.png", 0);
-        //humanToolTip.setX((int) (-((humanToolTip.getIconSize() + humanToolTip.getFontSpacing()) * humanToolTip.getValues().size()) / 2f));
-        //humanToolTip.setY(100*(int)(Constants.getResolutionWidth()/1280f));
-        //humanToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
 
 
         enemyToolTip = new Tooltip("", -900, 400, 75, 200);
         enemyToolTip.addValue("Icons/healthIcon.png", 0);
         enemyToolTip.addValue("Icons/damageIcon.png", 0);
         enemyToolTip.addValue("Icons/rangeIcon.png", 0);
-        //enemyToolTip.setX((int) (-((enemyToolTip.getIconSize() + enemyToolTip.getFontSpacing()) * enemyToolTip.getValues().size()) / 2f));
-        //enemyToolTip.setY(Constants.getResolutionHeight() / 2 - (int) (200 * (Constants.getResolutionWidth() / 1280f - 1)) * 2);
-
 
         humanData.distributeTeamLocation(map.getNClosest(Constants.getFireengineCount(), map.getStationPosition(), TileType.TILE_TYPES_ROAD));
         enemyData.distributePatrols(map.getNClosest(Constants.getPatrolCount(), map.getFortressTiles()[0], TileType.TILE_TYPES_ROAD));
@@ -133,9 +138,6 @@ public class GameScene extends Scene
         }
 
         this.minigameTrigger();
-
-        //Test code - should be removed when minigame implementation is done
-        //sceneManager.changeScene(new MinigameScene(font, cam, (FireEngine)humanData.getTeam()[0], (Patrol)enemyData.getPatrols()[0]));
     }
 
     @Override
@@ -168,7 +170,7 @@ public class GameScene extends Scene
         barManager.renderBars(cam);
     }
 
-    // ------------ Scene Utility ------------------------
+    // ------------ Scene Utilities ------------------------
 
     /**
      * test if the enemy has won in this scene
@@ -214,6 +216,12 @@ public class GameScene extends Scene
         }
     }
 
+    /***
+     * Called by the SceneManager to change the game accordingly when the user is returning from the Minigame
+     * @param didWin Whether the user won the minigame
+     * @param patrol The patrol that triggered the minigame
+     * @param engine The engine that triggered the minigame
+     */
     public void returnFromMinigame(boolean didWin, Patrol patrol, FireEngine engine){
         if(didWin){
             enemyData.getPatrols().remove(patrol);
@@ -225,6 +233,7 @@ public class GameScene extends Scene
         }
     }
 
+    //Getters and Setters
     public HighlightMap getHighlightMap()
     {
         return highlightMap;

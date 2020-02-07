@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.kroy.game.Character;
 import com.kroy.game.Constants;
 
+/***
+ * Added by Septagon
+ * Class for the bullets that are used in the minigame
+ */
 public class MinigameBullet {
 
     private ShapeRenderer bulletRenderer;
@@ -16,6 +20,11 @@ public class MinigameBullet {
     private boolean up;
     private boolean hasFired = false;
 
+    /**
+     * Constructor to pass values to the bullet
+     * @param sprite The sprite that the bullet is attached to (engine or alien)
+     * @param up Whether the bullet should be firing up or down
+     */
     public MinigameBullet(Sprite sprite, boolean up){
         this.sprite = sprite;
         this.up = up;

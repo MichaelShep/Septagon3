@@ -1,5 +1,8 @@
 package com.kroy.game;
 
+/**
+ * Enum storing the different types of tile that are present in the game
+ */
 
 public enum TileType {
     TILE_TYPES_ROAD,

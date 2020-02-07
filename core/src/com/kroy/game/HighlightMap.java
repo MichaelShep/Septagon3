@@ -1,5 +1,8 @@
 package com.kroy.game;
 
+/***
+ * Used to work out what tiles a engine can move to
+ */
 
 import java.util.ArrayList;
 
@@ -159,13 +162,7 @@ public class HighlightMap {
         return false;
     }
 
-
-
-
-
-
-
-
+    //Getters and Setters
     public Tile[][] getMapData() {
         return mapData;
     }

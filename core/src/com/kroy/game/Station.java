@@ -4,7 +4,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
-
+/***
+ * Class used to handle info about the fireStation
+ */
 
 public class Station extends Tile {
     private int repairTime;
@@ -27,6 +29,7 @@ public class Station extends Tile {
     }
 
 
+    //Getters
     public int getRepairTime() {
         return repairTime;
     }

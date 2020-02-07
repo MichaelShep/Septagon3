@@ -1,7 +1,5 @@
 package com.kroy.game;
 
-// ---------- clean up ----------
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,8 +15,9 @@ import com.kroy.game.scenes.Scene;
 
 import java.util.ArrayList;
 
-//import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-
+/**
+ * Used to handle all the scenes in the game and to allow you to swap between different scenes at any time
+ */
 
 public class SceneManager {
 
@@ -27,7 +26,6 @@ public class SceneManager {
 
     private OrthographicCamera cam;
 
-    //assets
 
     private Scene currentScene;
     //Variable that will allow you to get back to the GameScene from the MinigameScene
@@ -73,6 +71,10 @@ public class SceneManager {
         currentScene.renderScene(batch);
     }
 
+    /**
+     * Used to move to a different scene from the current one
+     * @param newScene The new scene to be moved to
+     */
     public void changeScene(Scene newScene)
     {
         if(currentScene != null){

@@ -1,5 +1,9 @@
 package com.kroy.game;
 
+/***
+ * Used to handle all the info about fire engines in the game
+ */
+
 public class FireEngine extends Patrol {
 
     private int speed;
@@ -44,8 +48,7 @@ public class FireEngine extends Patrol {
         }
     }
 
-
-
+    //Getters and Setters
     public int getSpeed() {
         return speed;
     }

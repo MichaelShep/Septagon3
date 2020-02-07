@@ -7,10 +7,19 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.kroy.game.Constants;
 import com.kroy.game.SceneType;
 
+/***
+ * Class added as a result of refractoring by Team Septagon
+ * Used to handle the game when the user has won
+ */
+
 public class HumanWinScene extends Scene
 {
-
-    protected HumanWinScene(BitmapFont font, OrthographicCamera cam) {
+    /***
+     * Constructor used to pass values to the scene
+     * @param font The games font
+     * @param cam the games camera
+     */
+    public HumanWinScene(BitmapFont font, OrthographicCamera cam) {
         super(font, cam);
     }
 
@@ -28,6 +37,9 @@ public class HumanWinScene extends Scene
     }
 
     @Override
+    /***
+     * Used to handle updating the scene
+     */
     public void resolveScene() {
 
     }

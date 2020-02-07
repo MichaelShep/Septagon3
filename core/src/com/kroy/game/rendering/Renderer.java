@@ -18,6 +18,11 @@ public class Renderer {
     private Map map;
     private HighlightMap highlightMap;
 
+    /***
+     * Constructor used to pass values to the Renderer
+     * @param map The Games map
+     * @param highlightMap The Games HighlightMap
+     */
     public Renderer(Map map, HighlightMap highlightMap){
         this.map = map;
         this.highlightMap = highlightMap;

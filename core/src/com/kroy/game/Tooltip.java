@@ -2,6 +2,10 @@ package com.kroy.game;
 
 import java.util.HashMap;
 
+/**
+ * Used to create tooltips which are used to give info on the stats of the item you are currently on
+ */
+
 public class Tooltip {
 
     private String name;
@@ -63,6 +67,7 @@ public class Tooltip {
     }
 
 
+    //Getters and Setters
     public boolean isRender() {
         return render;
     }

@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.kroy.game.Constants;
 import com.kroy.game.SceneType;
 
+/***
+ * Class made as a result of refractoring by Septagon
+ * Used to handle the game once the enemy has won (player lost)
+ */
+
 public class EnemyWinScene extends Scene {
 
     protected EnemyWinScene(BitmapFont font, OrthographicCamera cam) {

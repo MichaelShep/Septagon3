@@ -1,8 +1,8 @@
 package com.kroy.game;
 
 /*
-Added by Sam Harrison
-This class creates an object which extends character but also gives the
+Added by Septagon
+Used to handle all info about the Patrols in the game
  */
 public class Patrol extends Character {
 
@@ -22,6 +22,10 @@ public class Patrol extends Character {
         this.type = Type.PATROL;
     }
 
+    /***
+     * Used to handle moving the patrols to a new location
+     * @param newLocation The new tile that the patrol should be moved to
+     */
     public void transferTo(Tile newLocation){
         location.setInhabitant(null);
         location = newLocation;

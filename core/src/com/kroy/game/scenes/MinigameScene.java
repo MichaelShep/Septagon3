@@ -65,6 +65,14 @@ public class MinigameScene extends Scene {
 
     private SceneManager sceneManager;
 
+    /***
+     * Constructors used to pass vaues to the scene
+     * @param font The games font
+     * @param cam The game camera
+     * @param passedEngine The engine that triggered the minigame
+     * @param passedPatrol The patrol that triggered the minigame
+     * @param sceneManager SceneManager used to change the scenes of the game
+     */
     protected MinigameScene(BitmapFont font, OrthographicCamera cam, FireEngine passedEngine, Patrol passedPatrol, SceneManager sceneManager) {
         super(font, cam);
         this.passedEngine = passedEngine;

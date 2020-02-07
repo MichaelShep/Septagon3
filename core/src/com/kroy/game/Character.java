@@ -3,6 +3,9 @@ package com.kroy.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+/**
+ * Character class used as a base class for all moveable objects in the game
+ */
 
 abstract public class  Character extends Sprite {
     public enum Type {ENGINE, FORTRESS, PATROL};
@@ -75,6 +78,9 @@ abstract public class  Character extends Sprite {
 
     }
 
+    /***
+     * Used to improve fortresses over time
+     */
     public void improve() { //Added by Septagon
         setMaxHealth(getMaxHealth() + 2);
         setHealth(getHealth() + 2);
@@ -82,6 +88,7 @@ abstract public class  Character extends Sprite {
     }
 
 
+    //Getters and Setters
     public int getHealth() {
         return this.health;
     }

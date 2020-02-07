@@ -9,8 +9,9 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.TreeMap;
 
-//import sun.jvm.hotspot.utilities.ObjectReader;
-
+/**
+ * Used to load in the map and handle all the tiles of the game
+ */
 
 public class Map {
 
