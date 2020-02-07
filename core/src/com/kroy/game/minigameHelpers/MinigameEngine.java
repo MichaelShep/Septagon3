@@ -9,17 +9,24 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kroy.game.Constants;
 import com.kroy.game.FireEngine;
 
+/***
+ * Class created by Team Septagon
+ * Used to handle the engine that is used for the minigame
+ */
 public class MinigameEngine extends Sprite {
 
     private MinigameBullet[] bullets;
     private FireEngine passedEngine;
-    private int fireCooldown = 30;
+    private int fireCooldown = 10;
 
     public MinigameEngine(FireEngine passedEngine){
         super(passedEngine.getTexture());
         this.passedEngine = passedEngine;
     }
 
+    /**
+     * Sets up all features of the engine
+     */
     public void init(){
         //Sets up the engine to be the correct size and position
         this.setTexture(passedEngine.getTexture());
@@ -33,6 +40,9 @@ public class MinigameEngine extends Sprite {
         }
     }
 
+    /***
+     * Updates the engine
+     */
     public void update(){
         fireCooldown++;
         for(MinigameBullet bullet: bullets){
@@ -40,6 +50,9 @@ public class MinigameEngine extends Sprite {
         }
     }
 
+    /***
+     * Fires a bullet from the list of bullets
+     */
     public void fireBullet(){
         if(fireCooldown >= 30) {
             for (MinigameBullet bullet : bullets) {
@@ -53,6 +66,10 @@ public class MinigameEngine extends Sprite {
     }
 
 
+    /***
+     * Renders all the bullets that have been fired
+     * @param cam The games Orthographic Camera
+     */
     public void renderBullets(OrthographicCamera cam){
         for(MinigameBullet bullet: bullets) {
             if (bullet.isHasFired()) {
@@ -61,5 +78,6 @@ public class MinigameEngine extends Sprite {
         }
     }
 
+    //Getters
     public MinigameBullet[] getBullets() { return bullets; }
 }

@@ -22,6 +22,9 @@ public class MinigameBullet {
         bulletRenderer = new ShapeRenderer();
     }
 
+    /***
+     * Called to fire the bullet and make it move depending on the sprite that owns it
+     */
     public void fire(){
         x = sprite.getX() + sprite.getWidth() / 2;
         y = sprite.getY() + sprite.getHeight() / 2;
@@ -35,6 +38,9 @@ public class MinigameBullet {
         hasFired = true;
     }
 
+    /***
+     * Updates the bullet and also checks its bounds once it has been fired
+     */
     public void update(){
         if(hasFired){
             y += velY;
@@ -43,18 +49,24 @@ public class MinigameBullet {
             y = sprite.getY();
         }
 
-        if(y + Constants.getMinigameBulletHeight() >= Constants.getResolutionHeight() / 2){
-            hasFired = false;
-            this.x = sprite.getX() + sprite.getWidth() / 2;
-            this.y = sprite.getY() + sprite.getHeight() / 2;
-        }else if(y <= -Constants.getResolutionHeight() / 2){
-            hasFired = false;
-            System.out.println("Should remove bullet");
-            this.x = sprite.getX() + sprite.getWidth() / 2;
-            this.y = sprite.getY() + sprite.getHeight() / 2;
+        if(hasFired) {
+            if (y + Constants.getMinigameBulletHeight() >= Constants.getResolutionHeight() / 2) {
+                hasFired = false;
+                this.x = sprite.getX() + sprite.getWidth() / 2;
+                this.y = sprite.getY() + sprite.getHeight() / 2;
+            } else if (y <= -Constants.getResolutionHeight() / 2) {
+                hasFired = false;
+                System.out.println("Should remove bullet");
+                this.x = sprite.getX() + sprite.getWidth() / 2;
+                this.y = sprite.getY() + sprite.getHeight() / 2;
+            }
         }
     }
 
+    /***
+     * Renders the bullet
+     * @param cam Games camera
+     */
     public void render(OrthographicCamera cam){
         if(hasFired)
         {
@@ -71,6 +83,7 @@ public class MinigameBullet {
         }
     }
 
+    //Getters and Setters
     public boolean isHasFired() { return hasFired; }
     public float getX() { return x; }
     public float getY() { return y; }

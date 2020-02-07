@@ -18,11 +18,12 @@ public class Alien extends Sprite {
 
     private float movementSpeed;
     private float health;
-    private boolean left = true;
+    private boolean left = false;
     private Rectangle playableArea;
     private Patrol passedPatrol;
     private MinigameBullet bullet;
     private boolean hasLost = false;
+    private boolean shouldMoveDown = false;
 
     public Alien(float health, Rectangle playableArea, Patrol passedPatrol, Texture texture){
         this.health = health;
@@ -31,52 +32,68 @@ public class Alien extends Sprite {
         this.setTexture(texture);
     }
 
+    /***
+     * Initalise all properties of the alien
+     */
     public void init(){
         movementSpeed = Constants.getMinigameBaseAlienMovementSpeed() * passedPatrol.getRange() * 2;
         this.setSize(Constants.getTileSize(), Constants.getTileSize());
         bullet = new MinigameBullet(this, false);
     }
 
+    /***
+     * Moves the alien depending on which direction it is travelling in
+     */
     public void move(){
         bullet.update();
         if(left) {
-            this.setX(this.getX() + Constants.getMinigameBaseAlienMovementSpeed());
-        }else{
             this.setX(this.getX() - Constants.getMinigameBaseAlienMovementSpeed());
+        }else{
+            this.setX(this.getX() + Constants.getMinigameBaseAlienMovementSpeed());
         }
         checkBounds();
     }
 
+    /***
+     * Fires the aliens bullet
+     */
     public void fire(){
         bullet.fire();
     }
 
+    /***
+     * Checks that the alien does not go off the edge of the screen
+     */
     private void checkBounds(){
         if(this.getX() <= playableArea.x + Constants.getMinigameEdgeBuffer()){
-            this.setX(playableArea.x + Constants.getMinigameEdgeBuffer());
-            this.setY(this.getY() - Constants.getTileSize());
-            left = true;
-        }else if(this.getX() + this.getWidth() + Constants.getMinigameEdgeBuffer() >= playableArea.getX() + playableArea.getWidth()){
-            this.setX(playableArea.getX() + playableArea.getWidth() - this.getWidth() - Constants.getMinigameEdgeBuffer());
-            this.setY(this.getY() - Constants.getTileSize());
-            left = false;
+            shouldMoveDown = true;
+        }else if(this.getX() + this.getWidth() >= playableArea.getX() + playableArea.getWidth() - Constants.getMinigameEdgeBuffer()){
+            shouldMoveDown = true;
         }
 
+        //Checks if the alien has reached the players level - if so means the player lost
         if(this.getY() <= playableArea.y + Constants.getTileSize()){
             hasLost = true;
         }
     }
 
     @Override
+    /***
+     * Draws the alien
+     */
     public void draw(Batch batch){
         batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
+
+    //Getters and Setters
 
     public float getMovementSpeed() { return movementSpeed; }
     public float getHealth() { return health; }
     public boolean isLeft() { return left; }
     public MinigameBullet getBullet() { return bullet; }
     public boolean isHasLost() { return hasLost; }
+    public boolean isShouldMoveDown() { return shouldMoveDown; }
 
     public void setLeft(boolean left) { this.left = left; }
+    public void setShouldMoveDown(boolean  shouldMoveDown) { this.shouldMoveDown = shouldMoveDown; }
 }

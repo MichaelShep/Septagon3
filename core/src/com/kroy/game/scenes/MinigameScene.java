@@ -73,6 +73,9 @@ public class MinigameScene extends Scene {
     }
 
     @Override
+    /***
+     * Initalises and sets up all objects for the minigame
+     */
     public void initScene() {
         sceneType = SceneType.SCENE_TYPE_MINIGAME;
 
@@ -98,10 +101,12 @@ public class MinigameScene extends Scene {
         float startX = -playableArea.width / 2 + Constants.getMinigameEdgeBuffer();
         float startY = playableArea.height / 2 - Constants.getTileSize() - Constants.getMinigameEdgeBuffer();
         float bufferBetweenAliens = 3;
-        for(int i = 0; i < passedPatrol.getHealth(); i++){
-            Alien newAlien = new Alien(passedPatrol.getHealth(), playableArea, passedPatrol, aliensTextures[random.nextInt(aliensTextures.length)]);
-            newAlien.setPosition(startX + (i * Constants.getTileSize()) + bufferBetweenAliens, startY);
-            aliens.add(newAlien);
+        for(int y = 0; y < 2; y++) {
+            for (int x = 0; x < passedPatrol.getHealth(); x++) {
+                Alien newAlien = new Alien(passedPatrol.getHealth(), playableArea, passedPatrol, aliensTextures[random.nextInt(aliensTextures.length)]);
+                newAlien.setPosition(startX + (x * Constants.getTileSize()) + bufferBetweenAliens, startY - (Constants.getTileSize() * y));
+                aliens.add(newAlien);
+            }
         }
 
         for(Alien a: aliens){
@@ -122,6 +127,9 @@ public class MinigameScene extends Scene {
     }
 
     @Override
+    /***
+     * Updates all objects in the minigame
+     */
     public void resolveScene() {
         if(started && !lost && !won) {
             alienFireTimer++;
@@ -129,7 +137,8 @@ public class MinigameScene extends Scene {
             for (Alien alien : aliens) {
                 alien.move();
             }
-            if(alienFireTimer >= 60){
+            moveAliensDown();
+            if(alienFireTimer >= 30){
                 for(Alien alien: aliens){
                     if(!alien.getBullet().isHasFired()){
                         alien.fire();
@@ -168,6 +177,9 @@ public class MinigameScene extends Scene {
     }
 
     @Override
+    /***
+     * Renders all elements of the screen
+     */
     public void renderScene(Batch batch) {
         Gdx.gl.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -236,6 +248,35 @@ public class MinigameScene extends Scene {
         }
     }
 
+    /***
+     * Function to check if the aliens have reached the edge of the screen and if so, move them all down as
+     * a group
+     */
+    public void moveAliensDown(){
+        for(Alien a: aliens){
+            if(a.isShouldMoveDown()){
+                if(!a.isLeft()){
+                    for(Alien alien: aliens){
+                        alien.setLeft(true);
+                        alien.setShouldMoveDown(false);
+                        alien.setY(alien.getY() - Constants.getTileSize());
+                    }
+                }else{
+                    for(Alien alien: aliens){
+                        alien.setLeft(false);
+                        alien.setShouldMoveDown(false);
+                        alien.setY(alien.getY() - Constants.getTileSize());
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    /***
+     * Function that checks to see if a bullet from the engine has hit an alien - if so will
+     * kill the alien
+     */
     private void checkHittingAlien(){
         for(int i = 0; i < minigameEngine.getBullets().length; i++){
             if(minigameEngine.getBullets()[i].isHasFired()){
@@ -255,6 +296,10 @@ public class MinigameScene extends Scene {
         }
     }
 
+    /***
+     * Function to check if a bullet from the alien has hit a player - if so will kill
+     * the player
+     */
     private void checkHittingPlayer(){
         for(int i = 0; i < aliens.size(); i++){
             if(aliens.get(i).getBullet().isHasFired()){
@@ -267,6 +312,7 @@ public class MinigameScene extends Scene {
         }
     }
 
+    //  Getters and Setters
     public boolean isStarted() { return started; }
     public boolean isFinished() { return (won || lost); }
     public boolean isWon() { return won; }
