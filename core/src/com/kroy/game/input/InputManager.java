@@ -53,7 +53,6 @@ public class InputManager extends ApplicationAdapter
 
             }
             if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                GameScene.bullets.add(new Bullet( 1,  1,  20,  10, true));
                 sceneHelper.getMap().setShiftY(sceneHelper.getMap().getShiftY() + moveSpeed);
                 sceneHelper.getHighlightMap().setShiftY(sceneHelper.getHighlightMap().getShiftY() + moveSpeed);
             }
@@ -107,6 +106,10 @@ public class InputManager extends ApplicationAdapter
                 sceneHelper.getHumanToolTip().setRender(false);
                 sceneHelper.getEnemyToolTip().setRender(false);
             }
+
+//            if (Gdx.input.isButtonPressed(Input.Keys.B)) {
+//                GameScene.bullets.add(new Bullet(10,10, 100, 100, true));
+ //           }
 
 
         } else if (sceneHelper.getScene() == SceneType.SCENE_TYPE_HUMANWIN || sceneHelper.getScene() == SceneType.SCENE_TYPE_ENEMYWIN) {
@@ -188,6 +191,8 @@ public class InputManager extends ApplicationAdapter
                         System.out.println("ATTACK");
                         if (((FireEngine) sceneHelper.getSelectedTile().getInhabitant()).getWaterAmount() > 0) {
                             sceneHelper.getSelectedTile().getInhabitant().shootTarget(queryTile.getInhabitant());
+                            //shoot bullets animation
+                            GameScene.bullets.add(new Bullet( sceneHelper.getSelectedTile().getMapX(),sceneHelper.getSelectedTile().getMapY(), 100, 100, true));
                             sceneHelper.setSelectedTile(null);
                             sceneHelper.getHighlightMap().resetMap();
                             sceneHelper.getHighlightMap().setRender(false);

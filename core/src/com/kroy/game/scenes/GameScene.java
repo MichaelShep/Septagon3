@@ -88,6 +88,9 @@ public class GameScene extends Scene
         cam.viewportWidth = map.getMapWidth() * Constants.getTileSize();
         cam.viewportHeight = map.getMapHeight() * Constants.getTileSize();
         cam.zoom = 0.5f;
+
+        //empty arraylist of bullet
+        bullets = new ArrayList<Bullet>();
     }
 
     @Override
@@ -98,6 +101,19 @@ public class GameScene extends Scene
      * @param enemyData the data of the enemy player
      */
     public void resolveScene() {
+
+        //Bullet update
+        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
+        for (Bullet bullet : bullets)
+        {
+            System.out.print("bullet 123");
+            float deltaTime = 1 / 60f;
+            bullet.update(deltaTime);
+            if (bullet.remove)
+                bulletToRemove.add(bullet);
+        }
+        bullets.removeAll(bulletToRemove);
+
         //in gameplay actions
         map.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
         map.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));
@@ -162,17 +178,7 @@ public class GameScene extends Scene
      */
     public void renderScene(Batch batch) {
 
-        //empty bullet array
-        bullets = new ArrayList<Bullet>();
-        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
-        for (Bullet bullet : bullets)
-        {
-            float deltaTime = 1 / 60f;
-            bullet.update(deltaTime);
-            if (bullet.remove)
-                bulletToRemove.add(bullet);
-        }
-        bullets.removeAll(bulletToRemove);
+
         //renders the game screen
         batch.begin();
         renderMap(batch);

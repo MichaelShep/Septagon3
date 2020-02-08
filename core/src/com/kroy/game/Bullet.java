@@ -18,7 +18,7 @@ package com.kroy.game;
         public boolean remove = false;
 
         //creates a bullet with attacker and target positions
-        public Bullet (float attackerX, float attackerY, float targetX, float targetY, boolean water) {
+        public Bullet (int attackerX, int attackerY, float targetX, float targetY, boolean water) {
             this.x = attackerX;
             this.y = attackerY;
             this.targetX = targetX;
@@ -45,8 +45,8 @@ package com.kroy.game;
          */
         public void update (float deltaTime) {
             System.out.print("bullet fired");
-            y += deltaTime; //this.ySPEED * deltaTime * 25000;
-            x += deltaTime; //this.xSPEED * deltaTime * 25000;
+            y += this.ySPEED * deltaTime*3000 ;
+            x += this.xSPEED * deltaTime*3000 ;
             if ((deltaX* (targetX - x) < 0)&&(deltaY* (targetY - y) < 0))
                 remove = true;
         }
