@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.kroy.game.*;
 import com.kroy.game.Character;
+import com.kroy.game.scenes.GameScene;
 
 import java.util.ArrayList;
 
@@ -140,5 +141,15 @@ public class Renderer {
         }
 
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "controlInfo.png", Texture.class), 700, -400, 272, 720, 0, 0, 272, 720, false, false);
+    }
+
+    /**
+     * Render bullets
+     * @param batch
+     */
+    public void renderBullet(Batch batch){
+        for (Bullet bullet : GameScene.bullets) {
+            bullet.render(batch);
+        }
     }
 }

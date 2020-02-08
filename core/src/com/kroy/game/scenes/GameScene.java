@@ -34,6 +34,9 @@ public class GameScene extends Scene
 
     private Integer turnCounter = 0;
 
+    //Creates an array of bullets
+    public static ArrayList<Bullet> bullets;
+
     /***
      * Constructor to pass values to the GameScene
      * @param font The games font
@@ -91,6 +94,9 @@ public class GameScene extends Scene
         cam.viewportWidth = map.getMapWidth() * Constants.getTileSize();
         cam.viewportHeight = map.getMapHeight() * Constants.getTileSize();
         cam.zoom = 0.5f;
+
+        //empty arraylist of bullet
+        bullets = new ArrayList<Bullet>();
     }
 
     @Override
@@ -101,6 +107,19 @@ public class GameScene extends Scene
      * @param enemyData the data of the enemy player
      */
     public void resolveScene() {
+
+        //Bullet update
+        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
+        for (Bullet bullet : bullets)
+        {
+            System.out.print("bullet 123");
+            float deltaTime = 1 / 60f;
+            bullet.update(deltaTime);
+            if (bullet.remove)
+                bulletToRemove.add(bullet);
+        }
+        bullets.removeAll(bulletToRemove);
+
         //in gameplay actions
         map.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
         map.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));
@@ -154,6 +173,7 @@ public class GameScene extends Scene
         renderer.renderMap(batch);
         renderer.renderEnemies(batch, enemyData);
         renderer.renderFireEngines(batch, humanData);
+        renderer.renderBullet(batch);
         if (highlightMap.isRender()) {
             renderer.renderHighLightMap(batch);
         }
