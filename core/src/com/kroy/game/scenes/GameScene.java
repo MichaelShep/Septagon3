@@ -149,6 +149,7 @@ public class GameScene extends Scene
 
             //Station heals and repairs its surroundings
             ((Station) map.getStationPosition()).refillTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
+            ((Station) map.getStationPosition()).refillTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
             ((Station) map.getStationPosition()).repairTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
 
             if (turnCounter % 15 == 0) { //Added by Septagon
@@ -249,6 +250,7 @@ public class GameScene extends Scene
             engine.setWaterAmount(engine.getWaterCapacity());
             engine.setHealth(engine.getMaxHealth());
         }else{
+            engine.setDisabled(true);
             humanData.getTeam().remove(engine);
         }
     }

@@ -42,6 +42,8 @@ public final class Constants {
     private static int MINIGAME_BULLET_HEIGHT = 20;
     private static int NUM_ENGINE_BULLETS = 10;
 
+    private static int FORTRESS_DESTRUCTION_TIME = 480;
+
     private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png", "GreeneryTexture/BushTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/TreeTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/GrassTile1.png",};
     private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
     private static String[] MINIGAME_TEXTURES = {"MiniGameTexture/ethan.png", "MiniGameTexture/michael.png", "MiniGameTexture/thanh.png"};
@@ -53,7 +55,7 @@ public final class Constants {
     private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles", "Clifford's Tower", "York's Chocolate Story"};
 
     private static  int[][] fireEngineProfiles = {
-            {16,5,5,4,4}, {18,4,4,7,2}, {14,6,6,2,5}, {12,7,6,3,4}, {16,5,4,3,6}
+            {16,5,5,8,4}, {18,4,4,14,2}, {14,6,6,5,5}, {12,7,6,6,4}, {16,5,4,6,6}
     };
 
     private static  int[][] fortressProfiles = {
@@ -119,6 +121,8 @@ public final class Constants {
     }
 
     public static String[] getMinigameTextures() { return MINIGAME_TEXTURES; }
+
+    public static int getFortressDestructionTime() { return FORTRESS_DESTRUCTION_TIME; }
 
     public static String getResourceRoot() {
         String WORKING_DIRECTORY = Gdx.files.getLocalStoragePath();
