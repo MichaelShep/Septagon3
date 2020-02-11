@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
@@ -23,6 +24,7 @@ public class Bullet {
     private Human humanData;
     private Enemy enemyData;
 
+    //creates a bullet with attacker and target positions
     public Bullet(Character attacker, Character target, boolean water) {
         if (attacker != null) {
 
@@ -39,33 +41,6 @@ public class Bullet {
             xSPEED = deltaX / (deltaX * deltaX + deltaY * deltaY);
 
             if (water) {
-                shapeRenderer.setColor(Color.BLUE);
-                shapeRenderer.circle(xPosition, yPosition, 1);
-            } else {
-                shapeRenderer.setColor(Color.LIME);
-                shapeRenderer.circle(xPosition, yPosition, 1);
-            }
-
-        }
-    }
-
-    //creates a bullet with attacker and target positions
-    public Bullet(int attackerX, int attackerY, int targetX, int targetY, boolean water) {
-
-
-        this.yPosition = attackerX;
-        this.yPosition = attackerY;
-        this.targetX = targetX;
-        this.targetY = targetY;
-        deltaY = this.targetY - this.yPosition;
-        deltaX = this.targetX - this.xPosition;
-
-        //calculate relative speed in both x and y directions in order to move from attacker to target
-        ySPEED = deltaY / (deltaX * deltaX + deltaY * deltaY);
-        xSPEED = deltaX / (deltaX * deltaX + deltaY * deltaY);
-
-        if (texture == null) {
-            if (water) {
                 texture = new Texture("water.png");
             } else {
                 texture = new Texture("gunge.png");
@@ -73,13 +48,15 @@ public class Bullet {
         }
     }
 
+
+
     /**
      * Move bullets in required directions
      */
     public void update(float deltaTime) {
-        System.out.print("bullet fired");
-        yPosition += this.ySPEED * deltaTime * 3000;
-        xPosition += this.xSPEED * deltaTime * 3000;
+        System.out.print("bullet fired at xPosition" + xPosition + "bullet fired at yPosition" + yPosition + "bullet fired at targetX" + targetX +"bullet fired at targetY" + targetY);
+        yPosition += this.ySPEED * deltaTime *300 ;
+        xPosition += this.xSPEED * deltaTime *300 ;
         if ((deltaX * (targetX - xPosition) < 0) && (deltaY * (targetY - yPosition) < 0))
             remove = true;
     }
@@ -89,23 +66,7 @@ public class Bullet {
      *
      * @param batch The batch which is used for drawing objects to the screen
      */
-    public void renderBullet(Batch batch) {
+    public void renderBullet(SpriteBatch batch) {
         batch.draw(texture, xPosition, yPosition);
-    }
-
-    public void renderBullets(OrthographicCamera cam) {
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (Character attacker : humanData.getTeam()) {
-            for (Character target : enemyData.getTeam()) {
-                new Bullet(attacker, target, true);
-            }
-        }
-        for (Character attacker : enemyData.getTeam()) {
-            for (Character target : enemyData.getTeam()) {
-                new Bullet(attacker, target, false);
-            }
-        }
-        shapeRenderer.end();
     }
 }
