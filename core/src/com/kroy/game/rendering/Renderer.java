@@ -1,5 +1,6 @@
 package com.kroy.game.rendering;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -145,11 +146,11 @@ public class Renderer {
 
     /**
      * Render bullets
-     * @param batch
+     * @param cam
      */
-    public void renderBullet(Batch batch){
+    public void renderBullets(OrthographicCamera cam){
         for (Bullet bullet : GameScene.bullets) {
-            bullet.render(batch);
+            bullet.renderBullets(cam);
         }
     }
 }

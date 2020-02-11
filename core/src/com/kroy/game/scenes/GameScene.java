@@ -173,7 +173,7 @@ public class GameScene extends Scene
         renderer.renderMap(batch);
         renderer.renderEnemies(batch, enemyData);
         renderer.renderFireEngines(batch, humanData);
-        renderer.renderBullet(batch);
+        renderer.renderBullets(cam);
         if (highlightMap.isRender()) {
             renderer.renderHighLightMap(batch);
         }
