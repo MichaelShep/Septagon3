@@ -1,10 +1,8 @@
 package com.kroy.game.rendering;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kroy.game.*;
 import com.kroy.game.Character;
 import com.kroy.game.scenes.GameScene;
@@ -149,9 +147,9 @@ public class Renderer {
      * Render bullets
      * @param batch
      */
-    public void renderBullets(SpriteBatch batch){
+    public void renderBullets(Batch batch){
         for (Bullet bullet : GameScene.bullets) {
-            bullet.renderBullet(batch);
+            bullet.renderBullets(batch);
         }
     }
 }
