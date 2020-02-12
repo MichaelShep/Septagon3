@@ -122,11 +122,12 @@ public class InputManager extends ApplicationAdapter
             }
 
         }
-        //Minigame input handling - Added by Septagon
+        //Minigame input handling - [ID: MI1]
         else if(sceneHelper.getScene() == SceneType.SCENE_TYPE_MINIGAME)
         {
             MinigameScene currentScene = (MinigameScene) sceneHelper.getCurrentScene();
 
+            //Move the engine left and right
             if(Gdx.input.isKeyPressed(Input.Keys.A) && currentScene.isStarted() && !currentScene.isFinished()){
                 currentScene.moveEngine(-Constants.getMinigameBasePlayerMovementSpeed());
             }
@@ -135,6 +136,7 @@ public class InputManager extends ApplicationAdapter
                 currentScene.moveEngine(Constants.getMinigameBasePlayerMovementSpeed());
             }
 
+            //Firing bullets from the engine
             if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
                 currentScene.getMinigameEngine().fireBullet();
             }

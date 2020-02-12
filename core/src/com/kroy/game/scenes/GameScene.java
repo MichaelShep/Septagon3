@@ -29,6 +29,8 @@ public class GameScene extends Scene
 
     private Human humanData;
     private Enemy enemyData;
+
+    //Used to render health bars and water meters for characters [ID: B1]
     private BarManager barManager;
     private Renderer renderer;
 
@@ -69,6 +71,7 @@ public class GameScene extends Scene
         highlightMap = new HighlightMap(map.getMapWidth(), map.getMapHeight());
         selectedTile = null;
 
+        //Initalises BarManager instance and passes through the relevant varaibles [ID: B2]
         barManager = new BarManager(humanData, enemyData, map);
         renderer = new Renderer(map, highlightMap);
 
@@ -123,6 +126,8 @@ public class GameScene extends Scene
         //in gameplay actions
         map.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
         map.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));
+
+        //Updates the positions of the bars so that they move with the map [ID: B3]
         barManager.setShiftX(map.getShiftX());
         barManager.setShiftY(map.getShiftY());
 
@@ -188,6 +193,8 @@ public class GameScene extends Scene
 
         renderer.renderUI(batch);
         batch.end();
+
+        //Draws the health bars and water meters [ID: B4]
         barManager.renderBars(cam);
     }
 
@@ -216,17 +223,16 @@ public class GameScene extends Scene
     }
 
     /**
-     * Added by Septagon
+     * [ID: M1]
      * Checks whether the minigame should be triggered
      * If the minigame should be triggered, will switch to the minigame state
      */
     public void minigameTrigger(){
         for(Character c: humanData.getTeam()){
-            int xPos = c.getLocation().getMapX();
-            int yPos = c.getLocation().getMapY();
-
+            //Get the tiles around each engine
             Tile[] adjTiles = map.getNClosest(10, c.getLocation());
 
+            //Check if any of the tiles have a patrol on - if so trigger minigame
             for(Tile t: adjTiles){
                 if(t.getInhabitant() != null){
                     if(t.getInhabitant().getType() == Character.Type.PATROL){
@@ -238,18 +244,22 @@ public class GameScene extends Scene
     }
 
     /***
+     * [ID: M2]
      * Called by the SceneManager to change the game accordingly when the user is returning from the Minigame
      * @param didWin Whether the user won the minigame
      * @param patrol The patrol that triggered the minigame
      * @param engine The engine that triggered the minigame
      */
     public void returnFromMinigame(boolean didWin, Patrol patrol, FireEngine engine){
+        //If the player won the minigame
         if(didWin){
+            //Remove the patrol from the game and heal the engine
             enemyData.getPatrols().remove(patrol);
             patrol.getLocation().setInhabitant(null);
             engine.setWaterAmount(engine.getWaterCapacity());
             engine.setHealth(engine.getMaxHealth());
         }else{
+            //Remove the engine from the game
             engine.setDisabled(true);
             humanData.getTeam().remove(engine);
         }
