@@ -113,7 +113,6 @@ public class GameScene extends Scene
         ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
         for (Bullet bullet : bullets)
         {
-            System.out.print("bullet 123");
             float deltaTime = 1 / 60f;
             bullet.update(deltaTime);
             if (bullet.remove) {
@@ -176,7 +175,7 @@ public class GameScene extends Scene
         renderer.renderMap(batch);
         renderer.renderEnemies(batch, enemyData);
         renderer.renderFireEngines(batch, humanData);
-        renderer.renderBullets((SpriteBatch) batch);
+        renderer.renderBullets(batch);
         if (highlightMap.isRender()) {
             renderer.renderHighLightMap(batch);
         }
@@ -275,10 +274,7 @@ public class GameScene extends Scene
         return enemyToolTip;
     }
 
-    public Tile getSelectedTile()
-    {
-        return selectedTile;
-    }
+    public Tile getSelectedTile() { return selectedTile; }
 
     public Human getHumanData()
     {
