@@ -2,17 +2,30 @@ package Tests;
 
 import com.kroy.game.FireEngine;
 import com.kroy.game.Fortress;
+import com.kroy.game.LibGdxTestMocker;
 import com.kroy.game.Tile;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-
-import java.lang.reflect.Field;
+import org.junit.runner.RunWith;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+
+@RunWith(LibGdxTestMocker.class)
 public class FireEngineTests {
+    private FireEngine fireEngine;
+
+    @Before
+    public void init() {
+        Tile testTile = new Tile();
+        fireEngine = new FireEngine(100, 10, 10, testTile, 10, 100, "fireEngineSprite.png");
+        Class ReflectionClass = FireEngine.class;
+    }
+
+
     Tile testTile = new Tile();
     FireEngine testFireEngine = new FireEngine(100, 10, 10, testTile, 10, 100, "fireEngineSprite.png");
     Class ReflectionClass = FireEngine.class;
@@ -25,6 +38,8 @@ public class FireEngineTests {
         assertEquals(100, testFireEngine.getWaterAmount());
 
     }
+
+
 
 
     @Test
@@ -88,4 +103,12 @@ public class FireEngineTests {
         assertEquals(testFortress.getHealth(), (testFortress.getMaxHealth() - testFireEngine.getDamage()));
         assertEquals(99, testFireEngine.getWaterAmount());
     }
+
+
+@After
+public void clean() {
+    fireEngine.getTexture().dispose();
 }
+
+}
+

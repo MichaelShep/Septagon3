@@ -8,18 +8,21 @@ import com.badlogic.gdx.assets.AssetManager;
  */
 
 public final class Constants {
+    /*
     //Full size values
     private static int RESOLUTION_WIDTH = 1920;
     private static int RESOLUTION_HEIGHT = 1080;
     private static int ACTUAL_SCREEN_WIDTH = 2048;
     private static int ACTUAL_SCREEN_HEIGHT = 1196;
+    */
+
 
     //Half size values
-    /*
+
     private static int RESOLUTION_WIDTH = 1920/2;
     private static int RESOLUTION_HEIGHT = 1080/2;
     private static int ACTUAL_SCREEN_WIDTH = 2048/2;
-    private static int ACTUAL_SCREEN_HEIGHT = 1196/2;*/
+    private static int ACTUAL_SCREEN_HEIGHT = 1196/2;
 
 
     private static boolean FULLSCREEN = false;

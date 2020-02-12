@@ -63,12 +63,38 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java-library"
 
-
+    test{
+        workingDir= new File("/assets")
+    }
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
     }
+    apply plugin: "java"
+
+    dependencies {
+
+        compile "junit:junit:4.+"
+        compile "org.mockito:mockito-all:1.9.+"
+        compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+        testCompile 'junit:junit:4.+'
+        testCompile "org.mockito:mockito-all:1.9.+"
+        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
+
+    }
+
     apply plugin: 'java'
 
     jar {
@@ -76,20 +102,36 @@ project(":core") {
             attributes 'Main-Class': 'com.kroy.game.desktop.DesktopLauncher'
         }
     }
+}
 
-    repositories { jcenter() }
+project(":tests") {
+    apply plugin: "java"
+
+    sourceSets.test.java.srcDirs = ["src/"]
+
     dependencies {
-        testCompile 'junit:junit:4.12'
-        compile 'junit:junit:4.12'
-    }
 
-    sourceSets {
-        main {
-            java {
-                srcDir 'src'
-            }
-        }
+
+
+        compile "junit:junit:4.+"
+        compile "org.mockito:mockito-all:1.9.+"
+
+        compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+        testCompile 'junit:junit:4.+'
+        testCompile "org.mockito:mockito-all:1.9.+"
+
+        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
+}
+
+repositories { jcenter() }
+dependencies {
+
+
 }
 
 

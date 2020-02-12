@@ -3,13 +3,15 @@ package Tests;
 import com.kroy.game.Patrol;
 import com.kroy.game.Tile;
 import org.junit.Test;
+import com.kroy.game.LibGdxTestMocker;
+import org.junit.runner.RunWith;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
+@RunWith(LibGdxTestMocker.class)
 public class PatrolTests { //Added by Septagon
     Tile testTile = new Tile();
     Patrol testPatrol = new Patrol(100, 10, 10, testTile, "PatrolSprite.png");
@@ -17,6 +19,7 @@ public class PatrolTests { //Added by Septagon
 
     @Test
     public void testConstructor() {
+
         Patrol testPatrol = new Patrol(100, 10, 10, testTile, "PatrolSprite.png");
         assertEquals(testPatrol.getHealth(), 100);
         assertEquals(testPatrol.getDamage(), 10);
