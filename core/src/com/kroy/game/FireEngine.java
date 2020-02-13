@@ -4,6 +4,8 @@ package com.kroy.game;
  * Used to handle all the info about fire engines in the game
  */
 
+//Inheritance of fire engine changed to be from patrol as fire engines use all same features as patrols with
+//extra added [ID: F1]
 public class FireEngine extends Patrol {
 
     private int speed;

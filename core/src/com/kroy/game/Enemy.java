@@ -11,6 +11,7 @@ import java.util.Random;
 
 public class Enemy extends Player {
 
+    //Used to keep track of all the patrols in the game [ID: P1]
     private ArrayList<Patrol> patrols;
 
     /**
@@ -26,6 +27,7 @@ public class Enemy extends Player {
             team.add(createFortress(Constants.getFortressNames()[members], members));
         }
 
+        //Initalise all the patrols [ID: P2]
         patrols = new ArrayList<Patrol>();
         for (int members = 0; members < patrolSize; members++ ){
             patrols.add(createPatrol(members));
@@ -61,7 +63,8 @@ public class Enemy extends Player {
 
 
     /**
-     * Gets a newly constructed Patrol
+     * Gets a newly constructed Patrol from the patrol profiles given in the Constants file
+     * [ID: P3]
      *
      * @return returns the new Fortress object
      */
@@ -115,6 +118,7 @@ public class Enemy extends Player {
     }
 
     /**
+     * [ID: [P4]
      * Used to setup the locations for the patrols
      * @param locations The tiles where the patrols will be placed at
      */
