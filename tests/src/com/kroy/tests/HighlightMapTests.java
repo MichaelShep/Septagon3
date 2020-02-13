@@ -1,13 +1,11 @@
-package Tests;
+package com.kroy.tests;
 
 import com.kroy.game.HighlightMap;
 import com.kroy.game.Tile;
 import com.kroy.game.TileType;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class HighlightMapTests {
 

@@ -1,12 +1,11 @@
-package Tests;
+package com.kroy.tests;
 
 
-import static org.junit.Assert.*;
-
+import com.kroy.game.Tile;
 import com.kroy.game.TileType;
 import org.junit.Test;
 
-import com.kroy.game.Tile;
+import static org.junit.Assert.*;
 
 public class TileTests 
 {

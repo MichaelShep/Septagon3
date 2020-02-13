@@ -36,5 +36,4 @@ public class Patrol extends Character {
 
 
 
-
 }

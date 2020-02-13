@@ -1,9 +1,10 @@
-package Tests;
+package com.kroy.tests;
 
-import com.kroy.game.FireEngine;
 import com.kroy.game.Station;
 import com.kroy.game.TileType;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
