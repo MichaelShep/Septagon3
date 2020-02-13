@@ -68,6 +68,15 @@ public class Renderer {
             }
         }
     }
+    /**
+     * Render bullets
+     * @param batch
+     */
+    public void renderBullets(Batch batch){
+        for (Bullet bullet : GameScene.bullets) {
+            bullet.renderBullets(batch);
+        }
+    }
 
     /**
      * render a Map
@@ -143,13 +152,5 @@ public class Renderer {
         batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "controlInfo.png", Texture.class), 700, -400, 272, 720, 0, 0, 272, 720, false, false);
     }
 
-    /**
-     * Render bullets
-     * @param batch
-     */
-    public void renderBullets(Batch batch){
-        for (Bullet bullet : GameScene.bullets) {
-            bullet.renderBullets(batch);
-        }
-    }
+
 }
