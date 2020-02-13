@@ -21,17 +21,19 @@ public class Bullet {
     /**
      * new things
      */
-    private ShapeRenderer shapeRenderer;
-    private Human humanData;
-    private Enemy enemyData;
+    private int shiftX, shiftY;
+
+    //Setter Method
+    public void setShiftX(int shiftX) { this.shiftX = shiftX; }
+    public void setShiftY(int shiftY) { this.shiftY = shiftY; }
 
     //creates a bullet with attacker and target positions
 
     public Bullet(Character attacker, Character target, boolean water) {
         if (attacker != null) {
 
-            xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() /10;
-            yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() /100;
+            xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX;
+            yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY;
             targetX = target.getLocation().getMapX() * Constants.getTileSize();
             targetY = target.getLocation().getMapY() * Constants.getTileSize();
 
