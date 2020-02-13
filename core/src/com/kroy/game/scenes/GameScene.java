@@ -269,6 +269,7 @@ public class GameScene extends Scene
         }else{
             //Remove the engine from the game
             engine.setDisabled(true);
+            engine.getLocation().setInhabitant(null);
             humanData.getTeam().remove(engine);
         }
     }
