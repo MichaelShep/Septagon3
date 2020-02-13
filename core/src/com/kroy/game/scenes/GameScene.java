@@ -92,7 +92,7 @@ public class GameScene extends Scene
         enemyToolTip.addValue("Icons/rangeIcon.png", 0);
 
         humanData.distributeTeamLocation(map.getNClosest(Constants.getFireengineCount(), map.getStationPosition(), TileType.TILE_TYPES_ROAD));
-        enemyData.distributePatrols(map.getNClosest(Constants.getPatrolCount(), map.getFortressTiles()[0], TileType.TILE_TYPES_ROAD));
+        enemyData.distributePatrols(map);
         enemyData.distributeTeamLocation(map.getFortressTiles());
 
         font.setColor(1f, 1f, 1f, 1f);

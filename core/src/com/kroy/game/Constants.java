@@ -29,7 +29,7 @@ public final class Constants {
 
     private static int FORTRESS_COUNT = 6;
     private static int FIREENGINE_COUNT = 5;
-    private static int PATROL_COUNT = 2;
+    private static int PATROL_COUNT = 6;
 
     private static int STATION_REFILL_AMOUNT = 2;
     private static int STATION_REPAIR_AMOUNT = 2;
@@ -64,7 +64,7 @@ public final class Constants {
 
 
     private static int [][] patrolProfiles = {
-            {7,5,6}, {9,4,4}
+            {7,5,6}, {9,4,4}, {8,5,7}, {10,4,8}, {9,5,5}, {8,7,7}
     };
 
     private Constants() {
