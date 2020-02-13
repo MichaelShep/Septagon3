@@ -123,6 +123,7 @@ public class Enemy extends Player {
             patrols.get(locationIndex).setLocation(locations[locationIndex]);
             locations[locationIndex].setInhabitant(patrols.get(locationIndex));
         }
+
     }
 
     /**

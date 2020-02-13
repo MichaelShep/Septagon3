@@ -195,17 +195,9 @@ public class InputManager extends ApplicationAdapter
                     case "HighlightTexture/move.png":
                         System.out.println("MOVE");
                         ((FireEngine)sceneHelper.getSelectedTile().getInhabitant()).transferTo(queryTile);
-                        //Move all patrols randomly
-                        Random random = new Random();
+                        //Move all patrols randomly (Added by Septagon)
                         for (Patrol patrols : sceneHelper.getEnemyData().getPatrols()){
-                            ArrayList<Tile> movable = sceneHelper.getMap().getWithRangeOfHub(patrols.getLocation(), patrols.getRange(), TileType.TILE_TYPES_ROAD);
-                            if (movable.size() > 0) {
-                                int moveIndex = random.nextInt(movable.size());
-                                if (movable.get(moveIndex).getInhabitant() == null && sceneHelper.getHighlightMap().tileReachable(movable.get(moveIndex))){
-                                    patrols.transferTo(movable.get(moveIndex));
-                                }
-
-                            }
+                            patrols.move(sceneHelper);
                         }
 
                         sceneHelper.setSelectedTile(null);
