@@ -24,7 +24,7 @@ public class StationTests {
     @Test
     public  void  testDestroyTime(){ //Added by Septagon
         Station testStation = new Station(2,4);
-        assertTrue(testStation.destructionTimer());
+        assertTrue(testStation.isDestroyed());
     }
 
 

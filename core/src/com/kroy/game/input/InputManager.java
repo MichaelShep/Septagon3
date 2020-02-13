@@ -122,11 +122,12 @@ public class InputManager extends ApplicationAdapter
             }
 
         }
-        //Minigame input handling - Added by Septagon
+        //Minigame input handling - [ID: MI1]
         else if(sceneHelper.getScene() == SceneType.SCENE_TYPE_MINIGAME)
         {
             MinigameScene currentScene = (MinigameScene) sceneHelper.getCurrentScene();
 
+            //Move the engine left and right
             if(Gdx.input.isKeyPressed(Input.Keys.A) && currentScene.isStarted() && !currentScene.isFinished()){
                 currentScene.moveEngine(-Constants.getMinigameBasePlayerMovementSpeed());
             }
@@ -135,6 +136,7 @@ public class InputManager extends ApplicationAdapter
                 currentScene.moveEngine(Constants.getMinigameBasePlayerMovementSpeed());
             }
 
+            //Firing bullets from the engine
             if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
                 currentScene.getMinigameEngine().fireBullet();
             }
@@ -161,29 +163,31 @@ public class InputManager extends ApplicationAdapter
         if (sceneHelper.getHumanData().isMyTurn()) {
             if (sceneHelper.getSelectedTile() == null) {
                 if (queryTile.getInhabitant() instanceof FireEngine) {
+                    FireEngine currentEngine = (FireEngine) queryTile.getInhabitant();
+                    if(!currentEngine.isDisabled()) {
+                        sceneHelper.setSelectedTile(queryTile);
+                        sceneHelper.getHighlightMap().getMapData()[y][x].setTexName("HighlightTexture/selected.png");
 
-                    sceneHelper.setSelectedTile(queryTile);
-                    sceneHelper.getHighlightMap().getMapData()[y][x].setTexName("HighlightTexture/selected.png");
+                        //place green moves
+                        ArrayList<Tile> moveSpaces = sceneHelper.getMap().getWithRangeOfHub(queryTile, ((FireEngine) queryTile.getInhabitant()).getSpeed(), TileType.TILE_TYPES_ROAD);
+                        for (Tile tile : moveSpaces) {
+                            if (tile.getInhabitant() == null) {
+                                sceneHelper.getHighlightMap().setTile(tile.getMapX(), tile.getMapY(), TileType.TILE_TYPES_ROAD);
 
-                    //place green moves
-                    ArrayList<Tile> moveSpaces = sceneHelper.getMap().getWithRangeOfHub(queryTile, ((FireEngine) queryTile.getInhabitant()).getSpeed(), TileType.TILE_TYPES_ROAD);
-                    for (Tile tile : moveSpaces) {
-                        if (tile.getInhabitant() == null) {
-                            sceneHelper.getHighlightMap().setTile(tile.getMapX(), tile.getMapY(), TileType.TILE_TYPES_ROAD);
-
+                            }
                         }
-                    }
 
-                    ArrayList<Tile> attackSpaces = sceneHelper.getMap().getWithRangeOfHub(queryTile, queryTile.getInhabitant().getRange());
-                    for (Tile tile : attackSpaces) {
-                        if (tile.getInhabitant() instanceof Fortress) {
-                            sceneHelper.getHighlightMap().setTile(tile.getMapX(), tile.getMapY(), TileType.TILE_TYPES_FORTRESS);
+                        ArrayList<Tile> attackSpaces = sceneHelper.getMap().getWithRangeOfHub(queryTile, queryTile.getInhabitant().getRange());
+                        for (Tile tile : attackSpaces) {
+                            if (tile.getInhabitant() instanceof Fortress) {
+                                sceneHelper.getHighlightMap().setTile(tile.getMapX(), tile.getMapY(), TileType.TILE_TYPES_FORTRESS);
+                            }
                         }
+
+
+                        sceneHelper.getHighlightMap().setRender(true);
+                        sceneHelper.getHighlightMap().removeUnreachable();
                     }
-
-
-                    sceneHelper.getHighlightMap().setRender(true);
-                    sceneHelper.getHighlightMap().removeUnreachable();
                 }
 
             }

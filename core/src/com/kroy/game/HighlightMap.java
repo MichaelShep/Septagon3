@@ -151,7 +151,6 @@ public class HighlightMap {
                     }
                     catch (IndexOutOfBoundsException e)
                     {
-                        System.out.println("queryTile was on the edge of the map");
                     }
 
 

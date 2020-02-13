@@ -7,7 +7,7 @@ package com.kroy.game;
 public class Tile {
     private int mapX;
     private int mapY;
-    private String texName;
+    protected String texName;
     private TileType type;
     private Character inhabitant;
 

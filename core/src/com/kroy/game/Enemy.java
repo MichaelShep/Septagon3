@@ -3,6 +3,7 @@ package com.kroy.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 /***
@@ -11,7 +12,8 @@ import java.util.Random;
 
 public class Enemy extends Player {
 
-    private ArrayList<Patrol> patrols;
+    //Used to keep track of all the patrols in the game [ID: P1]
+    private List<Patrol> patrols;
 
     /**
      * Constructs Enemy Object which is able to control a team of fire Engines
@@ -26,6 +28,7 @@ public class Enemy extends Player {
             team.add(createFortress(Constants.getFortressNames()[members], members));
         }
 
+        //Initalise all the patrols [ID: P2]
         patrols = new ArrayList<Patrol>();
         for (int members = 0; members < patrolSize; members++ ){
             patrols.add(createPatrol(members));
@@ -61,7 +64,8 @@ public class Enemy extends Player {
 
 
     /**
-     * Gets a newly constructed Patrol
+     * Gets a newly constructed Patrol from the patrol profiles given in the Constants file
+     * [ID: P3]
      *
      * @return returns the new Fortress object
      */
@@ -115,13 +119,20 @@ public class Enemy extends Player {
     }
 
     /**
+     * [ID: [P4]
      * Used to setup the locations for the patrols
-     * @param locations The tiles where the patrols will be placed at
+     * @param map The games map used to get the location of the fortresses
      */
-    public void distributePatrols(Tile[] locations) {
-        for (int locationIndex = 0; locationIndex < locations.length; locationIndex++) {
+    public void distributePatrols(Map map) {
+        /*for (int locationIndex = 0; locationIndex < locations.length; locationIndex++) {
             patrols.get(locationIndex).setLocation(locations[locationIndex]);
             locations[locationIndex].setInhabitant(patrols.get(locationIndex));
+        }*/
+
+        for(int i = 0; i < Constants.getPatrolCount(); i++){
+            Tile[] locations = map.getNClosest(1, map.getFortressTiles()[i], TileType.TILE_TYPES_ROAD);
+            patrols.get(i).setLocation(locations[0]);
+            locations[0].setInhabitant(patrols.get(i));
         }
 
     }
@@ -154,9 +165,10 @@ public class Enemy extends Player {
     }
 
     /***
+     * [ID: E1]
      * Method used to improve the fortress as time increases in the game
      */
-    public void improveFortresses () { //Added by Septagon
+    public void improveFortresses () {
         for (int i = 0; i < team.size(); i++) {
             if (!(team.get(i) == null)) {
                 team.get(i).improve();
@@ -165,7 +177,7 @@ public class Enemy extends Player {
     }
 
     //Getters and Setters
-    public ArrayList<Patrol> getPatrols(){
+    public List<Patrol> getPatrols(){
         return patrols;
     }
 }

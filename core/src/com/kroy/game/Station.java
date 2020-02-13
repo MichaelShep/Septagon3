@@ -11,7 +11,10 @@ import java.util.ArrayList;
 public class Station extends Tile {
     private int repairTime;
     private int refillTime;
+
+    //Variables to keep track of whether the station has/should be destroyed [ID: S1]
     private Instant destructionTime;
+    private boolean destroyed = false;
 
 
     /**
@@ -40,10 +43,14 @@ public class Station extends Tile {
 
 
     /**
-     * Count the time since the start of the game.
+     * [ID: S2]
+     * Count the time since the start of the game to work out whether the station should be destroyed.
      */
-    public boolean destructionTimer() {
-        return (Duration.between(destructionTime, Instant.now()).getSeconds()) < 60;
+    public void destructionTimer() {
+        destroyed = !((Duration.between(destructionTime, Instant.now()).getSeconds()) < Constants.getFortressDestructionTime());
+        if(destroyed){
+            this.texName = "lavaTile.png";
+        }
     }
 
     /**
@@ -53,8 +60,11 @@ public class Station extends Tile {
      */
     public void repairTiles(ArrayList<Tile> surroundingTiles) {
         for (Tile surroundingTile : surroundingTiles) {
-            if (surroundingTile.getInhabitant() instanceof FireEngine && destructionTimer()) {
-                surroundingTile.getInhabitant().setHealth(Math.min(surroundingTile.getInhabitant().getHealth() + Constants.getStationRepairAmount(), surroundingTile.getInhabitant().getMaxHealth()));
+            if(!destroyed) {
+                destructionTimer();
+                if (surroundingTile.getInhabitant() instanceof FireEngine) {
+                    surroundingTile.getInhabitant().setHealth(Math.min(surroundingTile.getInhabitant().getHealth() + Constants.getStationRepairAmount(), surroundingTile.getInhabitant().getMaxHealth()));
+                 }
             }
         }
     }
@@ -66,11 +76,13 @@ public class Station extends Tile {
      */
     public void refillTiles(ArrayList<Tile> surroundingTiles) {
         for (Tile surroundingTile : surroundingTiles) {
-            if (surroundingTile.getInhabitant() instanceof FireEngine && destructionTimer()) {
+            if (surroundingTile.getInhabitant() instanceof FireEngine && !destroyed) {
                 ((FireEngine) surroundingTile.getInhabitant()).setWaterAmount(Math.min(((FireEngine) surroundingTile.getInhabitant()).getWaterAmount() + Constants.getStationRefillAmount(), ((FireEngine) surroundingTile.getInhabitant()).getWaterCapacity()));
             }
         }
     }
 
+    public boolean isDestroyed() { return destroyed; }
 
+    public void setDestroyed(boolean destroyed) { this.destroyed = destroyed; }
 }
