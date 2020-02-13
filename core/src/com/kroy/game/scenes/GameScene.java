@@ -109,27 +109,29 @@ public class GameScene extends Scene
      */
     public void resolveScene() {
 
-        //Bullet update
-        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
-        for (Bullet bullet : bullets)
-        {
-            float deltaTime = 1 / 60f;
-            bullet.update(deltaTime);
-            if (bullet.remove) {
-                System.out.print("Removed bullet");
-                bulletToRemove.add(bullet);
-            }
-        }
-        bullets.removeAll(bulletToRemove);
-
         //in gameplay actions
         map.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
         map.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));
         barManager.setShiftX(map.getShiftX());
         barManager.setShiftY(map.getShiftY());
 
-        bullets.setShiftX(map.getShiftX());
-        bullets.setShiftY(map.getShiftY());
+        //Bullet update
+        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
+        for (Bullet bullet : bullets)
+        {
+            bullet.setShiftX(map.getShiftX());
+            bullet.setShiftY(map.getShiftY());
+
+            float deltaTime = 1 / 60f;
+
+            bullet.update(deltaTime);
+
+            if (bullet.remove) {
+                System.out.print("Removed bullet");
+                bulletToRemove.add(bullet);
+            }
+        }
+        bullets.removeAll(bulletToRemove);
 
         highlightMap.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
         highlightMap.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));

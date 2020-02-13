@@ -21,6 +21,9 @@ public class Bullet {
     /**
      * new things
      */
+    private ShapeRenderer shapeRenderer;
+    private Human humanData;
+    private Enemy enemyData;
     private int shiftX, shiftY;
 
     //Setter Method
@@ -28,14 +31,13 @@ public class Bullet {
     public void setShiftY(int shiftY) { this.shiftY = shiftY; }
 
     //creates a bullet with attacker and target positions
-
     public Bullet(Character attacker, Character target, boolean water) {
         if (attacker != null) {
 
-            xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX;
-            yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY;
-            targetX = target.getLocation().getMapX() * Constants.getTileSize();
-            targetY = target.getLocation().getMapY() * Constants.getTileSize();
+            xPosition = (attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX) /10 ;
+            yPosition = (attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY) /100;
+            targetX = target.getLocation().getMapX() * Constants.getTileSize() + shiftX;
+            targetY = target.getLocation().getMapY() * Constants.getTileSize() + shiftY;
 
             deltaY = targetY - yPosition;
             deltaX = targetX - xPosition;
@@ -52,36 +54,15 @@ public class Bullet {
         }
     }
 
-/**
-    public Bullet (int attackerX, int attackerY, int targetX, int targetY, boolean water) {
-        this.xPosition = attackerX;
-        this.yPosition = attackerY;
-        this.targetX = targetX;
-        this.targetY = targetY;
-        deltaY = this.targetY - this.yPosition;
-        deltaX = this.targetX - this.xPosition;
 
-        //calculate relative speed in both x and y directions in order to move from attacker to target
-        ySPEED = deltaY / (deltaX*deltaX + deltaY*deltaY);
-        xSPEED = deltaX / (deltaX*deltaX + deltaY*deltaY);
 
-        if (texture == null) {
-            if (water) {
-                texture = new Texture("water.png");
-            }
-            else {
-                texture = new Texture("gunge.png");
-            }
-        }
-    }
-*/
     /**
      * Move bullets in required directions
      */
     public void update(float deltaTime) {
-        System.out.print("xPosition " + xPosition + "   yPosition " + yPosition + "   targetX " + targetX +"   targetY " + targetY + "   delta time " + deltaTime +"\n");
-        yPosition += ySPEED * deltaTime *3000 ;
-        xPosition += xSPEED * deltaTime *3000 ;
+        System.out.print("xPosition " + xPosition + "  yPosition " + yPosition + "  targetX " + targetX +"  targetY " + targetY);
+        yPosition += this.ySPEED * deltaTime *3000 ;
+        xPosition += this.xSPEED * deltaTime *3000 ;
         if ((deltaX * (targetX - xPosition) < 0) && (deltaY * (targetY - yPosition) < 0))
             remove = true;
     }
