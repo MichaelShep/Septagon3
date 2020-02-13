@@ -11,6 +11,7 @@ import com.kroy.game.rendering.Renderer;
 
 import javax.swing.text.Highlighter;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class made as a result of refractoring by Septagon
@@ -32,12 +33,13 @@ public class GameScene extends Scene
 
     //Used to render health bars and water meters for characters [ID: B1]
     private BarManager barManager;
+    //Used to handle most of the rendering of the GameScene [ID: R1]
     private Renderer renderer;
 
     private Integer turnCounter = 0;
 
     //Creates an array of bullets
-    public static ArrayList<Bullet> bullets;
+    public static List<Bullet> bullets;
 
     /***
      * Constructor to pass values to the GameScene
@@ -73,6 +75,7 @@ public class GameScene extends Scene
 
         //Initalises BarManager instance and passes through the relevant varaibles [ID: B2]
         barManager = new BarManager(humanData, enemyData, map);
+        //Initialises Renderer instance and passes through the relevant variables [ID: R2]
         renderer = new Renderer(map, highlightMap);
 
         humanToolTip = new Tooltip("", -900, 400, 75, 200);
@@ -157,7 +160,8 @@ public class GameScene extends Scene
             ((Station) map.getStationPosition()).refillTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
             ((Station) map.getStationPosition()).repairTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
 
-            if (turnCounter % 15 == 0) { //Added by Septagon
+            //Check whether the fortresses should be improved [ID: F1]
+            if (turnCounter % 15 == 0) {
                 enemyData.improveFortresses();
             }
         }
@@ -176,6 +180,10 @@ public class GameScene extends Scene
     public void renderScene(Batch batch) {
         //renders the game screen
         batch.begin();
+
+        cam.zoom = 0.5f;
+
+        //Calls all the rendering code from the Renderer class [ID: R3]
         renderer.renderMap(batch);
         renderer.renderEnemies(batch, enemyData);
         renderer.renderFireEngines(batch, humanData);

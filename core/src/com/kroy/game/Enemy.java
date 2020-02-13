@@ -3,6 +3,7 @@ package com.kroy.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 /***
@@ -12,7 +13,7 @@ import java.util.Random;
 public class Enemy extends Player {
 
     //Used to keep track of all the patrols in the game [ID: P1]
-    private ArrayList<Patrol> patrols;
+    private List<Patrol> patrols;
 
     /**
      * Constructs Enemy Object which is able to control a team of fire Engines
@@ -157,9 +158,10 @@ public class Enemy extends Player {
     }
 
     /***
+     * [ID: E1]
      * Method used to improve the fortress as time increases in the game
      */
-    public void improveFortresses () { //Added by Septagon
+    public void improveFortresses () {
         for (int i = 0; i < team.size(); i++) {
             if (!(team.get(i) == null)) {
                 team.get(i).improve();
@@ -168,7 +170,7 @@ public class Enemy extends Player {
     }
 
     //Getters and Setters
-    public ArrayList<Patrol> getPatrols(){
+    public List<Patrol> getPatrols(){
         return patrols;
     }
 }

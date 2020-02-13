@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class Station extends Tile {
     private int repairTime;
     private int refillTime;
+
+    //Variables to keep track of whether the station has/should be destroyed [ID: S1]
     private Instant destructionTime;
     private boolean destroyed = false;
 
@@ -41,12 +43,12 @@ public class Station extends Tile {
 
 
     /**
-     * Count the time since the start of the game.
+     * [ID: S2]
+     * Count the time since the start of the game to work out whether the station should be destroyed.
      */
     public void destructionTimer() {
         destroyed = !((Duration.between(destructionTime, Instant.now()).getSeconds()) < Constants.getFortressDestructionTime());
         if(destroyed){
-            System.out.println("STATION HAS BEEN DESTROYED");
             this.texName = "lavaTile.png";
         }
     }
