@@ -18,6 +18,9 @@ public class Bullet {
     float xPosition, yPosition;
     float targetX, targetY;
     public boolean remove = false;
+    public Character attacker, target;
+    float updateYPosition, updateXPosition;
+
     /**
      * new things
      */
@@ -29,16 +32,26 @@ public class Bullet {
     //Setter Method
     public void setShiftX(int shiftX) { this.shiftX = shiftX; }
     public void setShiftY(int shiftY) { this.shiftY = shiftY; }
+    public void setxPosition(float xPosition) {this.xPosition = xPosition;}
+    public void setyPosition(float yPosition) {this.yPosition = yPosition;}
+    public void setTargetX(float targetX) {this.targetX = targetX;}
+    public void setTargetY(float targetY) {this.targetY = targetY;}
 
     //creates a bullet with attacker and target positions
     public Bullet(Character attacker, Character target, boolean water) {
-        if (attacker != null) {
 
-            xPosition = (attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX) /10 ;
-            yPosition = (attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY) /100;
+        this.attacker = attacker;
+        this.target = target;
+
+        if ((attacker != null) && (target != null)){
+
+            xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX ;
+            yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY;
+
             targetX = target.getLocation().getMapX() * Constants.getTileSize() + shiftX;
             targetY = target.getLocation().getMapY() * Constants.getTileSize() + shiftY;
 
+            //difference in distance between attacker and target
             deltaY = targetY - yPosition;
             deltaX = targetX - xPosition;
 
@@ -60,9 +73,18 @@ public class Bullet {
      * Move bullets in required directions
      */
     public void update(float deltaTime) {
-        System.out.print("xPosition " + xPosition + "  yPosition " + yPosition + "  targetX " + targetX +"  targetY " + targetY);
-        yPosition += this.ySPEED * deltaTime *3000 ;
-        xPosition += this.xSPEED * deltaTime *3000 ;
+
+        xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX ;
+        yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY;
+
+        targetX = target.getLocation().getMapX() * Constants.getTileSize() + shiftX;
+        targetY = target.getLocation().getMapY() * Constants.getTileSize() + shiftY;
+
+        System.out.print("xPosition " + xPosition + "  yPosition " + yPosition + "  targetX " + targetX +"  targetY " + targetY + "\n");
+
+        yPosition += ySPEED * deltaTime * 3000;
+        xPosition += xSPEED * deltaTime * 3000 ;
+
         if ((deltaX * (targetX - xPosition) < 0) && (deltaY * (targetY - yPosition) < 0))
             remove = true;
     }

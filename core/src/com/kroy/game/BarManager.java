@@ -58,8 +58,8 @@ public class BarManager
     private void renderHealthBar(Character character)
     {
         if(character != null) {
-            int xPosition = character.getLocation().getMapX() * Constants.getTileSize() + shiftX;
-            int yPosition = character.getLocation().getMapY() * Constants.getTileSize() + shiftY + Constants.getTileSize();
+                int xPosition = character.getLocation().getMapX() * Constants.getTileSize() + shiftX;
+                int yPosition = character.getLocation().getMapY() * Constants.getTileSize() + shiftY + Constants.getTileSize();
 
             shapeRenderer.setColor(Color.LIGHT_GRAY);
             shapeRenderer.rect(xPosition, yPosition, Constants.getTileSize(), 11);

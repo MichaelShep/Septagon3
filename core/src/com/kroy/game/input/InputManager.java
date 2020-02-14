@@ -217,8 +217,10 @@ public class InputManager extends ApplicationAdapter
                     case "HighlightTexture/attack.png":
                         System.out.println("ATTACK");
                         if (((FireEngine) sceneHelper.getSelectedTile().getInhabitant()).getWaterAmount() > 0) {
+
                             //shoot bullets animation
                             GameScene.bullets.add(new Bullet(sceneHelper.getSelectedTile().getInhabitant(), queryTile.getInhabitant(), true));
+
                             sceneHelper.getSelectedTile().getInhabitant().shootTarget(queryTile.getInhabitant());
                             sceneHelper.setSelectedTile(null);
                             sceneHelper.getHighlightMap().resetMap();
