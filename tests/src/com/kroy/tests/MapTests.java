@@ -15,12 +15,15 @@ import static org.junit.Assert.fail;
 
 public class MapTests {
 
-
+    //Variables needed for use in the tests
     Class ReflectionClass = Map.class;
     String directory = System.getProperty("user.dir").replace("\\", "/") + "/assets/Data/" + "MapForTesting.csv";
     Map mapTest = new Map(directory);
 
     @Test
+    /***
+     * Tests whether loading the map from a CSV file works
+     */
     public void testLoadCSV() {
 
         String[][] expectedTileType = {{"3", "1", "3", "5"}, {"1", "1", "1", "1"}, {"3", "1", "3", "4"}, {"3", "1", "1", "6"}};
@@ -35,6 +38,9 @@ public class MapTests {
 
 
     @Test()
+    /**
+     * Tests that if a incorrect file path is given, an error will be thrown
+     */
     public void testFileNotFoundExceptionLoadCSV(){
         String invalidDirectory = directory + "cat";
         try{
@@ -48,6 +54,9 @@ public class MapTests {
 
 
     @Test
+    /***
+     * Tests whether generating the map from map data correctly works
+     */
     public void testGenertaeMap() {
         int[] expectedX = {1,3,3};
         int[] expectedY = {3,3,0};
@@ -72,6 +81,9 @@ public class MapTests {
 
 
     @Test
+    /**
+     * Tests whether assigning values to the road tiles works
+     */
     public void testMapRoadTile() {
         String directory = System.getProperty("user.dir").replace("\\", "/") + "/assets/Data/" + "MapForRoadTest.csv";
         Map mapRoadTest = new Map(directory);
@@ -109,6 +121,9 @@ public class MapTests {
     }
 
     @Test
+    /**
+     * Tests whether checking the distance between 2 different tiles gives the correct distance
+     */
     public void testDistanceBetween() {
         Tile testTile1 = new Tile(1, 1);
         Tile testTile2 = new Tile(4, 5);
@@ -133,9 +148,10 @@ public class MapTests {
         }
     }
 
-
-
     @Test
+    /**
+     * Tests whether you can correctly get the array of closest tiles to a given tile
+     */
     public void testGetNClosest()
     {
 
@@ -155,6 +171,9 @@ public class MapTests {
     }
 
     @Test
+    /**
+     * Tests whether you can correctly get the types of the closest tile to a given tile
+     */
     public void testGetNClosestTileType()
     {
         {
@@ -176,6 +195,9 @@ public class MapTests {
     }
 
     @Test
+    /**
+     * Tests whether you can correctly check if a tile is within range of the station
+     */
     public void testGetWithRangeOfHub(){
 
         Tile[][] testMapData = mapTest.getMapData();
@@ -198,6 +220,9 @@ public class MapTests {
 
 
     @Test
+    /***
+     * Tests that you can correctly get the type of tiles around the hub
+     */
     public void testGetWithRangeOfHubTileType(){
 
         TileType tileType = TileType.TILE_TYPES_ROAD;
@@ -215,26 +240,4 @@ public class MapTests {
 
         assertEquals(expectedWithRange, actualWithRange.toArray());
     }
-
-/*
-     @Test(expected = Exception.class)
-    public void testGetNClosestLargeNum()
-    {
-
-        Tile[] actualClosest = mapTest.getNClosest(100000, null);
-    }
-
-
-    @Test(expected = Exception.class)
-    public void testGetNClosestTileTypeLargeNum()
-    {
-        {
-            TileType testTileType = TileType.TILE_TYPES_GRASS;
-            Tile[][] temp = mapTest.getMapData();
-            Tile testTile = temp[1][1];
-
-            Tile[] actualClosest = mapTest.getNClosest(100000, testTile,testTileType);
-        }
-    }
-*/
 }

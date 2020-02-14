@@ -10,6 +10,9 @@ import static org.junit.Assert.*;
 public class TileTests 
 {
     @Test
+    /***
+     * Tests the constructor of the tile correctly assigns class variables
+     */
     public void testDefaultConstructor(){
         Tile testTile = new Tile();
 
@@ -22,7 +25,10 @@ public class TileTests
     }
 
 
-	@Test	
+	@Test
+    /***
+     * Tests whether the constructor that sets the x and y position of the tile sets all the class variables
+     */
 	public void testXYConstructor()
 	{
 	    Tile testTile = new Tile(2,4);
@@ -37,6 +43,9 @@ public class TileTests
 
 
     @Test
+    /***
+     * Tests whether the constructor that takes in x, y, texture and tiletype correctly assigns all class values
+     */
     public void testXYTexTypeConstructor()
     {
         Tile testTile = new Tile(2,4,"turnip",TileType.TILE_TYPES_BUILDING);

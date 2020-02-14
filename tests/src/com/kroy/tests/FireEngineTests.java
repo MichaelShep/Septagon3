@@ -18,11 +18,15 @@ import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class FireEngineTests {
+    //Variables that are used for testing
     Tile testTile = new Tile();
     FireEngine testFireEngine;
     Class ReflectionClass = FireEngine.class;
 
     @Before
+    /**
+     * Function to set up values that will be used for testing
+     */
     public void init(){
         testFireEngine = new FireEngine(100, 10, 10, testTile, 10, 100);
         Texture engineTexture = new Texture(Gdx.files.internal("fireEngineSprite.png"));
@@ -31,6 +35,9 @@ public class FireEngineTests {
 
 
     @Test
+    /**
+     * Test that refilling the engines gives the engine the correct capacity
+     */
     public void testRefillAmount() {
         testFireEngine.setWaterAmount(0);
         testFireEngine.refillAmount(50);
@@ -40,20 +47,19 @@ public class FireEngineTests {
 
     }
 
-
     @Test
-    public void testCanShoot() {
-
-    }
-
-
-    @Test
+    /**
+     * Tests whether the engine dies if its health becomes 0
+     */
     public void testDeath() {
         testFireEngine.takeDamage(testFireEngine.getMaxHealth());
         assertTrue(testFireEngine.isDisabled());
     }
 
     @Test
+    /**
+     * Tests whether the engines health is correctly affected when the damage occurs
+     */
     public void testTakeDamage() {
         try {
             testFireEngine.setHealth(100);
@@ -75,6 +81,9 @@ public class FireEngineTests {
     }
 
     @Test
+    /**
+     * Tests whether the tiles and positions are correctly updated when the fire engine is moved
+     */
     public void testTransferTo() {
         Tile newLocation = new Tile(2,2);
         try {
@@ -94,6 +103,9 @@ public class FireEngineTests {
     }
 
     @Test
+    /***
+     * Tests whether the fire engine can correctly shoot and damage a fortress
+     */
     public void testShootTarget() {
         Fortress testFortress = new Fortress(1000, 10,2,testTile, "fortress1");
 

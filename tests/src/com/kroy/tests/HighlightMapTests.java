@@ -10,6 +10,9 @@ import static org.junit.Assert.*;
 public class HighlightMapTests {
 
     @Test
+    /**
+     * Tests the constructor of the highlightMap correctly assigns class variables
+     */
     public void testDefaultConstructor(){
         HighlightMap testHighlightMap = new HighlightMap(5,6);
 
@@ -19,6 +22,9 @@ public class HighlightMapTests {
 
 
     @Test
+    /***
+     * Tests whether the highlightMap can be correctly generated and correctly assigns map data
+     */
     public void testGenerateMap(){
 
         HighlightMap testHighlightMap = new HighlightMap(3,3);
@@ -33,6 +39,9 @@ public class HighlightMapTests {
     }
 
     @Test
+    /***
+     * Tests whether you are correctly able to change the tiles at locations in the highlight map
+     */
     public void testSetTile(){
 
         HighlightMap testHighlightMap = new HighlightMap(3,3);

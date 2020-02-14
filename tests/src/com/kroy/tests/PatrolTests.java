@@ -14,13 +14,19 @@ import java.lang.reflect.Method;
 
 import static org.junit.Assert.*;
 
+//Added by Septagon
 @RunWith(GdxTestRunner.class)
-public class PatrolTests { //Added by Septagon
+public class PatrolTests {
+
+    //Vaiables used to perform the testing
     Tile testTile = new Tile();
     Patrol testPatrol;
     Class ReflectionClass = Patrol.class;
 
     @Before
+    /**
+     * Sets up the variables that are used by the testing
+     */
     public void init(){
         testPatrol = new Patrol(100, 10, 10, testTile);
         Texture engineTexture = new Texture(Gdx.files.internal("fireEngineSprite.png"));
@@ -28,6 +34,9 @@ public class PatrolTests { //Added by Septagon
     }
 
     @Test
+    /**
+     * Tests the patrols constructor correctly sets class variables
+     */
     public void testConstructor() {
         Patrol testPatrol = new Patrol(100, 10, 10, testTile);
         assertEquals(testPatrol.getHealth(), 100);
@@ -36,6 +45,9 @@ public class PatrolTests { //Added by Septagon
     }
 
     @Test
+    /**
+     * Tests that moving the patrols correctly updates the tiles they have moved to and from
+     */
     public void testTransferTo() {
         Tile newLocation = new Tile(2,2);
         try {

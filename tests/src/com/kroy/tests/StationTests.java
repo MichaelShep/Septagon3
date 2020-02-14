@@ -11,6 +11,9 @@ import static org.junit.Assert.*;
 public class StationTests {
 
     @Test
+    /**
+     * Tests that the constructor of the station correctly assigns class variable values
+     */
     public void testDefaultConstructor(){
         Station testStation = new Station(2,4);
 
