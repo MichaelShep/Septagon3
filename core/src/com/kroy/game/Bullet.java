@@ -15,12 +15,12 @@ public class Bullet {
     private double ySPEED, xSPEED;
     public Texture texture;
     private double deltaY, deltaX;
-    float xPosition, yPosition;
-    float targetX, targetY;
+    private float xPosition, yPosition;
+    private float targetX, targetY;
     public boolean remove = false;
-    public Character attacker, target;
-    float updateYPosition, updateXPosition;
-
+    private Character attacker, target;
+    private float updateYPosition, updateXPosition;
+    private float relativeXPosition, relativeYPosition;
     /**
      * new things
      */
@@ -32,10 +32,6 @@ public class Bullet {
     //Setter Method
     public void setShiftX(int shiftX) { this.shiftX = shiftX; }
     public void setShiftY(int shiftY) { this.shiftY = shiftY; }
-    public void setxPosition(float xPosition) {this.xPosition = xPosition;}
-    public void setyPosition(float yPosition) {this.yPosition = yPosition;}
-    public void setTargetX(float targetX) {this.targetX = targetX;}
-    public void setTargetY(float targetY) {this.targetY = targetY;}
 
     //creates a bullet with attacker and target positions
     public Bullet(Character attacker, Character target, boolean water) {
@@ -45,11 +41,11 @@ public class Bullet {
 
         if ((attacker != null) && (target != null)){
 
-            xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX ;
-            yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY;
+            xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2;
+            yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + Constants.getTileSize()/2;
 
-            targetX = target.getLocation().getMapX() * Constants.getTileSize() + shiftX;
-            targetY = target.getLocation().getMapY() * Constants.getTileSize() + shiftY;
+            targetX = target.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2;
+            targetY = target.getLocation().getMapY() * Constants.getTileSize() + Constants.getTileSize()/2;
 
             //difference in distance between attacker and target
             deltaY = targetY - yPosition;
@@ -65,6 +61,8 @@ public class Bullet {
                 texture = new Texture("gunge.png");
             }
         }
+        relativeXPosition = 0;
+        relativeYPosition = 0;
     }
 
 
@@ -72,22 +70,47 @@ public class Bullet {
     /**
      * Move bullets in required directions
      */
-    public void update(float deltaTime) {
+    /*
+    public void _update(float deltaTime) {
+
 
         xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX ;
-        yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY;
+        yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY ;
 
         targetX = target.getLocation().getMapX() * Constants.getTileSize() + shiftX;
         targetY = target.getLocation().getMapY() * Constants.getTileSize() + shiftY;
 
         System.out.print("xPosition " + xPosition + "  yPosition " + yPosition + "  targetX " + targetX +"  targetY " + targetY + "\n");
 
+
         yPosition += ySPEED * deltaTime * 3000;
-        xPosition += xSPEED * deltaTime * 3000 ;
+        xPosition += xSPEED * deltaTime * 3000;
 
         if ((deltaX * (targetX - xPosition) < 0) && (deltaY * (targetY - yPosition) < 0))
             remove = true;
+    }*/
+
+    public void update(float deltaTime) {
+
+        updateXPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX;
+        updateYPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY;
+
+        targetX = target.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftX;
+        targetY = target.getLocation().getMapY() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftY;
+
+        System.out.print("xPosition " + xPosition + "  yPosition " + yPosition + "  targetX " + targetX +"  targetY " + targetY + "\n");
+
+        relativeXPosition += xSPEED * deltaTime * 6000;;
+        relativeYPosition += ySPEED * deltaTime * 6000;
+
+        xPosition = relativeXPosition + updateXPosition;
+        yPosition = relativeYPosition + updateYPosition;
+
+        if ((deltaX * (targetX - xPosition) < 0) && (deltaY * (targetY - yPosition) < 0)){
+            remove = true;
+        }
     }
+
 
     /**
      * Draws the bullet to the screen

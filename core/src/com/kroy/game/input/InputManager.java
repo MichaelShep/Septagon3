@@ -58,7 +58,6 @@ public class InputManager extends ApplicationAdapter
             if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                 sceneHelper.getMap().setShiftX(sceneHelper.getMap().getShiftX() - moveSpeed);
                 sceneHelper.getHighlightMap().setShiftX(sceneHelper.getHighlightMap().getShiftX() - moveSpeed);
-
             }
             if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 sceneHelper.getMap().setShiftY(sceneHelper.getMap().getShiftY() + moveSpeed);
