@@ -1,4 +1,4 @@
 package com.kroy.tests;
 
-public class PlayerTests {
+public class HumanTests {
 }
