@@ -52,7 +52,7 @@ public final class Constants {
 
     private static int STATION_RANGE = 3;
 
-    private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles", "Clifford's Tower", "York's Chocolate Story"};
+    private static String[] fortressNames = {"The Minster", "National Railway Museum", "Jorvik Centre", "The Shambles", "Clifford's Tower", "York's Chocolate Story"};
 
     private static  int[][] fireEngineProfiles = {
             {16,5,5,4,4}, {18,4,4,7,2}, {14,6,6,2,5}, {12,7,6,3,4}, {16,5,4,3,6}
