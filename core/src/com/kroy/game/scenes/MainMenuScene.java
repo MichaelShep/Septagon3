@@ -28,7 +28,7 @@ public class MainMenuScene extends Scene
      */
     public void initScene() {
         sceneType = SceneType.SCENE_TYPE_MAINMENU;
-        titleSprite = new Sprite(Constants.getManager().get(Constants.getResourceRoot() + "title.png", Texture.class), 0, 0, 621, 168);
+        titleSprite = new Sprite(new Texture(Gdx.files.internal("title.png")), 0, 0, 621, 168);
         titleSprite.setScale(2 * Constants.getResolutionWidth() / 1280f);
         titleSprite.setCenterX(0);
         titleSprite.setCenterY(Constants.getResolutionHeight() / 4);
@@ -64,7 +64,7 @@ public class MainMenuScene extends Scene
     public void renderScene(Batch batch) {
         batch.begin();
 
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
+        batch.draw(new Texture(Gdx.files.internal("menuBackground.jpeg")), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
         titleSprite.draw(batch);
         font.getData().setScale((Constants.getResolutionWidth()/1280f));
         font.draw(batch, "Press -SPACE- To Start", -Constants.getResolutionWidth() / 3f, 0);

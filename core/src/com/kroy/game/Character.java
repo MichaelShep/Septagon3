@@ -1,5 +1,6 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -43,7 +44,8 @@ abstract public class  Character{
         this.y = 0;
         this.width = Constants.getTileSize();
         this.height = Constants.getTileSize();
-        this.texture = Constants.getManager().get(Constants.getResourceRoot() + spriteTex, Texture.class);
+        this.texture = new Texture(Gdx.files.internal(spriteTex));
+
     }
 
     /**

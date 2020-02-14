@@ -1,11 +1,17 @@
 package com.kroy.game;
 
+import org.junit.Before;
+
 /***
  * Class used to manage the fireEngines and all the users info
  */
 
 public class Human extends Player {
 
+    @Before
+    public void init(){
+
+    }
 
     /**
      * Constucts a Human Player, this will be able to control a team of fire engines

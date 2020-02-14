@@ -1,5 +1,6 @@
 package com.kroy.game.rendering;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,6 +19,10 @@ public class Renderer {
 
     private Map map;
     private HighlightMap highlightMap;
+
+    private Texture borderArtTexture = new Texture(Gdx.files.internal("borderArt.png"));
+    private Texture blankTexture = new Texture(Gdx.files.internal("HighlightTexture/blank.png"));
+    private Texture controlInfoTexture = new Texture(Gdx.files.internal("controlInfo.png"));
 
     /***
      * Constructor used to pass values to the Renderer
@@ -86,7 +91,7 @@ public class Renderer {
     public void renderMap(Batch batch) {
         for (int height = 0; height < map.getMapHeight(); height++) {
             for (int width = 0; width < map.getMapWidth(); width++) {
-                batch.draw(Constants.getManager().get(Constants.getResourceRoot() + map.getMapData()[height][width].getTexName(), Texture.class), (width * Constants.getTileSize()) + map.getShiftX(), (height * Constants.getTileSize()) + map.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
+                batch.draw(map.getMapData()[height][width].getTexture(), (width * Constants.getTileSize()) + map.getShiftX(), (height * Constants.getTileSize()) + map.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
             }
         }
     }
@@ -99,7 +104,7 @@ public class Renderer {
     public void renderHighLightMap(Batch batch) {
         for (int height = 0; height < highlightMap.getMapHeight(); height++) {
             for (int width = 0; width < highlightMap.getMapWidth(); width++) {
-                batch.draw(Constants.getManager().get(Constants.getResourceRoot() + highlightMap.getMapData()[height][width].getTexName(), Texture.class), (width * Constants.getTileSize()) + highlightMap.getShiftX(), (height * Constants.getTileSize()) + highlightMap.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
+                batch.draw(highlightMap.getMapData()[height][width].getTexture(), (width * Constants.getTileSize()) + highlightMap.getShiftX(), (height * Constants.getTileSize()) + highlightMap.getShiftY(), Constants.getTileSize(), Constants.getTileSize(), 0, 0, Constants.getTileSize(), Constants.getTileSize(), false, false);
             }
         }
     }
@@ -110,7 +115,7 @@ public class Renderer {
      * @param batch the batch to render it through
      */
     public void renderUI(Batch batch) {
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "borderArt.png", Texture.class), -Constants.getActualScreenWidth() / 2, -Constants.getActualScreenHeight() / 2, Constants.getActualScreenWidth(), Constants.getActualScreenHeight(), 0, 0, 1280, 720, false, false);
+        batch.draw(borderArtTexture, -Constants.getActualScreenWidth() / 2, -Constants.getActualScreenHeight() / 2, Constants.getActualScreenWidth(), Constants.getActualScreenHeight(), 0, 0, 1280, 720, false, false);
 
     }
 
@@ -136,7 +141,7 @@ public class Renderer {
 
 
 
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "HighlightTexture/blank.png", Texture.class), xPos , yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
+        batch.draw(blankTexture, xPos , yPos, baseWidth, baseHeight, 0, 0, 64, 64, false, false);
         font.draw(batch, data.getName(), -920, -450);
 
         xPos += baseIconSize / 2;
@@ -144,12 +149,12 @@ public class Renderer {
         ArrayList<String> keys = new ArrayList<String>(data.getValues().keySet());
 
         for (int keyIndex = 0; keyIndex < keys.size(); keyIndex++) {
-            batch.draw(Constants.getManager().get(Constants.getResourceRoot() + keys.get(keyIndex), Texture.class), xPos + (keyIndex * (baseIconSize + textSize)), yPos, baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
+            batch.draw(data.getTextures().get(keys.get(keyIndex)), xPos + (keyIndex * (baseIconSize + textSize)), yPos, baseIconSize, baseIconSize, 0, 0, 64, 64, false, false);
             font.draw(batch, " : " + (data.getValues().get(keys.get(keyIndex))).toString(), xPos + (keyIndex * (baseIconSize + textSize)) + baseIconSize, yPos + baseIconSize);
 
         }
 
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "controlInfo.png", Texture.class), 700, -400, 272, 720, 0, 0, 272, 720, false, false);
+        batch.draw(controlInfoTexture, 700, -400, 272, 720, 0, 0, 272, 720, false, false);
     }
 
 

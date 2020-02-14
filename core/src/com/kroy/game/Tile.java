@@ -1,5 +1,7 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  * Used to handle info about each of the tiles in the game
  */
@@ -10,6 +12,7 @@ public class Tile {
     protected String texName;
     private TileType type;
     private Character inhabitant;
+    private Texture texture;
 
 
     /**
@@ -74,6 +77,8 @@ public class Tile {
         return mapY;
     }
 
+    public Texture getTexture() { return texture; }
+
     public void setMapY(int newMapY) {
         this.mapY = mapY;
     }
@@ -85,6 +90,7 @@ public class Tile {
     public void setTexName(String newTexName) {
         texName = newTexName;
     }
+    public void setTexture(Texture texture) { this.texture = texture; }
 
     public TileType getType() {
         return type;

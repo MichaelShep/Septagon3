@@ -126,7 +126,7 @@ public final class Constants {
 
     public static String getResourceRoot() {
         String WORKING_DIRECTORY = Gdx.files.getLocalStoragePath();
-        String resources_root = Gdx.files.absolute(WORKING_DIRECTORY).toString() + "/core/assets/";
+        String resources_root = Gdx.files.absolute(WORKING_DIRECTORY).toString() + "/assets/";
         return resources_root;
     }
 
