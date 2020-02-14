@@ -41,11 +41,11 @@ public class Bullet {
 
         if ((attacker != null) && (target != null)){
 
-            xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2;
-            yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + Constants.getTileSize()/2;
+            xPosition = attacker.getLocation().getMapX() * Constants.getTileSize();
+            yPosition = attacker.getLocation().getMapY() * Constants.getTileSize();
 
-            targetX = target.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2;
-            targetY = target.getLocation().getMapY() * Constants.getTileSize() + Constants.getTileSize()/2;
+            targetX = target.getLocation().getMapX() * Constants.getTileSize();
+            targetY = target.getLocation().getMapY() * Constants.getTileSize();
 
             //difference in distance between attacker and target
             deltaY = targetY - yPosition;
@@ -92,16 +92,16 @@ public class Bullet {
 
     public void update(float deltaTime) {
 
-        updateXPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX;
-        updateYPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY;
+        updateXPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftX;
+        updateYPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftY;
 
         targetX = target.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftX;
         targetY = target.getLocation().getMapY() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftY;
 
         System.out.print("xPosition " + xPosition + "  yPosition " + yPosition + "  targetX " + targetX +"  targetY " + targetY + "\n");
 
-        relativeXPosition += xSPEED * deltaTime * 6000;;
-        relativeYPosition += ySPEED * deltaTime * 6000;
+        relativeXPosition += xSPEED * deltaTime * 15000;;
+        relativeYPosition += ySPEED * deltaTime * 15000;
 
         xPosition = relativeXPosition + updateXPosition;
         yPosition = relativeYPosition + updateYPosition;
