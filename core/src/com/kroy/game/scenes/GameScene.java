@@ -112,6 +112,7 @@ public class GameScene extends Scene
         //in gameplay actions
         map.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
         map.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));
+
         barManager.setShiftX(map.getShiftX());
         barManager.setShiftY(map.getShiftY());
 
