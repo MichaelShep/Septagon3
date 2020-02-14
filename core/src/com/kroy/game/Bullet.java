@@ -12,21 +12,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public class Bullet {
 
-    private double ySPEED, xSPEED;
+    private double ySPEED, xSPEED; // speed of bullet in x and y direction
     public Texture texture;
-    private double deltaY, deltaX;
+    private double deltaY, deltaX; // difference in distance of attacker and targer
     private float xPosition, yPosition;
     private float targetX, targetY;
     public boolean remove = false;
     private Character attacker, target;
     private float updateYPosition, updateXPosition;
     private float relativeXPosition, relativeYPosition;
-    /**
-     * new things
-     */
-    private ShapeRenderer shapeRenderer;
-    private Human humanData;
-    private Enemy enemyData;
     private int shiftX, shiftY;
 
     //Setter Method
@@ -70,26 +64,6 @@ public class Bullet {
     /**
      * Move bullets in required directions
      */
-    /*
-    public void _update(float deltaTime) {
-
-
-        xPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + shiftX ;
-        yPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + shiftY ;
-
-        targetX = target.getLocation().getMapX() * Constants.getTileSize() + shiftX;
-        targetY = target.getLocation().getMapY() * Constants.getTileSize() + shiftY;
-
-        System.out.print("xPosition " + xPosition + "  yPosition " + yPosition + "  targetX " + targetX +"  targetY " + targetY + "\n");
-
-
-        yPosition += ySPEED * deltaTime * 3000;
-        xPosition += xSPEED * deltaTime * 3000;
-
-        if ((deltaX * (targetX - xPosition) < 0) && (deltaY * (targetY - yPosition) < 0))
-            remove = true;
-    }*/
-
     public void update(float deltaTime) {
 
         updateXPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftX;
