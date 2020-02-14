@@ -193,7 +193,7 @@ public class MinigameScene extends Scene {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //Only needed when renderering at half size
-        cam.zoom = 0.25f;
+        //cam.zoom = 0.25f;
 
         batch.begin();
         batch.draw(backgroundImage, -Constants.getActualScreenWidth() / 2, -Constants.getActualScreenHeight() /2, Constants.getActualScreenWidth(), Constants.getActualScreenHeight());
