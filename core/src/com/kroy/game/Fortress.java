@@ -27,6 +27,24 @@ public class Fortress extends Character {
         this.type = Type.FORTRESS;
     }
 
+
+    /**
+     * ONLY USED IN TESTING
+     * Construct a character that Enemy can control
+     * Extends Character
+     *
+     * @param health   the starting and max health
+     * @param damage   the amount health it removes when shooting
+     * @param range    how many tiles away it can shoot
+     * @param location the starting location
+     * @param charName the name of the location on the map
+     */
+    public Fortress(int health, int damage, int range, Tile location, String charName) {
+        super(health, damage, range, location);
+        name = charName;
+        this.type = Type.FORTRESS;
+    }
+
     //Getters and Setters
     public String getName() {
         return name;

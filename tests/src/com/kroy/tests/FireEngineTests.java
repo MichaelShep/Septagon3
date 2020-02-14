@@ -1,8 +1,13 @@
 package com.kroy.tests;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.kroy.game.FireEngine;
 import com.kroy.game.Fortress;
 import com.kroy.game.Tile;
+import com.kroy.game.Constants;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -14,11 +19,20 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class FireEngineTests {
     Tile testTile = new Tile();
-    FireEngine testFireEngine = new FireEngine(100, 10, 10, testTile, 10, 100, "fireEngineSprite.png");
+    FireEngine testFireEngine;
     Class ReflectionClass = FireEngine.class;
+
+    @Before
+    public void init(){
+        testFireEngine = new FireEngine(100, 10, 10, testTile, 10, 100);
+        Texture engineTexture = new Texture(Gdx.files.internal("fireEngineSprite.png"));
+        testFireEngine.setTexture(engineTexture);
+    }
+
 
     @Test
     public void testRefillAmount() {
+        testFireEngine.setWaterAmount(0);
         testFireEngine.refillAmount(50);
         assertEquals(50, testFireEngine.getWaterAmount());
         testFireEngine.refillAmount(5000);
@@ -35,7 +49,7 @@ public class FireEngineTests {
 
     @Test
     public void testDeath() {
-        testFireEngine.setHealth(0);
+        testFireEngine.takeDamage(testFireEngine.getMaxHealth());
         assertTrue(testFireEngine.isDisabled());
     }
 
@@ -81,7 +95,7 @@ public class FireEngineTests {
 
     @Test
     public void testShootTarget() {
-        Fortress testFortress = new Fortress(1000, 10,2,testTile, "fortress1", "lavaTile.png");
+        Fortress testFortress = new Fortress(1000, 10,2,testTile, "fortress1");
 
         testFireEngine.shootTarget(testFortress);
 
