@@ -51,6 +51,8 @@ public class FireEngineTests {
      * Tests whether the engine dies if its health becomes 0
      */
     public void testDeath() {
+        testFireEngine.takeDamage(1);
+        assertFalse(testFireEngine.isDisabled());
         testFireEngine.takeDamage(testFireEngine.getMaxHealth());
         assertTrue(testFireEngine.isDisabled());
     }

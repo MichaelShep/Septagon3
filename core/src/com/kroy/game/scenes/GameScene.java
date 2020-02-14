@@ -256,6 +256,7 @@ public class GameScene extends Scene
             engine.setWaterAmount(engine.getWaterCapacity());
             engine.setHealth(engine.getMaxHealth());
         }else{
+            engine.getLocation().setInhabitant(null);
             humanData.getTeam().remove(engine);
         }
     }

@@ -29,6 +29,7 @@ abstract public class Player {
             if (!(team.get(i) == null))
                 if (team.get(i).isDisabled()) {
                     team.get(i).getLocation().setInhabitant(null);
+                    System.out.println(team.get(i).getLocation());
                     team.remove(i);
                 }
         }
