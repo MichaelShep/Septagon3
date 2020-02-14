@@ -84,4 +84,5 @@ public class MinigameEngine extends Sprite {
 
     //Getters
     public MinigameBullet[] getBullets() { return bullets; }
+    public FireEngine getPassedEngine() { return passedEngine; }
 }

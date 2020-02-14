@@ -71,7 +71,7 @@ public class Alien extends Sprite {
     /***
      * Checks that the alien does not go off the edge of the screen
      */
-    private void checkBounds(){
+    public void checkBounds(){
         if(this.getX() <= playableArea.x + Constants.getMinigameEdgeBuffer()){
             shouldMoveDown = true;
         }else if(this.getX() + this.getWidth() >= playableArea.getX() + playableArea.getWidth() - Constants.getMinigameEdgeBuffer()){
@@ -98,6 +98,8 @@ public class Alien extends Sprite {
     public float getHealth() { return health; }
     public boolean isLeft() { return left; }
     public MinigameBullet getBullet() { return bullet; }
+    public Rectangle getPlayableArea() { return playableArea; }
+    public Patrol getPassedPatrol() { return passedPatrol; }
     public boolean isHasLost() { return hasLost; }
     public boolean isShouldMoveDown() { return shouldMoveDown; }
 

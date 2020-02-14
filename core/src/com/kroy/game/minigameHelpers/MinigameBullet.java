@@ -54,8 +54,8 @@ public class MinigameBullet {
         if(hasFired){
             y += velY;
         }else{
-            x = sprite.getX();
-            y = sprite.getY();
+            x = sprite.getX() + sprite.getWidth() / 2;
+            y = sprite.getY() + sprite.getHeight() / 2;
         }
 
         if(hasFired) {
@@ -65,7 +65,6 @@ public class MinigameBullet {
                 this.y = sprite.getY() + sprite.getHeight() / 2;
             } else if (y <= -Constants.getResolutionHeight() / 2) {
                 hasFired = false;
-                System.out.println("Should remove bullet");
                 this.x = sprite.getX() + sprite.getWidth() / 2;
                 this.y = sprite.getY() + sprite.getHeight() / 2;
             }
@@ -94,8 +93,13 @@ public class MinigameBullet {
 
     //Getters and Setters
     public boolean isHasFired() { return hasFired; }
+    public boolean isUp() { return up; }
     public float getX() { return x; }
     public float getY() { return y; }
+    public float getVelY() { return velY; }
+    public Sprite getSprite() { return sprite; }
+    public ShapeRenderer getBulletRenderer() { return bulletRenderer; }
 
     public void setHasFired(boolean hasFired) { this.hasFired = hasFired; }
+    public void setY(float y) { this.y = y; }
 }

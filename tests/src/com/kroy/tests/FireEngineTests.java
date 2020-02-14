@@ -33,7 +33,6 @@ public class FireEngineTests {
         testFireEngine.setTexture(engineTexture);
     }
 
-
     @Test
     /**
      * Test that refilling the engines gives the engine the correct capacity
