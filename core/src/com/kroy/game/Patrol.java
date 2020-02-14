@@ -71,10 +71,13 @@ public class Patrol extends Character {
         if (movable.size() > 0) {
             for (int i = 1; i > -2; i--) {
                 for (Tile tile : movable) {
-                    //System.out.println("chosen tile ("+ directionArray[Math.abs(direction + i) % 4] + "): " +((int) this.getLocation().getMapX() + directionArray[Math.abs(direction + i) % 4][0] + " " + (int) this.getLocation().getMapY() + directionArray[Math.abs(direction + i) % 4][1]));
-                    if ((tile.getMapX() == (int) this.getLocation().getMapX() + directionArray[Math.abs(direction + i) % 4][0]) && (tile.getMapY() == (int) this.getLocation().getMapY() + directionArray[Math.abs(direction + i) % 4][1]) && (tile.getInhabitant() == null)) {
+                    System.out.println((-1 % 4 + 4) % 4);
+                    //System.out.println("chosen tile ("+ directionArray[Math.abs(direction + i % 4)].toString() + "): " +((int) this.getLocation().getMapX() + directionArray[Math.abs(direction + i) % 4][0] + " " + (int) this.getLocation().getMapY() + directionArray[Math.abs(direction + i) % 4][1]));
+                    int desiredTileX = (int) this.getLocation().getMapX() + directionArray[(((direction + i) % 4 + 4)% 4)][0];
+                    int desiredTileY = (int) this.getLocation().getMapY() + directionArray[(((direction + i) % 4 + 4)% 4)][1];
+                    if ((tile.getMapX() == desiredTileX) && (tile.getMapY() == desiredTileY) && (tile.getInhabitant() == null)) {
                         this.transferTo(tile);
-                        direction = Math.abs(direction + i) % 4;
+                        direction = Math.abs((((direction + i) % 4 + 4)% 4));
                         moved = true;
                     }
                     if (moved) break;
