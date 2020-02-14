@@ -215,6 +215,7 @@ public class InputManager extends ApplicationAdapter
 
                             //shoot bullets animation
                             GameScene.bullets.add(new Bullet(sceneHelper.getSelectedTile().getInhabitant(), queryTile.getInhabitant(), true));
+                            GameScene.bullets.add(new Bullet(queryTile.getInhabitant(), sceneHelper.getSelectedTile().getInhabitant(), false));
 
                             sceneHelper.getSelectedTile().getInhabitant().shootTarget(queryTile.getInhabitant());
                             sceneHelper.setSelectedTile(null);
