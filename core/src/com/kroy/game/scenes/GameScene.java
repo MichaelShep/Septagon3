@@ -11,7 +11,6 @@ import com.kroy.game.rendering.Renderer;
 
 import javax.swing.text.Highlighter;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class made as a result of refractoring by Septagon
@@ -30,16 +29,13 @@ public class GameScene extends Scene
 
     private Human humanData;
     private Enemy enemyData;
-
-    //Used to render health bars and water meters for characters [ID: B1]
     private BarManager barManager;
-    //Used to handle most of the rendering of the GameScene [ID: R1]
     private Renderer renderer;
 
     private Integer turnCounter = 0;
 
     //Creates an array of bullets
-    public static List<Bullet> bullets;
+    public static ArrayList<Bullet> bullets;
 
     /***
      * Constructor to pass values to the GameScene
@@ -73,9 +69,7 @@ public class GameScene extends Scene
         highlightMap = new HighlightMap(map.getMapWidth(), map.getMapHeight());
         selectedTile = null;
 
-        //Initalises BarManager instance and passes through the relevant varaibles [ID: B2]
         barManager = new BarManager(humanData, enemyData, map);
-        //Initialises Renderer instance and passes through the relevant variables [ID: R2]
         renderer = new Renderer(map, highlightMap);
 
         humanToolTip = new Tooltip("", -900, 400, 75, 200);
@@ -129,8 +123,6 @@ public class GameScene extends Scene
         //in gameplay actions
         map.setShiftX(map.getShiftX() - (map.getShiftX() % Constants.getTileSize()));
         map.setShiftY(map.getShiftY() - (map.getShiftY() % Constants.getTileSize()));
-
-        //Updates the positions of the bars so that they move with the map [ID: B3]
         barManager.setShiftX(map.getShiftX());
         barManager.setShiftY(map.getShiftY());
 
@@ -157,11 +149,9 @@ public class GameScene extends Scene
 
             //Station heals and repairs its surroundings
             ((Station) map.getStationPosition()).refillTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
-            ((Station) map.getStationPosition()).refillTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
             ((Station) map.getStationPosition()).repairTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
 
-            //Check whether the fortresses should be improved [ID: F1]
-            if (turnCounter % 15 == 0) {
+            if (turnCounter % 15 == 0) { //Added by Septagon
                 enemyData.improveFortresses();
             }
         }
@@ -180,10 +170,6 @@ public class GameScene extends Scene
     public void renderScene(Batch batch) {
         //renders the game screen
         batch.begin();
-
-        cam.zoom = 0.5f;
-
-        //Calls all the rendering code from the Renderer class [ID: R3]
         renderer.renderMap(batch);
         renderer.renderEnemies(batch, enemyData);
         renderer.renderFireEngines(batch, humanData);
@@ -201,8 +187,6 @@ public class GameScene extends Scene
 
         renderer.renderUI(batch);
         batch.end();
-
-        //Draws the health bars and water meters [ID: B4]
         barManager.renderBars(cam);
     }
 
@@ -231,16 +215,17 @@ public class GameScene extends Scene
     }
 
     /**
-     * [ID: M1]
+     * Added by Septagon
      * Checks whether the minigame should be triggered
      * If the minigame should be triggered, will switch to the minigame state
      */
     public void minigameTrigger(){
         for(Character c: humanData.getTeam()){
-            //Get the tiles around each engine
+            int xPos = c.getLocation().getMapX();
+            int yPos = c.getLocation().getMapY();
+
             Tile[] adjTiles = map.getNClosest(10, c.getLocation());
 
-            //Check if any of the tiles have a patrol on - if so trigger minigame
             for(Tile t: adjTiles){
                 if(t.getInhabitant() != null){
                     if(t.getInhabitant().getType() == Character.Type.PATROL){
@@ -252,24 +237,18 @@ public class GameScene extends Scene
     }
 
     /***
-     * [ID: M2]
      * Called by the SceneManager to change the game accordingly when the user is returning from the Minigame
      * @param didWin Whether the user won the minigame
      * @param patrol The patrol that triggered the minigame
      * @param engine The engine that triggered the minigame
      */
     public void returnFromMinigame(boolean didWin, Patrol patrol, FireEngine engine){
-        //If the player won the minigame
         if(didWin){
-            //Remove the patrol from the game and heal the engine
             enemyData.getPatrols().remove(patrol);
             patrol.getLocation().setInhabitant(null);
             engine.setWaterAmount(engine.getWaterCapacity());
             engine.setHealth(engine.getMaxHealth());
         }else{
-            //Remove the engine from the game
-            engine.setDisabled(true);
-            engine.getLocation().setInhabitant(null);
             humanData.getTeam().remove(engine);
         }
     }

@@ -134,6 +134,7 @@ public class Enemy extends Player {
             patrols.get(i).setLocation(locations[0]);
             locations[0].setInhabitant(patrols.get(i));
         }
+
     }
 
     /**

@@ -9,17 +9,17 @@ import com.badlogic.gdx.assets.AssetManager;
 
 public final class Constants {
     //Full size values
-    /*
     private static int RESOLUTION_WIDTH = 1920;
     private static int RESOLUTION_HEIGHT = 1080;
     private static int ACTUAL_SCREEN_WIDTH = 2048;
-    private static int ACTUAL_SCREEN_HEIGHT = 1196;*/
+    private static int ACTUAL_SCREEN_HEIGHT = 1196;
 
     //Half size values
+    /*
     private static int RESOLUTION_WIDTH = 1920/2;
     private static int RESOLUTION_HEIGHT = 1080/2;
     private static int ACTUAL_SCREEN_WIDTH = 2048/2;
-    private static int ACTUAL_SCREEN_HEIGHT = 1196/2;
+    private static int ACTUAL_SCREEN_HEIGHT = 1196/2;*/
 
 
     private static boolean FULLSCREEN = false;
@@ -55,7 +55,7 @@ public final class Constants {
     private static String[] fortressNames = {"The Minster", "National Railway Museum", "Yorvik Centre", "The Shambles", "Clifford's Tower", "York's Chocolate Story"};
 
     private static  int[][] fireEngineProfiles = {
-            {16,5,5,8,4}, {18,4,4,14,2}, {14,6,6,5,5}, {12,7,6,6,4}, {16,5,4,6,6}
+            {16,5,5,4,4}, {18,4,4,7,2}, {14,6,6,2,5}, {12,7,6,3,4}, {16,5,4,3,6}
     };
 
     private static  int[][] fortressProfiles = {
@@ -64,7 +64,7 @@ public final class Constants {
 
 
     private static int [][] patrolProfiles = {
-            {7,5,6}, {9,4,4}, {8,5,7}, {10,4,8}, {9,5,5}, {8,7,7}
+            {7,5,6}, {10,5,7}, {7,8,9}, {7,7,7}, {10,9,6}, {9,8,8}
     };
 
     private Constants() {
