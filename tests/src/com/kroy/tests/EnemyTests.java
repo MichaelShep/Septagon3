@@ -9,12 +9,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class EnemyTests {
 
+    String directory = Gdx.files.getLocalStoragePath() + "assets/Data/MapForTesting.csv";
     Enemy testEnemy;
+    Map testMap;
+
 
     @Before
     public void init(){
@@ -24,7 +29,7 @@ public class EnemyTests {
         Assets.loadGameAssets();
         testEnemy = new Enemy(false, 1,1);
         String directory = Gdx.files.getLocalStoragePath() + "assets/Data/MapForTesting.csv";
-        Map testMap = new Map(directory);
+        testMap = new Map(directory);
     }
 
     @Test
@@ -52,6 +57,10 @@ public class EnemyTests {
 
     @Test
     public void testCalculateTargets(){
+        testEnemy = new Enemy(false, 1,1);
+        FireEngine testFireEngine = new FireEngine(1,1,1, (testMap.getWithRangeOfHub(testEnemy.getTeam().get(0).getLocation(), 3, TileType.TILE_TYPES_ROAD).get(0)), 1, 1, "FireEngine.png");
+        HashMap testLocations = testEnemy.calculateTargets(testMap);
+        assertTrue(testLocations.containsValue(testFireEngine));
 
     }
 
