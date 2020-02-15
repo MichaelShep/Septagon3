@@ -29,6 +29,7 @@ public class FireEngineTests {
      */
     public void init(){
         testFireEngine = new FireEngine(100, 10, 10, testTile, 10, 100, "fireEngineSprite.png");
+        testFireEngine.setTexture(new Texture(Gdx.files.internal("fireEngineSprite.png")));
     }
 
     @Test

@@ -41,7 +41,7 @@ public class Tile {
         mapX = newMapX;
         mapY = newMapY;
         texName = "grassTile.png";
-        texture = new Texture(Gdx.files.internal(texName));
+        texture = Assets.grassTileTexture;
         type = TileType.TILE_TYPES_GRASS;
         inhabitant = null;
 

@@ -1,24 +1,44 @@
 package com.kroy.tests;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
+import com.kroy.game.Assets;
 import com.kroy.game.Map;
 import com.kroy.game.Tile;
 import com.kroy.game.TileType;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+@RunWith(GdxTestRunner.class)
 public class MapTests {
 
     //Variables needed for use in the tests
     Class ReflectionClass = Map.class;
-    String directory = System.getProperty("user.dir").replace("\\", "/") + "/assets/Data/" + "MapForTesting.csv";
-    Map mapTest = new Map(directory);
+    String directory;
+    Map mapTest;
+
+    @Before
+    public void init(){
+        //Mock the opengl classes using mockito so that libgdx opengl functions can be used
+        Gdx.gl20 = Mockito.mock(GL20.class);
+        Gdx.gl30 = Mockito.mock(GL30.class);
+
+        Assets.loadGameAssets();
+        directory = Gdx.files.getLocalStoragePath() + "assets/Data/MapForTesting.csv";
+        mapTest = new Map(directory);
+    }
 
     @Test
     /***

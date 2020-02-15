@@ -30,8 +30,10 @@ public class AlienTests
      */
     public void init(){
         testFireEngine = new FireEngine(100, 10, 10, new Tile(), 10, 100, "fireEngineSprite.png");
+        testFireEngine.setTexture(new Texture(Gdx.files.internal("fireEngineSprite.png")));
 
         testPatrol = new Patrol(100, 10, 10, new Tile(), "MinigameTexture/ethan.png");
+        testPatrol.setTexture(new Texture(Gdx.files.internal("MinigameTexture/ethan.png")));
 
         //Mock the opengl classes using mockito so that libgdx opengl functions can be used
         Gdx.gl20 = Mockito.mock(GL20.class);
@@ -48,7 +50,6 @@ public class AlienTests
         assertEquals(alien.getHealth(), 100, 0);
         assertEquals(alien.getPlayableArea().x, 100, 0);
         assertEquals(alien.getPassedPatrol(), testPatrol);
-        assertEquals(alien.getTexture(), alienTexture);
     }
 
     @Test

@@ -29,6 +29,7 @@ public class MinigameBulletTests
      */
     public void init(){
         testFireEngine = new FireEngine(100, 10, 10, new Tile(), 10, 100, "fireEngineSprite.png");
+        testFireEngine.setTexture(new Texture(Gdx.files.internal("fireEngineSprite.png")));
 
         //Mock the opengl classes using mockito so that libgdx opengl functions can be used
         Gdx.gl20 = Mockito.mock(GL20.class);

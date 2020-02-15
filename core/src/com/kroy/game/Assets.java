@@ -11,6 +11,7 @@ public class Assets
     public static Texture menuBackgroundTexture;
     public static Texture menuTitleTexture;
 
+    public static Texture grassTileTexture;
     public static Texture roadTileTexture;
     public static Texture waterTileTexture;
     public static Texture lavaTileTexture;
@@ -48,6 +49,8 @@ public class Assets
     public static void loadGameAssets(){
         menuBackgroundTexture = new Texture(Gdx.files.internal("menuBackground.jpeg"));
         menuTitleTexture = new Texture(Gdx.files.internal("title.png"));
+
+        grassTileTexture = new Texture(Gdx.files.internal("grassTile.png"));
         roadTileTexture = new Texture(Gdx.files.internal("roadTile.png"));
         waterTileTexture = new Texture(Gdx.files.internal("waterTile.png"));
         lavaTileTexture = new Texture(Gdx.files.internal("lavaTile.png"));
