@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.kroy.game.Assets;
 import com.kroy.game.Constants;
 import com.kroy.game.SceneType;
 
@@ -52,7 +53,7 @@ public class HumanWinScene extends Scene
      */
     public void renderScene(Batch batch) {
         batch.begin();
-        batch.draw(Constants.getManager().get(Constants.getResourceRoot() + "menuBackground.jpeg", Texture.class), -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
+        batch.draw(Assets.menuBackgroundTexture, -Constants.getResolutionWidth(), -Constants.getResolutionHeight(), Constants.getResolutionWidth() * 2, Constants.getResolutionHeight() * 2, 0, 0, 1880, 1058, false, false);
 
         font.draw(batch, "YOU WIN", -(Constants.getResolutionWidth() / 6f), 100);
         font.draw(batch, "THE KROY ARE NO MORE!", -(Constants.getResolutionWidth() / 2.8f), 0);

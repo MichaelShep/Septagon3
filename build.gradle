@@ -93,12 +93,13 @@ project(":core") {
 }
 
 project(":tests") {
+    apply plugin: "java-library"
     apply plugin: "java"
 
     sourceSets.test.java.srcDirs = ["src/"]
 
     dependencies {
-
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         /**
          * If you do have some classes to test in os specific code you may want to uncomment
          * some of these lines.

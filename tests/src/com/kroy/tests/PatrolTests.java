@@ -28,9 +28,7 @@ public class PatrolTests {
      * Sets up the variables that are used by the testing
      */
     public void init(){
-        testPatrol = new Patrol(100, 10, 10, testTile);
-        Texture engineTexture = new Texture(Gdx.files.internal("fireEngineSprite.png"));
-        testPatrol.setTexture(engineTexture);
+        testPatrol = new Patrol(100, 10, 10, testTile, "fireEngineSprite.png");
     }
 
     @Test
@@ -38,7 +36,7 @@ public class PatrolTests {
      * Tests the patrols constructor correctly sets class variables
      */
     public void testConstructor() {
-        Patrol testPatrol = new Patrol(100, 10, 10, testTile);
+        Patrol testPatrol = new Patrol(100, 10, 10, testTile, "fireEngineSprite.png");
         assertEquals(testPatrol.getHealth(), 100);
         assertEquals(testPatrol.getDamage(), 10);
         assertEquals(testPatrol.getRange(), 10);

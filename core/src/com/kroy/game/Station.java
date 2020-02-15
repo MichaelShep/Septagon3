@@ -25,6 +25,7 @@ public class Station extends Tile {
      */
     public Station(int X, int Y) {
         super(X, Y, "stationTile.png", TileType.TILE_TYPES_STATION);
+        this.setTexture(Assets.stationTileTexture);
 
         repairTime = Constants.getStationRepairAmount();
         refillTime = Constants.getStationRefillAmount();
@@ -50,6 +51,8 @@ public class Station extends Tile {
         destroyed = !((Duration.between(destructionTime, Instant.now()).getSeconds()) < Constants.getFortressDestructionTime());
         if(destroyed){
             this.texName = "lavaTile.png";
+            this.setTexture(Assets.lavaTileTexture);
+
         }
     }
 

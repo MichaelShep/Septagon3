@@ -96,9 +96,9 @@ public class MinigameScene extends Scene {
         playableArea.setPosition( -playableArea.getWidth() / 2, -playableArea.getHeight() / 2);
 
         //Loads in all the different alien textures for the game
-        aliensTextures = new Texture[Constants.getMinigameTextures().length];
-        for(int i = 0; i < Constants.getMinigameTextures().length; i++){
-            aliensTextures[i] = new Texture(Gdx.files.internal(Constants.getMinigameTextures()[i]));
+        aliensTextures = new Texture[Assets.MINIGAME_TEXTURES.size()];
+        for(int i = 0; i < Assets.MINIGAME_TEXTURES.size(); i++){
+            aliensTextures[i] = Assets.MINIGAME_TEXTURES.get(i);
         }
 
         minigameEngine = new MinigameEngine(passedEngine);

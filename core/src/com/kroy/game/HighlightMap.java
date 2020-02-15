@@ -4,6 +4,9 @@ package com.kroy.game;
  * Used to work out what tiles a engine can move to
  */
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
 import java.util.ArrayList;
 
 public class HighlightMap {
@@ -12,7 +15,6 @@ public class HighlightMap {
     private int mapWidth, mapHeight;
     private boolean render;
     private int shiftX, shiftY;
-
 
     /**
      * Constructs a type of map to rendered on top of the game map
@@ -47,6 +49,7 @@ public class HighlightMap {
         for (int height = 0; height < mapHeight; height++) {
             for (int width = 0; width < mapWidth; width++) {
                 mapData[height][width] = new Tile(width, height, "HighlightTexture/blank.png", TileType.TILE_TYPES_HIGHLIGHT);
+                mapData[height][width].setTexture(Assets.blankTexture);
             }
         }
 
@@ -60,6 +63,7 @@ public class HighlightMap {
         for (int height = 0; height < mapHeight; height++) {
             for (int width = 0; width < mapWidth; width++) {
                 mapData[height][width].setTexName("HighlightTexture/blank.png");
+                mapData[height][width].setTexture(Assets.blankTexture);
             }
         }
 
@@ -76,8 +80,10 @@ public class HighlightMap {
     public void setTile(int x, int y, TileType type) {
         if (type == TileType.TILE_TYPES_FORTRESS) {
             mapData[y][x].setTexName("HighlightTexture/attack.png");
+            mapData[y][x].setTexture(Assets.attackTexture);
         } else if (type == TileType.TILE_TYPES_ROAD) {
             mapData[y][x].setTexName("HighlightTexture/move.png");
+            mapData[y][x].setTexture(Assets.moveTexture);
         }
 
 
@@ -103,6 +109,7 @@ public class HighlightMap {
             if (!tileReachable(move))
             {
                 move.setTexName("HighlightTexture/blank.png");
+                move.setTexture(Assets.blankTexture);
             }
         }
 

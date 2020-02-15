@@ -1,5 +1,6 @@
 package com.kroy.game;
 
+import org.junit.Before;
 
 /***
  * Class used to manage the fireEngines and all the users info
@@ -7,6 +8,10 @@ package com.kroy.game;
 
 public class Human extends Player {
 
+    @Before
+    public void init(){
+
+    }
 
     /**
      * Constucts a Human Player, this will be able to control a team of fire engines
@@ -50,7 +55,9 @@ public class Human extends Player {
         int speed = statProfile[3];
         int waterCapacity = statProfile[4];
 
-        return new FireEngine(health, damage, range, null, speed, waterCapacity, "fireEngineSprite.png");
+        FireEngine f = new FireEngine(health, damage, range, null, speed, waterCapacity, "fireEngineSprite.png");
+        f.setTexture(Assets.fireEngineSpriteTexture);
+        return f;
     }
 
 

@@ -21,11 +21,9 @@ public final class Constants {
     private static int ACTUAL_SCREEN_WIDTH = 2048/2;
     private static int ACTUAL_SCREEN_HEIGHT = 1196/2;*/
 
-
     private static boolean FULLSCREEN = false;
 
     private static int TILE_SIZE = 64;
-    private static AssetManager MANAGER = new AssetManager();
 
     private static int FORTRESS_COUNT = 6;
     private static int FIREENGINE_COUNT = 5;
@@ -43,10 +41,6 @@ public final class Constants {
     private static int NUM_ENGINE_BULLETS = 10;
 
     private static int FORTRESS_DESTRUCTION_TIME = 300;
-
-    private static String[] GRASS_TEXTURES = {"GreeneryTexture/GrassTile1.png", "GreeneryTexture/BushTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/TreeTile1.png", "GreeneryTexture/GrassTile1.png", "GreeneryTexture/GrassTile1.png",};
-    private static String[] BUILDING_TEXTURE = {"BuildingTexture/BuildingTile1.png", "BuildingTexture/BuildingTile2.png", "BuildingTexture/BuildingTile3.png", "BuildingTexture/BuildingTile4.png", "BuildingTexture/BuildingTile5.png", "BuildingTexture/BuildingTile6.png", "BuildingTexture/BuildingTile7.png", "BuildingTexture/BuildingTile8.png", "BuildingTexture/BuildingTile9.png",};
-    private static String[] MINIGAME_TEXTURES = {"MiniGameTexture/ethan.png", "MiniGameTexture/michael.png", "MiniGameTexture/thanh.png"};
 
     private static String MAP_FILE_NAME = "Data/yorkMapFlipped.csv";
 
@@ -82,10 +76,6 @@ public final class Constants {
 
     public static int getActualScreenHeight() { return ACTUAL_SCREEN_HEIGHT; }
 
-    public static AssetManager getManager() {
-        return MANAGER;
-    }
-
     public static int getTileSize() {
         return TILE_SIZE;
     }
@@ -112,23 +102,7 @@ public final class Constants {
         return STATION_REPAIR_AMOUNT;
     }
 
-    public static String[] getGrassTexture() {
-        return GRASS_TEXTURES;
-    }
-
-    public static String[] getBuildingTexture() {
-        return BUILDING_TEXTURE;
-    }
-
-    public static String[] getMinigameTextures() { return MINIGAME_TEXTURES; }
-
     public static int getFortressDestructionTime() { return FORTRESS_DESTRUCTION_TIME; }
-
-    public static String getResourceRoot() {
-        String WORKING_DIRECTORY = Gdx.files.getLocalStoragePath();
-        String resources_root = Gdx.files.absolute(WORKING_DIRECTORY).toString() + "/core/assets/";
-        return resources_root;
-    }
 
     public static float getMinigameBasePlayerMovementSpeed() { return MINIGAME_BASE_PLAYER_MOVEMENT_SPEED; }
 

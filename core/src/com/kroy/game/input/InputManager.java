@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.kroy.game.*;
@@ -166,6 +167,7 @@ public class InputManager extends ApplicationAdapter
                     if(!currentEngine.isDisabled()) {
                         sceneHelper.setSelectedTile(queryTile);
                         sceneHelper.getHighlightMap().getMapData()[y][x].setTexName("HighlightTexture/selected.png");
+                        sceneHelper.getHighlightMap().getMapData()[y][x].setTexture(new Texture(Gdx.files.internal("HighlightTexture/selected.png")));
 
                         //place green moves
                         ArrayList<Tile> moveSpaces = sceneHelper.getMap().getWithRangeOfHub(queryTile, ((FireEngine) queryTile.getInhabitant()).getSpeed(), TileType.TILE_TYPES_ROAD);
