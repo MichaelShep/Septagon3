@@ -95,14 +95,11 @@ public class Map {
                 if (tileCode == 0) {
                     int[] adjacentTiles = getAdjacentTileCodes(width, height, mapTileData);
                     mapData[height][width] = new Tile(width, height, mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
-                    mapData[height][width].setTexture(new Texture(Gdx.files.internal(mapData[height][width].getTexName())));
                 } else if (tileCode == 5) {
                     stationPosition = new Station(width, height);
                     mapData[height][width] = stationPosition;
-                    mapData[height][width].setTexture(new Texture(Gdx.files.internal(mapData[height][width].getTexName())));
                 } else {
                     mapData[height][width] = new Tile(width, height, mapTextures(tileCode), TileType.values()[tileCode]);
-                    mapData[height][width].setTexture(new Texture(Gdx.files.internal(mapData[height][width].getTexName())));
                 }
 
             }

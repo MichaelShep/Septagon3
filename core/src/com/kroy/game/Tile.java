@@ -1,5 +1,6 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
@@ -23,6 +24,7 @@ public class Tile {
         mapX = 0;
         mapY = 0;
         texName = "grassTile.png";
+        texture = new Texture(Gdx.files.internal(texName));
         type = TileType.TILE_TYPES_GRASS;
         inhabitant = null;
 
@@ -39,6 +41,7 @@ public class Tile {
         mapX = newMapX;
         mapY = newMapY;
         texName = "grassTile.png";
+        texture = new Texture(Gdx.files.internal(texName));
         type = TileType.TILE_TYPES_GRASS;
         inhabitant = null;
 
@@ -57,6 +60,7 @@ public class Tile {
         mapX = newMapX;
         mapY = newMapY;
         texName = newTextureLocation;
+        texture = new Texture(Gdx.files.internal(texName));
         type = newType;
         inhabitant = null;
 
