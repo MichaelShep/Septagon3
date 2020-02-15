@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class EnemyTests {
 
-    String directory = Gdx.files.getLocalStoragePath() + "assets/Data/MapForTesting.csv";
     Enemy testEnemy;
     Map testMap;
 
@@ -29,6 +28,7 @@ public class EnemyTests {
 
         Assets.loadGameAssets();
         testEnemy = new Enemy(false, 1,1);
+        String directory = Gdx.files.getLocalStoragePath() + "assets/Data/MapForTesting.csv";
         testMap = new Map(directory);
     }
 
@@ -57,11 +57,13 @@ public class EnemyTests {
 
     @Test
     public void testCalculateTargets(){
-        testEnemy = new Enemy(false, 1,1);
-        testEnemy.distributeTeamLocation(testMap.getNClosest(1, testMap.getStationPosition(), TileType.TILE_TYPES_ROAD));
+        testEnemy = new Enemy(false, 6,1);
+        testEnemy.distributeTeamLocation(testMap.getFortressTiles());
         FireEngine testFireEngine = new FireEngine(1,1,1, testEnemy.getTeam().get(0).getLocation(), 1, 1, "FireEngine.png");
         testFireEngine.setTexture(new Texture(Gdx.files.internal("fireEngineSprite.png")));
         HashMap testLocations = testEnemy.calculateTargets(testMap);
+        System.out.println(testLocations);
+
         assertTrue(testLocations.containsValue(testFireEngine));
 
     }
