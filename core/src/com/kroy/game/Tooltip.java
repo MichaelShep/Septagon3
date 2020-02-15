@@ -48,14 +48,14 @@ public class Tooltip {
      * @param iconRoot the icon root to be rendered
      * @param value    the value associated
      */
-    public void addValue(String iconRoot, Object value) {
+    public void addValue(String iconRoot, Object value, Texture texture) {
         if (!(values.containsKey(iconRoot))) {
             values.put(iconRoot, value);
         } else {
             //icon is already being used in this tool tip
         }
 
-        iconTextures.put(iconRoot, new Texture(Gdx.files.internal(iconRoot)));
+        iconTextures.put(iconRoot, texture);
     }
 
     /**

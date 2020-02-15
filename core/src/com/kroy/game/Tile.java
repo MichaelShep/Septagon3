@@ -60,7 +60,6 @@ public class Tile {
         mapX = newMapX;
         mapY = newMapY;
         texName = newTextureLocation;
-        texture = new Texture(Gdx.files.internal(texName));
         type = newType;
         inhabitant = null;
 

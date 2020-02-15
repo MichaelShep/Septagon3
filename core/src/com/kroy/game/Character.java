@@ -44,8 +44,6 @@ abstract public class  Character{
         this.y = 0;
         this.width = Constants.getTileSize();
         this.height = Constants.getTileSize();
-        this.texture = new Texture(Gdx.files.internal(spriteTex));
-
     }
 
     /**

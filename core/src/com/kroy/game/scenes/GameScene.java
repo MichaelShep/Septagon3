@@ -73,17 +73,17 @@ public class GameScene extends Scene
         renderer = new Renderer(map, highlightMap);
 
         humanToolTip = new Tooltip("", -900, 400, 75, 200);
-        humanToolTip.addValue("Icons/healthIcon.png", 0);
-        humanToolTip.addValue("Icons/damageIcon.png", 0);
-        humanToolTip.addValue("Icons/rangeIcon.png", 0);
-        humanToolTip.addValue("Icons/speedIcon.png", 0);
-        humanToolTip.addValue("Icons/waterIcon.png", 0);
+        humanToolTip.addValue("Icons/healthIcon.png", 0, Assets.healthIconTexture);
+        humanToolTip.addValue("Icons/damageIcon.png", 0, Assets.damageIconTexture);
+        humanToolTip.addValue("Icons/rangeIcon.png", 0, Assets.rangeIconTexture);
+        humanToolTip.addValue("Icons/speedIcon.png", 0, Assets.speedIconTexture);
+        humanToolTip.addValue("Icons/waterIcon.png", 0, Assets.waterIconTexture);
 
 
         enemyToolTip = new Tooltip("", -900, 400, 75, 200);
-        enemyToolTip.addValue("Icons/healthIcon.png", 0);
-        enemyToolTip.addValue("Icons/damageIcon.png", 0);
-        enemyToolTip.addValue("Icons/rangeIcon.png", 0);
+        enemyToolTip.addValue("Icons/healthIcon.png", 0, Assets.healthIconTexture);
+        enemyToolTip.addValue("Icons/damageIcon.png", 0, Assets.damageIconTexture);
+        enemyToolTip.addValue("Icons/rangeIcon.png", 0, Assets.rangeIconTexture);
 
         humanData.distributeTeamLocation(map.getNClosest(Constants.getFireengineCount(), map.getStationPosition(), TileType.TILE_TYPES_ROAD));
         enemyData.distributePatrols(map);

@@ -55,7 +55,9 @@ public class Human extends Player {
         int speed = statProfile[3];
         int waterCapacity = statProfile[4];
 
-        return new FireEngine(health, damage, range, null, speed, waterCapacity, "fireEngineSprite.png");
+        FireEngine f = new FireEngine(health, damage, range, null, speed, waterCapacity, "fireEngineSprite.png");
+        f.setTexture(Assets.fireEngineSpriteTexture);
+        return f;
     }
 
 

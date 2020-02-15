@@ -25,6 +25,8 @@ public class Map {
     private int mapWidth, mapHeight;
     private int shiftX, shiftY;
 
+    private Random random = new Random();
+
     /**
      * Constructs a new game Map Object
      * @param fileName the file root of the map data
@@ -94,12 +96,14 @@ public class Map {
 
                 if (tileCode == 0) {
                     int[] adjacentTiles = getAdjacentTileCodes(width, height, mapTileData);
-                    mapData[height][width] = new Tile(width, height, mapRoadTextures(adjacentTiles), TileType.values()[tileCode]);
+                    mapData[height][width] = new Tile(width, height, "", TileType.values()[tileCode]);
+                    mapData[height][width].setTexName(mapRoadTextures(adjacentTiles, mapData[height][width]));
                 } else if (tileCode == 5) {
                     stationPosition = new Station(width, height);
                     mapData[height][width] = stationPosition;
                 } else {
-                    mapData[height][width] = new Tile(width, height, mapTextures(tileCode), TileType.values()[tileCode]);
+                    mapData[height][width] = new Tile(width, height, "", TileType.values()[tileCode]);
+                    mapData[height][width].setTexName(mapTextures(tileCode, mapData[height][width]));
                 }
 
             }
@@ -111,21 +115,28 @@ public class Map {
      * @param textureCode the texture code you want the corresponding root for
      * @return the texture root for that texture code
      */
-    private String mapTextures(int textureCode) {
+    private String mapTextures(int textureCode, Tile tile) {
         switch (textureCode) {
             case 0:
+                tile.setTexture(Assets.roadTileTexture);
                 return "roadTile.png";
             case 1:
+                tile.setTexture(Assets.waterTileTexture);
                 return "waterTile.png";
             case 2:
-                return rndTexture("GreeneryTexture");
+                tile.setTexture(rndTexture("GreeneryTexture"));
+                return "GreeneryTexture";
             case 3:
-                return rndTexture("BuildingTexture");
+                tile.setTexture(rndTexture("BuildingTexture"));
+                return "BuildingTexture";
             case 4:
+                tile.setTexture(Assets.lavaTileTexture);
                 return "lavaTile.png";
             case 5:
+                tile.setTexture(Assets.stationTileTexture);
                 return "stationTile.png";
             case 6:
+                tile.setTexture(Assets.lavaTileTexture);
                 return "lavaTile.png";
             default:
                 throw new IllegalArgumentException(textureCode + " is not implemented in mapTextures()");
@@ -181,17 +192,21 @@ public class Map {
      * @param adjacentTileTypes the list of adjacent tile codes
      * @return the road texture for a tile that is surrounded by those inputs
      */
-    private String mapRoadTextures(int[] adjacentTileTypes) {
+    private String mapRoadTextures(int[] adjacentTileTypes, Tile tile) {
         switch ((adjacentTileTypes[0] + adjacentTileTypes[1] + adjacentTileTypes[2] + adjacentTileTypes[3])) {
             case 1: {
                 if (adjacentTileTypes[0] == 1) {
-                    return ("RoadVertical.png");
+                    tile.setTexture(Assets.roadVerticalTexture);
+                    return "RoadVertical.png";
                 } else if (adjacentTileTypes[1] == 1) {
-                    return ("RoadHorizontal.png");
+                    tile.setTexture(Assets.roadHorizontalTexture);
+                    return"RoadHorizontal.png";
                 } else if (adjacentTileTypes[2] == 1) {
-                    return ("RoadVertical.png");
+                    tile.setTexture(Assets.roadVerticalTexture);
+                    return "RoadVertical.png";
                 } else {
-                    return ("RoadHorizontal.png");
+                    tile.setTexture(Assets.roadHorizontalTexture);
+                    return "RoadHorizontal.png";
                 }
 
             }
@@ -199,41 +214,53 @@ public class Map {
                 if (adjacentTileTypes[0] == 1) {
                     if (adjacentTileTypes[2] != 1) {
                         if (adjacentTileTypes[1] == 1) {
-                            return ("RoadTwoWayRightUp.png");
+                            tile.setTexture(Assets.roadTwoWayRightUpTexture);
+                            return "RoadTwoWayRightUp.png";
                         } else {
-                            return ("RoadTwoWayLeftUp.png");
+                            tile.setTexture(Assets.roadTwoWayLeftUpTexture);
+                            return "RoadTwoWayLeftUp.png";
                         }
                     } else {
-                        return ("RoadVertical.png");
+                        tile.setTexture(Assets.roadVerticalTexture);
+                        return "RoadVertical.png";
                     }
                 } else if (adjacentTileTypes[2] == 1) {
                     if (adjacentTileTypes[1] == 1) {
-                        return ("RoadTwoWayRightDown.png");
+                        tile.setTexture(Assets.roadTwoWayRightDownTexture);
+                        return "RoadTwoWayRightDown.png";
                     } else {
-                        return ("RoadTwoWayLeftDown.png");
+                        tile.setTexture(Assets.roadTwoWayLeftDownTexture);
+                        return "RoadTwoWayLeftDown.png";
                     }
                 } else {
-                    return ("RoadHorizontal.png");
+                    tile.setTexture(Assets.roadHorizontalTexture);
+                    return "RoadHorizontal.png";
                 }
             }
             case 3: {
                 if (adjacentTileTypes[0] != 1) {
-                    return ("RoadThreeWayNoUp.png");
+                    tile.setTexture(Assets.roadThreeWayNoUpTexture);
+                    return "RoadThreeWayNoUp.png";
                 } else if (adjacentTileTypes[1] != 1) {
-                    return ("RoadThreeWayNoRight.png");
+                    tile.setTexture(Assets.roadThreeWayNoRightTexture);
+                    return "RoadThreeWayNoRight.png";
                 } else if (adjacentTileTypes[2] != 1) {
-                    return ("RoadThreeWayNoDown.png");
+                    tile.setTexture(Assets.roadThreeWayNoDownTexture);
+                    return "RoadThreeWayNoDown.png";
                 } else {
-                    return ("RoadThreeWayNoLeft.png");
+                    tile.setTexture(Assets.roadThreeWayNoLeftTexture);
+                    return"RoadThreeWayNoLeft.png";
                 }
             }
 
             case 4:
-                return ("RoadFourWay.png");
+                tile.setTexture(Assets.roadFourWayTexture);
+                return "RoadFourWay.png";
 
 
             default:
-                return ("BuildingTexture/TileBuild.png");
+                tile.setTexture(Assets.tileBuildTexture);
+                return "BuildingTexture/TileBuild.png";
         }
     }
 
@@ -242,13 +269,11 @@ public class Map {
      * @param textureType the type you want query
      * @return a texture in the pool of type passed
      */
-    String rndTexture(String textureType) {
-        Random random = new Random();
-
+    Texture rndTexture(String textureType) {
         if (textureType == "GreeneryTexture") {
-            return Constants.getGrassTexture()[random.nextInt(Constants.getGrassTexture().length)];
+            return Assets.GRASS_TEXTURES.get(random.nextInt(Assets.GRASS_TEXTURES.size()));
         } else if (textureType == "BuildingTexture") {
-            return Constants.getBuildingTexture()[random.nextInt(Constants.getBuildingTexture().length)];
+            return Assets.BUILDING_TEXTURES.get(random.nextInt(Assets.BUILDING_TEXTURES.size()));
         } else {
             throw new IllegalArgumentException(textureType + " not textureType");
         }
