@@ -28,9 +28,8 @@ public class FireEngineTests {
      * Function to set up values that will be used for testing
      */
     public void init(){
-        testFireEngine = new FireEngine(100, 10, 10, testTile, 10, 100);
-        Texture engineTexture = new Texture(Gdx.files.internal("fireEngineSprite.png"));
-        testFireEngine.setTexture(engineTexture);
+        testFireEngine = new FireEngine(100, 10, 10, testTile, 10, 100, "fireEngineSprite.png");
+        testFireEngine.setTexture(new Texture(Gdx.files.internal("fireEngineSprite.png")));
     }
 
     @Test
@@ -108,7 +107,7 @@ public class FireEngineTests {
      * Tests whether the fire engine can correctly shoot and damage a fortress
      */
     public void testShootTarget() {
-        Fortress testFortress = new Fortress(1000, 10,2,testTile, "fortress1");
+        Fortress testFortress = new Fortress(1000, 10,2,testTile, "fortress1", "fireEngineSprite.png");
 
         testFireEngine.shootTarget(testFortress);
 

@@ -35,28 +35,6 @@ public class FireEngine extends Patrol {
     }
 
     /**
-     * ONLY USED IN TESTING
-     * Constructs a FireEngine which is the character that a human can control
-     * Extends Character
-     *
-     * @param health        the starting and max health
-     * @param damage        the amount health it removes when shooting
-     * @param range         how many tiles away it can shoot
-     * @param location      the starting location
-     * @param speed         how many tiles it can move at once
-     * @param waterCapacity the max amount of water this engine can shoot
-     */
-    public FireEngine(int health, int damage, int range, Tile location, int speed, int waterCapacity) {
-        super(health, damage, range, location);
-        this.speed = speed;
-        this.waterCapacity = waterCapacity;
-        this.waterAmount = waterCapacity;
-        this.disabled = false;
-        this.type = Type.ENGINE;
-    }
-
-
-    /**
      * Increase the stored amount of water, capped by the water capacity
      *
      * @param newAmount the amount of water you want to add

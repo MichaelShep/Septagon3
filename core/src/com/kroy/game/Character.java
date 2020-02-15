@@ -1,5 +1,6 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -43,33 +44,7 @@ abstract public class  Character{
         this.y = 0;
         this.width = Constants.getTileSize();
         this.height = Constants.getTileSize();
-        this.texture = Constants.getManager().get(Constants.getResourceRoot() + spriteTex, Texture.class);
     }
-
-    /**
-     * ONLY USED IN TESTING
-     * Constructs a Character object which is an entity that can shoot, move and be killed.
-     * Extends from Sprite to allow rendering capability
-     * Character is abstract and must be constructed via a child
-     *
-     * @param health    the starting health of the character
-     * @param damage    the amount of damage this deals
-     * @param range     how far from its location it can shoot
-     * @param spawn     the starting location of this character
-     */
-    protected Character(int health, int damage, int range, Tile spawn) {
-        this.health = health;
-        this.maxHealth = health;
-        this.damage = damage;
-        this.range = range;
-        this.location = spawn;
-        this.disabled = false;
-        this.x = 0;
-        this.y = 0;
-        this.width = Constants.getTileSize();
-        this.height = Constants.getTileSize();
-    }
-
 
     /**
      * Checks if the character needs to be disabled

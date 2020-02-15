@@ -1,6 +1,11 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Used to create tooltips which are used to give info on the stats of the item you are currently on
@@ -14,7 +19,7 @@ public class Tooltip {
     private int iconSize;
     private int fontSpacing;
     private HashMap<String, Object> values;
-
+    private HashMap<String, Texture> iconTextures;
 
     /**
      * Constructs a tooltip to be rendered on the screen
@@ -34,6 +39,7 @@ public class Tooltip {
         fontSpacing = sizeOfFont;
         render = false;
         values = new HashMap<String, Object>();
+        iconTextures = new HashMap<String, Texture>();
     }
 
     /**
@@ -42,13 +48,14 @@ public class Tooltip {
      * @param iconRoot the icon root to be rendered
      * @param value    the value associated
      */
-    public void addValue(String iconRoot, Object value) {
+    public void addValue(String iconRoot, Object value, Texture texture) {
         if (!(values.containsKey(iconRoot))) {
             values.put(iconRoot, value);
         } else {
             //icon is already being used in this tool tip
-
         }
+
+        iconTextures.put(iconRoot, texture);
     }
 
     /**
@@ -95,6 +102,8 @@ public class Tooltip {
     public void setY(int y) {
         this.y = y;
     }
+
+    public HashMap<String, Texture> getTextures() { return iconTextures; }
 
     public void updateValue(HashMap<String, Object> values) {
         this.values = values;

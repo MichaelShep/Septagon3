@@ -1,5 +1,8 @@
 package com.kroy.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  * Used to handle info about each of the tiles in the game
  */
@@ -10,6 +13,7 @@ public class Tile {
     protected String texName;
     private TileType type;
     private Character inhabitant;
+    private Texture texture;
 
 
     /**
@@ -20,6 +24,7 @@ public class Tile {
         mapX = 0;
         mapY = 0;
         texName = "grassTile.png";
+        texture = new Texture(Gdx.files.internal(texName));
         type = TileType.TILE_TYPES_GRASS;
         inhabitant = null;
 
@@ -36,6 +41,7 @@ public class Tile {
         mapX = newMapX;
         mapY = newMapY;
         texName = "grassTile.png";
+        texture = Assets.grassTileTexture;
         type = TileType.TILE_TYPES_GRASS;
         inhabitant = null;
 
@@ -74,6 +80,8 @@ public class Tile {
         return mapY;
     }
 
+    public Texture getTexture() { return texture; }
+
     public void setMapY(int newMapY) {
         this.mapY = mapY;
     }
@@ -85,6 +93,7 @@ public class Tile {
     public void setTexName(String newTexName) {
         texName = newTexName;
     }
+    public void setTexture(Texture texture) { this.texture = texture; }
 
     public TileType getType() {
         return type;

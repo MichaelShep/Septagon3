@@ -59,7 +59,9 @@ public class Enemy extends Player {
         int damage = statProfile[1];
         int range = statProfile[2];
 
-        return new Fortress(health, damage, range, null, name, "fortressSprite.png");
+        Fortress f = new Fortress(health, damage, range, null, name, "fortressSprite.png");
+        f.setTexture(Assets.fortressSpriteTexture);
+        return f;
     }
 
 
@@ -86,7 +88,9 @@ public class Enemy extends Player {
         int damage = statProfile[1];
         int range = statProfile[2];
 
-        return new Patrol(health, damage, range, null, "PatrolSprite.png");
+        Patrol p = new Patrol(health, damage, range, null, "PatrolSprite.png");
+        p.setTexture(Assets.patrolSpriteTexture);
+        return p;
     }
 
 

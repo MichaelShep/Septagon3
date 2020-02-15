@@ -54,24 +54,13 @@ public class MainClass extends ApplicationAdapter {
 
         initSetting();
 
-        //LOADING ASSETS
-        System.out.println("BASE ROOT: " + Constants.getResourceRoot());
-        loadTextures("");
         loadFont();
-
 
         if (Constants.isFULLSCREEN()) {
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
         }
 
-        while (!Constants.getManager().update()) {
-            //LOOP WAITS UNTIL ALL ASSETS ARE LOADED
-        }
-
         batch = new SpriteBatch();
-
-        Array<Texture> allAssetsLoaded = new Array<Texture>();
-        Constants.getManager().getAll(Texture.class, allAssetsLoaded);
 
         //define camera
         cam = new OrthographicCamera();
@@ -106,38 +95,6 @@ public class MainClass extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         
-    }
-
-    /**
-     * Load in all texture into the assetManager with the suffix of an image
-     * Leave root at an empty string to load in all assets in resource root
-     *
-     * @param root the root you want to start searching in
-     */
-    private void loadTextures(String root) {
-        //all loading is auto, place all assets somewhere in the asset Root. Use Constants.Manager to access.
-        System.out.println("---------------------------------------");
-        File dir = new File(Constants.getResourceRoot() + root);
-        System.out.println("Trying to load: " + Constants.getResourceRoot() + root);
-        File[] directoryListing = dir.listFiles();
-        if (directoryListing != null) {
-            for (File child : directoryListing) {
-                if (child.isDirectory()) {
-                    loadTextures(child.getName() + "/");
-                } else {
-                    if (child.getName().contains(".png") || child.getName().contains(".jpeg")) {
-                        //System.out.println("Asset Found: "+ Constants.getResourceRoot() + root + child.getName());
-                        Constants.getManager().load(Constants.getResourceRoot() + root + child.getName(), Texture.class);
-                    } else {
-                        System.out.println("Asset not an image: " + child.getName());
-                    }
-                }
-            }
-        } else {
-            System.out.println(root + " was an empty location\n-------------------------");
-        }
-
-
     }
 
     /**
