@@ -69,7 +69,7 @@ public class GameScene extends Scene
         highlightMap = new HighlightMap(map.getMapWidth(), map.getMapHeight());
         selectedTile = null;
 
-        barManager = new BarManager(humanData, enemyData, map);
+        barManager = new BarManager(humanData, enemyData);
         renderer = new Renderer(map, highlightMap);
 
         humanToolTip = new Tooltip("", -900, 400, 75, 200);
