@@ -56,7 +56,6 @@ public class MainClass extends ApplicationAdapter {
 
         loadFont();
 
-
         if (Constants.isFULLSCREEN()) {
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
         }
