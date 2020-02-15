@@ -63,6 +63,7 @@ public class EnemyTests {
         testFireEngine.setTexture(new Texture(Gdx.files.internal("fireEngineSprite.png")));
         HashMap testLocations = testEnemy.calculateTargets(testMap);
         System.out.println(testLocations);
+        //System.out.println();
 
         assertTrue(testLocations.containsValue(testFireEngine));
 
