@@ -28,7 +28,7 @@ public class EnemyTests {
 
         Assets.loadGameAssets();
         testEnemy = new Enemy(false, 1,1);
-        String directory = Gdx.files.getLocalStoragePath() + "assets/Data/MapForTesting.csv";
+        String directory = Gdx.files.getLocalStoragePath() + "assets/Data/YorkMapFlipped.csv";
         testMap = new Map(directory);
     }
 
@@ -59,7 +59,7 @@ public class EnemyTests {
     public void testCalculateTargets(){
         testEnemy = new Enemy(false, 6,1);
         testEnemy.distributeTeamLocation(testMap.getFortressTiles());
-        FireEngine testFireEngine = new FireEngine(1,1,1, testEnemy.getTeam().get(0).getLocation(), 1, 1, "FireEngine.png");
+        FireEngine testFireEngine = new FireEngine(1,1,1, testMap.getWithRangeOfHub(testEnemy.getTeam().get(0).getLocation(), 5, TileType.TILE_TYPES_ROAD).get(2), 1, 1, "FireEngine.png");
         testFireEngine.setTexture(new Texture(Gdx.files.internal("fireEngineSprite.png")));
         HashMap testLocations = testEnemy.calculateTargets(testMap);
         System.out.println(testLocations);
