@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.kroy.game.*;
+import com.kroy.game.Character;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,7 @@ public class EnemyTests {
         Fortress testFortress = testEnemy.createFortress("TEST_FORTRESS", 0);
         assertEquals(2, testFortress.getHealth());
         assertEquals(3, testFortress.getDamage());
-        assertEquals(2, testFortress.getRange());
+        assertEquals(5, testFortress.getRange());
     }
 
     @Test
@@ -81,7 +82,12 @@ public class EnemyTests {
 
     @Test
     public void testImproveFortress(){
-
+        testEnemy.createFortress("TEST_FORTRESS", 0);
+        testEnemy.improveFortresses();
+        Character testFortress = testEnemy.getTeam().get(0);
+        assertEquals(4, testFortress.getHealth());
+        assertEquals(4, testFortress.getDamage());
+        assertEquals(5, testFortress.getRange());
     }
 
 

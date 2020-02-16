@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kroy.tests.BulletTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-02-16T19:32:30" hostname="LAPTOP-NPDR84MS" time="0.034">
+  <properties/>
+  <testcase name="testUpdate" classname="com.kroy.tests.BulletTests" time="0.015"/>
+  <testcase name="testConstructor" classname="com.kroy.tests.BulletTests" time="0.012"/>
+  <system-out><![CDATA[xPosition 0.0  yPosition 0.0  targetX 52.0  targetY 52.0
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

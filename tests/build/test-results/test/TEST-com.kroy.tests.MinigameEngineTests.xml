@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kroy.tests.MinigameEngineTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-02-16T19:32:32" hostname="LAPTOP-NPDR84MS" time="0.037">
+  <properties/>
+  <testcase name="testInit" classname="com.kroy.tests.MinigameEngineTests" time="0.016"/>
+  <testcase name="testConstructor" classname="com.kroy.tests.MinigameEngineTests" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

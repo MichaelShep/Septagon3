@@ -41,7 +41,7 @@ public class HumanTests {
         FireEngine testEngine = testHuman.createFireEngine(0);
         assertEquals(16, testEngine.getMaxHealth());
         assertEquals(5, testEngine.getDamage());
-        assertEquals(5, testEngine.getRange());
+        assertEquals(4, testEngine.getRange());
         assertEquals(4, testEngine.getSpeed());
         assertEquals(4, testEngine.getWaterCapacity());
 
