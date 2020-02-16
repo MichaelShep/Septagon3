@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.kroy.tests.BarManagerTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-02-16T19:32:30" hostname="LAPTOP-NPDR84MS" time="0.247">
-  <properties/>
-  <testcase name="testColourOfHealthBar" classname="com.kroy.tests.BarManagerTests" time="0.127"/>
-  <testcase name="testConstructor" classname="com.kroy.tests.BarManagerTests" time="0.103"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.kroy.tests.EnemyTests" tests="7" skipped="0" failures="1" errors="0" timestamp="2020-02-16T19:32:30" hostname="LAPTOP-NPDR84MS" time="0.719">
+<testsuite name="com.kroy.tests.EnemyTests" tests="7" skipped="0" failures="1" errors="0" timestamp="2020-02-16T20:05:25" hostname="LAPTOP-NPDR84MS" time="0.774">
   <properties/>
-  <testcase name="testImproveFortress" classname="com.kroy.tests.EnemyTests" time="0.111"/>
-  <testcase name="testCreatePatrol" classname="com.kroy.tests.EnemyTests" time="0.082"/>
-  <testcase name="testCalculateTargets" classname="com.kroy.tests.EnemyTests" time="0.098">
+  <testcase name="testImproveFortress" classname="com.kroy.tests.EnemyTests" time="0.176"/>
+  <testcase name="testCreatePatrol" classname="com.kroy.tests.EnemyTests" time="0.084"/>
+  <testcase name="testCalculateTargets" classname="com.kroy.tests.EnemyTests" time="0.096">
     <failure message="java.lang.AssertionError" type="java.lang.AssertionError">java.lang.AssertionError
 	at org.junit.Assert.fail(Assert.java:87)
 	at org.junit.Assert.assertTrue(Assert.java:42)
 	at org.junit.Assert.assertTrue(Assert.java:53)
-	at com.kroy.tests.EnemyTests.testCalculateTargets(EnemyTests.java:69)
+	at com.kroy.tests.EnemyTests.testCalculateTargets(EnemyTests.java:73)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -27,10 +27,10 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="testDistributesPatrols" classname="com.kroy.tests.EnemyTests" time="0.089"/>
-  <testcase name="testCreateFortress" classname="com.kroy.tests.EnemyTests" time="0.083"/>
-  <testcase name="testDecideTarget" classname="com.kroy.tests.EnemyTests" time="0.077"/>
-  <testcase name="testConstructor" classname="com.kroy.tests.EnemyTests" time="0.081"/>
+  <testcase name="testDistributesPatrols" classname="com.kroy.tests.EnemyTests" time="0.082"/>
+  <testcase name="testCreateFortress" classname="com.kroy.tests.EnemyTests" time="0.078"/>
+  <testcase name="testDecideTarget" classname="com.kroy.tests.EnemyTests" time="0.081"/>
+  <testcase name="testConstructor" classname="com.kroy.tests.EnemyTests" time="0.079"/>
   <system-out><![CDATA[{}
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
