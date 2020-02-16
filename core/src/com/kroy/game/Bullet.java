@@ -74,8 +74,8 @@ public class Bullet {
 
         System.out.print("xPosition " + xPosition + "  yPosition " + yPosition + "  targetX " + targetX +"  targetY " + targetY + "\n");
 
-        relativeXPosition += xSPEED * deltaTime * 30000;
-        relativeYPosition += ySPEED * deltaTime * 30000;
+        relativeXPosition += xSPEED * deltaTime * 100000;
+        relativeYPosition += ySPEED * deltaTime * 100000;
 
         xPosition = relativeXPosition + updateXPosition;
         yPosition = relativeYPosition + updateYPosition;
