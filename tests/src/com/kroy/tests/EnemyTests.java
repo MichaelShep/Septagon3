@@ -29,7 +29,7 @@ public class EnemyTests {
 
         Assets.loadGameAssets();
         testEnemy = new Enemy(false, 1,1);
-        String directory = Gdx.files.getLocalStoragePath() + "assets/Data/YorkMapFlipped.csv";
+        String directory = Gdx.files.getLocalStoragePath() + "assets/Data/yorkMapFlipped.csv";
         testMap = new Map(directory);
     }
 

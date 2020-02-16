@@ -64,7 +64,7 @@ public class GameScene extends Scene
         humanData = new Human( true, Constants.getFireengineCount());
         enemyData = new Enemy( false, Constants.getFortressCount(), Constants.getPatrolCount());
 
-        map = new Map(Gdx.files.getLocalStoragePath() + "/core/assets/" + Constants.getMapFileName());
+        map = new Map(System.getProperty("user.dir") + "/core/assets/" + Constants.getMapFileName());
         map.setShiftX(-1024);
         map.setShiftY(-1728);
 

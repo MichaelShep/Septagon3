@@ -1,6 +1,7 @@
 package com.kroy.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.io.BufferedReader;
@@ -36,7 +37,7 @@ public class Map {
         String directory = fileName;
 
         try {
-            generateMap(readMapCSV(directory));
+            generateMap(readMapCSV());
         } catch (IOException e) {
             System.out.println(e + " -- Map could not be read");
             System.exit(0);
@@ -49,28 +50,21 @@ public class Map {
 
     /**
      * Read the map data from CSV
-     * @param mapCSVFile the csv file with the data
      * @return return a List of string which represent each row of data
      * @throws IOException if the file cannot be opened
      */
-    public ArrayList<String[]> readMapCSV(String mapCSVFile) throws IOException {
+    public ArrayList<String[]> readMapCSV() throws IOException {
         ArrayList<String[]> rowData = new ArrayList<String[]>();
         String row;
 
+        FileHandle csvReader = Gdx.files.internal("Data/yorkMapFlipped.csv");
 
-        try {
-            BufferedReader csvReader = new BufferedReader(new FileReader(mapCSVFile));
+        String text = csvReader.readString();
+        String wordsArray[] = text.split("\\r?\\n");
 
-            while ((row = csvReader.readLine()) != null) {
-                String[] data = row.split(",");
-                rowData.add(data);
-            }
-
-            csvReader.close();
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException();
-        } catch (IOException e) {
-            throw new IOException();
+        for(String word: wordsArray) {
+            String[] data = word.split(",");
+            rowData.add(data);
         }
 
         mapWidth = (rowData.get(0).length);
