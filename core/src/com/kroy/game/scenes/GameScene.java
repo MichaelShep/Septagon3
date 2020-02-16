@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.kroy.game.*;
 import com.kroy.game.Character;
+import com.kroy.game.input.InputManager;
 import com.kroy.game.rendering.Renderer;
 
 import javax.swing.text.Highlighter;
@@ -98,6 +99,7 @@ public class GameScene extends Scene
 
         //empty arraylist of bullet
         bullets = new ArrayList<Bullet>();
+
     }
 
     @Override
@@ -117,6 +119,8 @@ public class GameScene extends Scene
         barManager.setShiftY(map.getShiftY());
 
         //Bullet update
+
+        //list of bullets to be removed
         ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
         for (Bullet bullet : bullets)
         {
@@ -130,6 +134,10 @@ public class GameScene extends Scene
             if (bullet.remove) {
                 System.out.print("Removed bullet");
                 bulletToRemove.add(bullet);
+                InputManager.sceneHelper.setSelectedTile(null);
+                InputManager.sceneHelper.getHumanData().setMyTurn(false);
+                InputManager.sceneHelper.getEnemyData().setMyTurn(true);
+                //InputManager.sceneHelper.getSelectedTile().getInhabitant().shootTarget(InputManager.queryTile.getInhabitant());
             }
         }
         bullets.removeAll(bulletToRemove);
