@@ -33,6 +33,7 @@ public class GameScene extends Scene
     private Renderer renderer;
 
     private Integer turnCounter = 0;
+    private boolean canIncrementTurnCounter = true;
 
     //Creates an array of bullets
     public static ArrayList<Bullet> bullets;
@@ -69,7 +70,7 @@ public class GameScene extends Scene
         highlightMap = new HighlightMap(map.getMapWidth(), map.getMapHeight());
         selectedTile = null;
 
-        barManager = new BarManager(humanData, enemyData, map);
+        barManager = new BarManager(humanData, enemyData);
         renderer = new Renderer(map, highlightMap);
 
         humanToolTip = new Tooltip("", -900, 400, 75, 200);
@@ -152,7 +153,13 @@ public class GameScene extends Scene
 
             enemyData.setMyTurn(false);
             humanData.setMyTurn(true);
-            turnCounter++;
+
+            //Keep track of how many player turns there has been in the game
+            if(canIncrementTurnCounter)
+            {
+                turnCounter++;
+                canIncrementTurnCounter = false;
+            }
 
             //Station heals and repairs its surroundings
             ((Station) map.getStationPosition()).refillTiles(map.getWithRangeOfHub(map.getStationPosition(), Constants.getStationRange()));
@@ -161,6 +168,12 @@ public class GameScene extends Scene
             if (turnCounter % 15 == 0) { //Added by Septagon
                 enemyData.improveFortresses();
             }
+
+            if(turnCounter == 50){
+                ((Station)map.getStationPosition()).destroy();
+            }
+        }else if(humanData.isMyTurn()){
+            canIncrementTurnCounter = true;
         }
 
         this.minigameTrigger();

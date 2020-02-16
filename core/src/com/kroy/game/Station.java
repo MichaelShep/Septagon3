@@ -13,7 +13,6 @@ public class Station extends Tile {
     private int refillTime;
 
     //Variables to keep track of whether the station has/should be destroyed [ID: S1]
-    private Instant destructionTime;
     private boolean destroyed = false;
 
 
@@ -29,7 +28,6 @@ public class Station extends Tile {
 
         repairTime = Constants.getStationRepairAmount();
         refillTime = Constants.getStationRefillAmount();
-        destructionTime=Instant.now();
     }
 
 
@@ -45,15 +43,12 @@ public class Station extends Tile {
 
     /**
      * [ID: S2]
-     * Count the time since the start of the game to work out whether the station should be destroyed.
+     * Destroy the station so engines cant use it to refill anymore
      */
-    public void destructionTimer() {
-        destroyed = !((Duration.between(destructionTime, Instant.now()).getSeconds()) < Constants.getFortressDestructionTime());
-        if(destroyed){
-            this.texName = "lavaTile.png";
-            this.setTexture(Assets.lavaTileTexture);
-
-        }
+    public void destroy() {
+        destroyed = true;
+        this.texName = "lavaTile.png";
+        this.setTexture(Assets.lavaTileTexture);
     }
 
     /**
@@ -64,7 +59,6 @@ public class Station extends Tile {
     public void repairTiles(ArrayList<Tile> surroundingTiles) {
         for (Tile surroundingTile : surroundingTiles) {
             if(!destroyed) {
-                destructionTimer();
                 if (surroundingTile.getInhabitant() instanceof FireEngine) {
                     surroundingTile.getInhabitant().setHealth(Math.min(surroundingTile.getInhabitant().getHealth() + Constants.getStationRepairAmount(), surroundingTile.getInhabitant().getMaxHealth()));
                  }

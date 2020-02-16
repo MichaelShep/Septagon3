@@ -114,7 +114,6 @@ public class Enemy extends Player {
                     }
                 }
             }
-
         }
 
         return targetLocations;
