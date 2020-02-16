@@ -137,7 +137,7 @@ public class GameScene extends Scene
                 InputManager.sceneHelper.setSelectedTile(null);
                 InputManager.sceneHelper.getHumanData().setMyTurn(false);
                 InputManager.sceneHelper.getEnemyData().setMyTurn(true);
-                //InputManager.sceneHelper.getSelectedTile().getInhabitant().shootTarget(InputManager.queryTile.getInhabitant());
+                //InputManager.sceneHelper.getSelectedTile().getInhabitant().shootTarget(InputManager.getQueryTile().getInhabitant());
             }
         }
         bullets.removeAll(bulletToRemove);

@@ -66,21 +66,21 @@ public class Bullet {
      */
     public void update(float deltaTime) {
 
-        updateXPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftX;
-        updateYPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftY;
+        updateXPosition = attacker.getLocation().getMapX() * Constants.getTileSize() + (float) Constants.getTileSize()/2 + shiftX;
+        updateYPosition = attacker.getLocation().getMapY() * Constants.getTileSize() + (float) Constants.getTileSize()/2 + shiftY;
 
-        targetX = target.getLocation().getMapX() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftX;
-        targetY = target.getLocation().getMapY() * Constants.getTileSize() + Constants.getTileSize()/2 + shiftY;
+        targetX = target.getLocation().getMapX() * Constants.getTileSize() + (float) Constants.getTileSize()/2 + shiftX;
+        targetY = target.getLocation().getMapY() * Constants.getTileSize() + (float) Constants.getTileSize()/2 + shiftY;
 
         System.out.print("xPosition " + xPosition + "  yPosition " + yPosition + "  targetX " + targetX +"  targetY " + targetY + "\n");
 
-        relativeXPosition += xSPEED * deltaTime * 100000;;
-        relativeYPosition += ySPEED * deltaTime * 100000;
+        relativeXPosition += xSPEED * deltaTime * 30000;
+        relativeYPosition += ySPEED * deltaTime * 30000;
 
         xPosition = relativeXPosition + updateXPosition;
         yPosition = relativeYPosition + updateYPosition;
 
-        if ((deltaX * (targetX - xPosition) < 0) && (deltaY * (targetY - yPosition) < 0)){
+        if ((deltaX * (targetX - xPosition) < 0) || (deltaY * (targetY - yPosition) < 0)){
             remove = true;
         }
     }

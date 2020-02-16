@@ -156,11 +156,10 @@ public class InputManager extends ApplicationAdapter
      * @param x the x value of the mouse
      * @param y the y value of the mouse
      */
-    public static Tile queryTile;
+
     private void tileClicked(int x, int y) {
         //clicking tiles can only be done on your turn
         Tile queryTile = sceneHelper.getMap().getMapData()[y][x];
-        this.queryTile = queryTile;
 
         if (sceneHelper.getHumanData().isMyTurn()) {
             if (sceneHelper.getSelectedTile() == null) {
