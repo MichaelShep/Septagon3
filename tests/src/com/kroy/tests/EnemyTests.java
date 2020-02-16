@@ -62,13 +62,8 @@ public class EnemyTests {
         testEnemy.distributeTeamLocation(testMap.getFortressTiles());
         Human testHuman = new Human(false, 1);
         testHuman.createFireEngine(0);
-        //FireEngine testFireEngine = new FireEngine(1,1,1, testMap.getWithRangeOfHub(testEnemy.getTeam().get(0).getLocation(), 5, TileType.TILE_TYPES_ROAD).get(2), 1, 1, "FireEngine.png");
-        //testFireEngine.setTexture(new Texture(Gdx.files.internal("fireEngineSprite.png")));
-        testHuman.distributeTeamLocation(testMap.getNClosest(1, testMap.getStationPosition(), TileType.TILE_TYPES_ROAD));
-        testHuman.getTeam().get(0).setLocation(testMap.getWithRangeOfHub(testEnemy.getTeam().get(0).getLocation(), 5, TileType.TILE_TYPES_ROAD).get(2));
+        testHuman.distributeTeamLocation(testMap.getNClosest(1, testMap.getFortressTiles()[0], TileType.TILE_TYPES_ROAD));
         HashMap testLocations = testEnemy.calculateTargets(testMap);
-        System.out.println(testLocations);
-        //System.out.println();
 
         assertTrue(testLocations.containsValue(testHuman.getTeam().get(0).getLocation()));
 
