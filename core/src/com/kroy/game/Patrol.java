@@ -7,9 +7,20 @@ Added by Septagon
 Used to handle all info about the Patrols in the game
  */
 public class Patrol extends Character {
-    private int[] u = {0,1}; int[] l = {-1,0}; int[] d = {0,-1}; int[] r = {1,0};
+    private int[] u = {0,1};
+    private int[] l = {-1,0};
+    private int[] d = {0,-1};
+    private int[] r = {1,0};
     private int[][] directionArray = {u,r,d,l};
-    private int direction = 2;
+    private int direction;
+
+    public int getDirection(){
+        return direction;
+    }
+
+    public void setDirection(int direction){
+        this.direction = direction;
+    }
 
     /**
      * Constructs a Character object which is an entity that can shoot, move and be killed.
@@ -44,24 +55,24 @@ public class Patrol extends Character {
      * want to move right, down the list so a nested for loop is used. The inner loop iterates through the adjacent
      * tiles while the outer one is used to calculate which direction to be looking in ie starting with the direction to
      * the right in the list (the current direction's right), then the current direction (moving forward), then, the
-     * worst case, the left value (turning left). The patrol will never have to move backward as the game map is made of
-     * loops. Once the adjacent tile closest to a right turn is found, the patrol is moved to this position and the
-     * direction pointer is updated appropriately and the loop is broke.
-     * @param patrolSceneHelper used to get tile functions
+     * worst case, the left value (turning left). A new variable is made to account for pointers exceeding the list to
+     * make them wrap around appropriately ie -1 to 3 and 4 to 0. The patrol will never have to move backward as the
+     * game map is made of loops so a fourth case is not required. Once the adjacent tile closest to a right turn is
+     * found, the patrol is moved to this position and the direction pointer is updated appropriately and the loop is
+     * broke.
      */
     public void move(SceneManager patrolSceneHelper){
-        ArrayList<Tile> movable = patrolSceneHelper.getMap().getWithRangeOfHub(this.getLocation(), 2, TileType.TILE_TYPES_ROAD);
+        ArrayList<Tile> movableTiles = patrolSceneHelper.getMap().getWithRangeOfHub(this.getLocation(), 2, TileType.TILE_TYPES_ROAD);
         boolean moved = false;
-        if (movable.size() > 0) {
-            for (int i = 1; i > -2; i--) {
-                for (Tile tile : movable) {
-                    System.out.println((-1 % 4 + 4) % 4);
-                    //System.out.println("chosen tile ("+ directionArray[Math.abs(direction + i % 4)].toString() + "): " +((int) this.getLocation().getMapX() + directionArray[Math.abs(direction + i) % 4][0] + " " + (int) this.getLocation().getMapY() + directionArray[Math.abs(direction + i) % 4][1]));
-                    int desiredTileX = (int) this.getLocation().getMapX() + directionArray[(((direction + i) % 4 + 4)% 4)][0];
-                    int desiredTileY = (int) this.getLocation().getMapY() + directionArray[(((direction + i) % 4 + 4)% 4)][1];
+        if (movableTiles.size() > 0) {
+            for (int desiredDirectionPointer = direction + 1; desiredDirectionPointer > direction - 2; desiredDirectionPointer--) {
+                for (Tile tile : movableTiles) {
+                    int correctedDirectionPointer = (((desiredDirectionPointer) % 4 + 4) % 4);
+                    int desiredTileX = (int) this.getLocation().getMapX() + directionArray[correctedDirectionPointer][0];
+                    int desiredTileY = (int) this.getLocation().getMapY() + directionArray[correctedDirectionPointer][1];
                     if ((tile.getMapX() == desiredTileX) && (tile.getMapY() == desiredTileY) && (tile.getInhabitant() == null)) {
                         this.transferTo(tile);
-                        direction = Math.abs((((direction + i) % 4 + 4)% 4));
+                        direction = correctedDirectionPointer;
                         moved = true;
                     }
                     if (moved) break;

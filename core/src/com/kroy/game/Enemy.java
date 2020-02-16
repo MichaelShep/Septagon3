@@ -123,21 +123,23 @@ public class Enemy extends Player {
 
     /**
      * [ID: [P4]
-     * Used to setup the locations for the patrols
+     * Used to setup the locations and initial directions for the patrols
      * @param map The games map used to get the location of the fortresses
      */
     public void distributePatrols(Map map) {
-        /*for (int locationIndex = 0; locationIndex < locations.length; locationIndex++) {
-            patrols.get(locationIndex).setLocation(locations[locationIndex]);
-            locations[locationIndex].setInhabitant(patrols.get(locationIndex));
-        }*/
-
         for(int i = 0; i < Constants.getPatrolCount(); i++){
             Tile[] locations = map.getNClosest(1, map.getFortressTiles()[i], TileType.TILE_TYPES_ROAD);
             patrols.get(i).setLocation(locations[0]);
             locations[0].setInhabitant(patrols.get(i));
+            switch (patrols.get(i).getLocation().getMapX()){
+                case 6: patrols.get(i).setDirection(1); break;
+                case 20: patrols.get(i).setDirection(3); break;
+                case 24: patrols.get(i).setDirection(3); break;
+                case 43: patrols.get(i).setDirection(2); break;
+                case 45: patrols.get(i).setDirection(0); break;
+                case 50: patrols.get(i).setDirection(0); break;
+            }
         }
-
     }
 
     /**
