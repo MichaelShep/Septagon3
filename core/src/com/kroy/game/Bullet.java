@@ -26,6 +26,8 @@ public class Bullet {
     //Setter Method
     public void setShiftX(int shiftX) { this.shiftX = shiftX; }
     public void setShiftY(int shiftY) { this.shiftY = shiftY; }
+    public int getShiftX() { return shiftX; }
+    public int getShiftY() { return shiftY; }
 
     //creates a bullet with attacker and target positions
     public Bullet(Character attacker, Character target, boolean water) {
@@ -94,4 +96,14 @@ public class Bullet {
     public void renderBullets(Batch batch) {
         batch.draw(texture, xPosition, yPosition);
     }
+
+    public Character getAttacker() { return attacker; }
+    public Character getTarget() { return target; }
+
+    public float getxPosition() { return xPosition; }
+    public float getyPosition() { return yPosition; }
+    public float getTargetX() { return targetX; }
+    public float getTargetY() { return targetY; }
+    public float getUpdateXPosition() { return updateXPosition; }
+    public float getUpdateYPosition() { return updateYPosition;}
 }
