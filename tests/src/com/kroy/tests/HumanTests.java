@@ -45,5 +45,6 @@ public class HumanTests {
         assertEquals(4, testEngine.getSpeed());
         assertEquals(4, testEngine.getWaterCapacity());
 
+        Human testHuman = new Human(false, 3);
     }
 }

@@ -22,7 +22,7 @@ import java.util.Random;
 public class InputManager extends ApplicationAdapter
 {
     //member variables that are used to change states
-    private SceneManager sceneHelper;
+    public static SceneManager sceneHelper;
     private BitmapFont font;
     private OrthographicCamera cam;
 
@@ -156,6 +156,7 @@ public class InputManager extends ApplicationAdapter
      * @param x the x value of the mouse
      * @param y the y value of the mouse
      */
+
     private void tileClicked(int x, int y) {
         //clicking tiles can only be done on your turn
         Tile queryTile = sceneHelper.getMap().getMapData()[y][x];
@@ -220,11 +221,8 @@ public class InputManager extends ApplicationAdapter
                             GameScene.bullets.add(new Bullet(queryTile.getInhabitant(), sceneHelper.getSelectedTile().getInhabitant(), false));
 
                             sceneHelper.getSelectedTile().getInhabitant().shootTarget(queryTile.getInhabitant());
-                            sceneHelper.setSelectedTile(null);
                             sceneHelper.getHighlightMap().resetMap();
                             sceneHelper.getHighlightMap().setRender(false);
-                            sceneHelper.getHumanData().setMyTurn(false);
-                            sceneHelper.getEnemyData().setMyTurn(true);
                         }
 
 

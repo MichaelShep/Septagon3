@@ -3,11 +3,14 @@ package com.kroy.tests;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Texture;
 import com.kroy.game.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +18,8 @@ import static org.junit.Assert.*;
 public class EnemyTests {
 
     Enemy testEnemy;
+    Map testMap;
+
 
     @Before
     public void init(){
@@ -23,8 +28,8 @@ public class EnemyTests {
 
         Assets.loadGameAssets();
         testEnemy = new Enemy(false, 1,1);
-        String directory = Gdx.files.getLocalStoragePath() + "assets/Data/MapForTesting.csv";
-        Map testMap = new Map(directory);
+        String directory = Gdx.files.getLocalStoragePath() + "assets/Data/YorkMapFlipped.csv";
+        testMap = new Map(directory);
     }
 
     @Test
@@ -52,6 +57,15 @@ public class EnemyTests {
 
     @Test
     public void testCalculateTargets(){
+        testEnemy = new Enemy(false, 6,1);
+        testEnemy.distributeTeamLocation(testMap.getFortressTiles());
+        FireEngine testFireEngine = new FireEngine(1,1,1, testMap.getWithRangeOfHub(testEnemy.getTeam().get(0).getLocation(), 5, TileType.TILE_TYPES_ROAD).get(2), 1, 1, "FireEngine.png");
+        testFireEngine.setTexture(new Texture(Gdx.files.internal("fireEngineSprite.png")));
+        HashMap testLocations = testEnemy.calculateTargets(testMap);
+        System.out.println(testLocations);
+        //System.out.println();
+
+        assertTrue(testLocations.containsValue(testFireEngine));
 
     }
 

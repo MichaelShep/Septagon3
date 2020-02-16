@@ -20,7 +20,7 @@ public class BarManager
 
     private int shiftX, shiftY;
 
-    public BarManager(Human humanData, Enemy enemyData, Map map)
+    public BarManager(Human humanData, Enemy enemyData)
     {
         this.humanData = humanData;
         this.enemyData = enemyData;
@@ -58,8 +58,8 @@ public class BarManager
     private void renderHealthBar(Character character)
     {
         if(character != null) {
-                int xPosition = character.getLocation().getMapX() * Constants.getTileSize() + shiftX;
-                int yPosition = character.getLocation().getMapY() * Constants.getTileSize() + shiftY + Constants.getTileSize();
+            int xPosition = character.getLocation().getMapX() * Constants.getTileSize() + shiftX;
+            int yPosition = character.getLocation().getMapY() * Constants.getTileSize() + shiftY + Constants.getTileSize();
 
             shapeRenderer.setColor(Color.LIGHT_GRAY);
             shapeRenderer.rect(xPosition, yPosition, Constants.getTileSize(), 11);
@@ -95,7 +95,7 @@ public class BarManager
      * Method to work out what colour the engines health should be shown in dependant on how much health they have
      * @param character The engine that we are currently drawing the health bar for
      */
-    private void getColourOfBar(Character character)
+    public void getColourOfBar(Character character)
     {
         if(character.getHealth() <= character.getMaxHealth() / 4){
             shapeRenderer.setColor(Color.RED);
@@ -109,4 +109,9 @@ public class BarManager
     //Setter Method
     public void setShiftX(int shiftX) { this.shiftX = shiftX; }
     public void setShiftY(int shiftY) { this.shiftY = shiftY; }
+
+    public Human getHumanData() { return humanData; }
+    public Enemy getEnemyData() { return enemyData; }
+    public ShapeRenderer getShapeRenderer() { return shapeRenderer; }
+
 }
