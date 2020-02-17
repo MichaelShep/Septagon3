@@ -40,7 +40,7 @@ public final class Constants {
     private static int MINIGAME_BULLET_HEIGHT = 20;
     private static int NUM_ENGINE_BULLETS = 10;
 
-    private static int FORTRESS_DESTRUCTION_TIME = 300;
+    private static int FORTRESS_DESTRUCTION_TIME = 100;
 
     private static String MAP_FILE_NAME = "Data/yorkMapFlipped.csv";
 

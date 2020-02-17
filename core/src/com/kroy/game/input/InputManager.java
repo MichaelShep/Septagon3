@@ -201,7 +201,7 @@ public class InputManager extends ApplicationAdapter
                     case "HighlightTexture/move.png":
                         System.out.println("MOVE");
                         ((FireEngine)sceneHelper.getSelectedTile().getInhabitant()).transferTo(queryTile);
-                        //Move all patrols randomly (Added by Septagon)
+                        //Move all patrols based on algorithm [ID: P1]
                         for (Patrol patrols : sceneHelper.getEnemyData().getPatrols()){
                             patrols.move(sceneHelper);
                         }

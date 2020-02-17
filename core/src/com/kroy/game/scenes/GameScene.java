@@ -177,7 +177,8 @@ public class GameScene extends Scene
                 enemyData.improveFortresses();
             }
 
-            if(turnCounter == 50){
+            //Destroy the fortress after a certain number of player turns
+            if(turnCounter == Constants.getFortressDestructionTime()){
                 ((Station)map.getStationPosition()).destroy();
             }
         }else if(humanData.isMyTurn()){

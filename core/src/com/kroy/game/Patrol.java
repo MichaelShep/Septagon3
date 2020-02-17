@@ -60,6 +60,7 @@ public class Patrol extends Character {
      * game map is made of loops so a fourth case is not required. Once the adjacent tile closest to a right turn is
      * found, the patrol is moved to this position and the direction pointer is updated appropriately and the loop is
      * broke.
+     * [ID: M1]
      */
     public void move(SceneManager patrolSceneHelper){
         ArrayList<Tile> movableTiles = patrolSceneHelper.getMap().getWithRangeOfHub(this.getLocation(), 2, TileType.TILE_TYPES_ROAD);
